@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "s6nU2HzGKu4=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jacya\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.0\\microsoft.aspnetcore.openapi.9.0.0.nupkg.sha512",
+    "C:\\Users\\jacya\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\9.0.0\\microsoft.aspnetcore.spaproxy.9.0.0.nupkg.sha512",
+    "C:\\Users\\jacya\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
