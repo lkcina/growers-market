@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj": {}
+    "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj": {
+    "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj",
+        "projectUniqueName": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj",
         "projectName": "growers_market.Server",
-        "projectPath": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj",
+        "projectPath": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj",
         "packagesPath": "C:\\Users\\jacya\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\obj\\",
         "projectStyle": "PackageReference",
