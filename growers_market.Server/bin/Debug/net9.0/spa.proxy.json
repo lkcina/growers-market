@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:55977",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\..\\growers_market.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

@@ -3,6 +3,34 @@
   "WorkspaceRootPath": "C:\\Users\\jacya\\source\\repos\\growers-market\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\migrations\\20250106205546_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\migrations\\20250106205546_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\controllers\\speciescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\controllers\\speciescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\growers_market.server.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\growers_market.server.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\mappers\\speciesmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\mappers\\speciesmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\dtos\\species\\speciesdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\dtos\\species\\speciesdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\growers_market.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\growers_market.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\models\\species.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\models\\species.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\repositories\\speciesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\repositories\\speciesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,20 +43,8 @@
       "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\growers_market.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\growers_market.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\interfaces\\ispeciesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\interfaces\\ispeciesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\controllers\\speciescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\controllers\\speciescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\models\\species.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|solutionrelative:growers_market.server\\models\\species.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B747B4DE-0905-47C4-AC8D-B3C872AE2FC4}|growers_market.Server\\growers_market.Server.csproj|c:\\users\\jacya\\source\\repos\\growers-market\\growers_market.server\\models\\listing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,71 +91,84 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "20250106205546_Init.cs",
+              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Migrations\\20250106205546_Init.cs",
+              "RelativeDocumentMoniker": "growers_market.Server\\Migrations\\20250106205546_Init.cs",
+              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Migrations\\20250106205546_Init.cs",
+              "RelativeToolTip": "growers_market.Server\\Migrations\\20250106205546_Init.cs",
+              "ViewState": "AgIAAOgAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T20:55:47.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "growers_market.Server.http",
+              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\growers_market.Server.http",
+              "RelativeDocumentMoniker": "growers_market.Server\\growers_market.Server.http",
+              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\growers_market.Server.http",
+              "RelativeToolTip": "growers_market.Server\\growers_market.Server.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-01-06T20:52:40.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SpeciesMapper.cs",
+              "DocumentMoniker": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\Mappers\\SpeciesMapper.cs",
+              "RelativeDocumentMoniker": "growers_market.Server\\Mappers\\SpeciesMapper.cs",
+              "ToolTip": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\Mappers\\SpeciesMapper.cs",
+              "RelativeToolTip": "growers_market.Server\\Mappers\\SpeciesMapper.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwAUAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T20:35:58.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SpeciesDto.cs",
+              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Dtos\\Species\\SpeciesDto.cs",
+              "RelativeDocumentMoniker": "growers_market.Server\\Dtos\\Species\\SpeciesDto.cs",
+              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Dtos\\Species\\SpeciesDto.cs",
+              "RelativeToolTip": "growers_market.Server\\Dtos\\Species\\SpeciesDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T20:33:33.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "SpeciesRepository.cs",
               "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Repositories\\SpeciesRepository.cs",
               "RelativeDocumentMoniker": "growers_market.Server\\Repositories\\SpeciesRepository.cs",
               "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Repositories\\SpeciesRepository.cs",
               "RelativeToolTip": "growers_market.Server\\Repositories\\SpeciesRepository.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-06T20:01:46.723Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ISpeciesRepository.cs",
-              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Interfaces\\ISpeciesRepository.cs",
-              "RelativeDocumentMoniker": "growers_market.Server\\Interfaces\\ISpeciesRepository.cs",
-              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Interfaces\\ISpeciesRepository.cs",
-              "RelativeToolTip": "growers_market.Server\\Interfaces\\ISpeciesRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T19:56:08.423Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "SpeciesController.cs",
               "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Controllers\\SpeciesController.cs",
               "RelativeDocumentMoniker": "growers_market.Server\\Controllers\\SpeciesController.cs",
               "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Controllers\\SpeciesController.cs",
               "RelativeToolTip": "growers_market.Server\\Controllers\\SpeciesController.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAqwB4AAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-06T19:52:10.745Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Species.cs",
-              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Models\\Species.cs",
-              "RelativeDocumentMoniker": "growers_market.Server\\Models\\Species.cs",
-              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Models\\Species.cs",
-              "RelativeToolTip": "growers_market.Server\\Models\\Species.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T19:14:31.467Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Listing.cs",
-              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Models\\Listing.cs",
-              "RelativeDocumentMoniker": "growers_market.Server\\Models\\Listing.cs",
-              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Models\\Listing.cs",
-              "RelativeToolTip": "growers_market.Server\\Models\\Listing.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T16:51:24.83Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "growers_market.Server\\Data\\AppDbContext.cs",
@@ -152,46 +181,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Program.cs",
-              "RelativeDocumentMoniker": "growers_market.Server\\Program.cs",
-              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Program.cs",
-              "RelativeToolTip": "growers_market.Server\\Program.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAADIAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "Species.cs",
+              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Models\\Species.cs",
+              "RelativeDocumentMoniker": "growers_market.Server\\Models\\Species.cs",
+              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Models\\Species.cs",
+              "RelativeToolTip": "growers_market.Server\\Models\\Species.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T18:45:32.328Z",
+              "WhenOpened": "2025-01-06T19:14:31.467Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AppUser.cs",
-              "DocumentMoniker": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\Models\\AppUser.cs",
-              "RelativeDocumentMoniker": "growers_market.Server\\Models\\AppUser.cs",
-              "ToolTip": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\Models\\AppUser.cs",
-              "RelativeToolTip": "growers_market.Server\\Models\\AppUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T18:36:55.886Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "tsconfig.json",
-              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.client\\tsconfig.json",
-              "RelativeDocumentMoniker": "growers_market.client\\tsconfig.json",
-              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.client\\tsconfig.json",
-              "RelativeToolTip": "growers_market.client\\tsconfig.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-01-06T15:08:35.06Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "growers_market.Server",
               "DocumentMoniker": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\growers_market.Server.csproj",
               "RelativeDocumentMoniker": "growers_market.Server\\growers_market.Server.csproj",
@@ -204,7 +207,72 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Program.cs",
+              "RelativeDocumentMoniker": "growers_market.Server\\Program.cs",
+              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Program.cs",
+              "RelativeToolTip": "growers_market.Server\\Program.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAADIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T18:45:32.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 10,
+              "Title": "ISpeciesRepository.cs",
+              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Interfaces\\ISpeciesRepository.cs",
+              "RelativeDocumentMoniker": "growers_market.Server\\Interfaces\\ISpeciesRepository.cs",
+              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Interfaces\\ISpeciesRepository.cs",
+              "RelativeToolTip": "growers_market.Server\\Interfaces\\ISpeciesRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T19:56:08.423Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Listing.cs",
+              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Models\\Listing.cs",
+              "RelativeDocumentMoniker": "growers_market.Server\\Models\\Listing.cs",
+              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\Models\\Listing.cs",
+              "RelativeToolTip": "growers_market.Server\\Models\\Listing.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T16:51:24.83Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AppUser.cs",
+              "DocumentMoniker": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\Models\\AppUser.cs",
+              "RelativeDocumentMoniker": "growers_market.Server\\Models\\AppUser.cs",
+              "ToolTip": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.Server\\Models\\AppUser.cs",
+              "RelativeToolTip": "growers_market.Server\\Models\\AppUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T18:36:55.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "tsconfig.json",
+              "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.client\\tsconfig.json",
+              "RelativeDocumentMoniker": "growers_market.client\\tsconfig.json",
+              "ToolTip": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.client\\tsconfig.json",
+              "RelativeToolTip": "growers_market.client\\tsconfig.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-06T15:08:35.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "main.tsx",
               "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.client\\src\\main.tsx",
               "RelativeDocumentMoniker": "growers_market.client\\src\\main.tsx",
@@ -217,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.Server\\appsettings.json",
               "RelativeDocumentMoniker": "growers_market.Server\\appsettings.json",
@@ -230,7 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "growers_market.client",
               "DocumentMoniker": "C:\\Users\\jacya\\Source\\Repos\\growers-market\\growers_market.client\\growers_market.client.esproj",
               "RelativeDocumentMoniker": "growers_market.client\\growers_market.client.esproj",
@@ -243,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "App.tsx",
               "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.client\\src\\App.tsx",
               "RelativeDocumentMoniker": "growers_market.client\\src\\App.tsx",
@@ -256,7 +324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "package.json",
               "DocumentMoniker": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.client\\package.json",
               "RelativeDocumentMoniker": "growers_market.client\\package.json",

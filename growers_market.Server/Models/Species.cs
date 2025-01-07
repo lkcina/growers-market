@@ -1,4 +1,6 @@
-﻿namespace growers_market.Server.Models
+﻿using System.Reflection.Metadata;
+
+namespace growers_market.Server.Models
 {
     public class Species
     {
@@ -6,6 +8,5 @@
         public string CommonName { get; set; } = string.Empty;
         public string GenusName { get; set; } = string.Empty;
         public string SpeciesName { get; set; } = string.Empty;
-        public string Image { get; set; } = string.Empty;
     }
 }

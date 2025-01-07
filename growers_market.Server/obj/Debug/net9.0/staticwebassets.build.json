@@ -1,0 +1,24 @@
+{
+  "Version": 1,
+  "Hash": "DjE1r2OVeqXSJ1pUqdMEgJWAbTv6YxqUiqi7PkbOXQo=",
+  "Source": "growers_market.Server",
+  "BasePath": "_content/growers_market.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\jacya\\source\\repos\\growers-market\\growers_market.client\\growers_market.client.esproj",
+      "Version": 2,
+      "Source": "growers_market.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

@@ -1,5 +1,6 @@
 ﻿using growers_market.Server.Data;
 using growers_market.Server.Interfaces;
+using growers_market.Server.Mappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,8 @@ namespace growers_market.Server.Controllers
             }
 
             var species = await _speciesRepository.GetAllAsync();
-
+            var speciesDto = species.Select(spec => spec.ToSpeciesDto()).ToList();
+            return Ok(speciesDto);
         }
     }
 }
