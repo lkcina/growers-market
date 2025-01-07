@@ -1,5 +1,7 @@
 using growers_market.Server.Data;
+using growers_market.Server.Interfaces;
 using growers_market.Server.Models;
+using growers_market.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +52,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddOpenApi();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
