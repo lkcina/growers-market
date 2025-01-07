@@ -31,5 +31,21 @@ namespace growers_market.Server.Controllers
             var speciesDto = species.Select(spec => spec.ToSpeciesDto()).ToList();
             return Ok(speciesDto);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var species = await _speciesRepository.GetByIdAsync(id);
+            if (species == null)
+            {
+                return NotFound();
+            }
+            var speciesDto = species.ToSpeciesDto();
+            return Ok(speciesDto);
+        }
     }
 }

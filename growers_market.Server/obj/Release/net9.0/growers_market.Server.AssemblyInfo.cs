@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("growers_market.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+843915252915ac5fe60887b068bd8393920a07dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57a343066f70ea54b777cc5ff13b8531c5ecd991")]
 [assembly: System.Reflection.AssemblyProductAttribute("growers_market.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("growers_market.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
