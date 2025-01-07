@@ -2,7 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/
-/.growers_market.Server/bin/
-/.growers_market.Server/obj/
+/.vs
+/.growers_market.Server/bin
+/.growers_market.Server/obj
 /growers_market.Server/obj
