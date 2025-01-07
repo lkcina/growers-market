@@ -3,5 +3,5 @@
 ################################################################################
 
 /.vs/
-/.vs/growers-market/FileContentIndex/e65b08e4-270d-48c9-85e9-218ca2622f2e.vsidx
-/.vs/growers_market/FileContentIndex
+/.growers_market.Server/bin/
+/.growers_market.Server/obj/
