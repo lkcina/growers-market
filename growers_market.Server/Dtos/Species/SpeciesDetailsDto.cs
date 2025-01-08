@@ -6,6 +6,6 @@
         public string CommonName { get; set; } = string.Empty;
         public string GenusName { get; set; } = string.Empty;
         public string SpeciesName { get; set; } = string.Empty;
-        public string Details {  get; set; } = string.Empty;
+        public string Description {  get; set; } = string.Empty;
     }
 }

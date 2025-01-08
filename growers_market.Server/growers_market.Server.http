@@ -21,3 +21,7 @@ Content-Type: application/json
 ### Get All Species
 GET {{growers_market.Server_HostAddress}}/api/species
 Accept: application/json
+
+### Get Species By Id
+GET {{growers_market.Server_HostAddress}}/api/species/10
+Accept: application/json

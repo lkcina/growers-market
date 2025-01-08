@@ -21,6 +21,10 @@ namespace growers_market.Server.Repositories
         public async Task<Species> GetByIdAsync(int id)
         {
             var species = await _context.Species.FirstOrDefaultAsync(spec => spec.Id == id);
+            if (species == null)
+            {
+                return null;
+            }
             return species;
         }
     }

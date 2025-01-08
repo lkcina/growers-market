@@ -42,7 +42,7 @@ namespace growers_market.Server.Controllers
             {
                 return NotFound();
             }
-            var speciesDto = species.ToAllSpeciesDto();
+            var speciesDto = species.ToSpeciesDetailsDto();
             return Ok(speciesDto);
         }
     }
