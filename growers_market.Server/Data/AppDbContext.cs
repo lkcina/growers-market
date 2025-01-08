@@ -9,10 +9,25 @@ namespace growers_market.Server.Data
     {
         public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
+
         }
+
+        public DbSet<Species> Species { get; set; }
+        public DbSet<Listing> Listings { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Wishlist>(item => item.HasKey(key => new { key.AppUserId, key.SpeciesId }));
+            builder.Entity<Wishlist>()
+                .HasOne(wish => wish.AppUser)
+                .WithMany(user => user.Wishlists)
+                .HasForeignKey(wish => wish.AppUserId);
+            builder.Entity<Wishlist>()
+                .HasOne(wish => wish.Species)
+                .WithMany(species => species.Wishlists)
+                .HasForeignKey(wish => wish.SpeciesId);
 
             List<IdentityRole> roles = new List<IdentityRole>
             {

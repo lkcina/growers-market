@@ -51,13 +51,13 @@ namespace growers_market.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "619d856d-6b39-42b4-b2e2-3980f9ceb2f8",
+                            Id = "4419cd74-ea6b-4ffc-b1e8-23a63b42dd43",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "8e94f2f7-e61e-45c5-86e4-bd02507241d5",
+                            Id = "c7e16d30-a8b1-4037-927d-a8c50cde3355",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -243,6 +243,7 @@ namespace growers_market.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
@@ -262,17 +263,13 @@ namespace growers_market.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
                     b.HasIndex("SpeciesId");
 
-                    b.ToTable("Listing");
+                    b.ToTable("Listings");
                 });
 
             modelBuilder.Entity("growers_market.Server.Models.Species", b =>
@@ -283,18 +280,15 @@ namespace growers_market.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CommonName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GenusName")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("GenusName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -304,9 +298,22 @@ namespace growers_market.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.ToTable("Species");
+                });
+
+            modelBuilder.Entity("growers_market.Server.Models.Wishlist", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("SpeciesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "SpeciesId");
+
+                    b.HasIndex("SpeciesId");
+
+                    b.ToTable("Wishlists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -364,7 +371,9 @@ namespace growers_market.Server.Migrations
                 {
                     b.HasOne("growers_market.Server.Models.AppUser", "AppUser")
                         .WithMany("Listings")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("growers_market.Server.Models.Species", "Species")
                         .WithMany()
@@ -375,18 +384,35 @@ namespace growers_market.Server.Migrations
                     b.Navigation("Species");
                 });
 
-            modelBuilder.Entity("growers_market.Server.Models.Species", b =>
+            modelBuilder.Entity("growers_market.Server.Models.Wishlist", b =>
                 {
-                    b.HasOne("growers_market.Server.Models.AppUser", null)
-                        .WithMany("Wishlist")
-                        .HasForeignKey("AppUserId");
+                    b.HasOne("growers_market.Server.Models.AppUser", "AppUser")
+                        .WithMany("Wishlists")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("growers_market.Server.Models.Species", "Species")
+                        .WithMany("Wishlists")
+                        .HasForeignKey("SpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Species");
                 });
 
             modelBuilder.Entity("growers_market.Server.Models.AppUser", b =>
                 {
                     b.Navigation("Listings");
 
-                    b.Navigation("Wishlist");
+                    b.Navigation("Wishlists");
+                });
+
+            modelBuilder.Entity("growers_market.Server.Models.Species", b =>
+                {
+                    b.Navigation("Wishlists");
                 });
 #pragma warning restore 612, 618
         }

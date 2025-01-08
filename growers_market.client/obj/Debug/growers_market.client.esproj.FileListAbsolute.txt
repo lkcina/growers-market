@@ -1,1 +1,2 @@
 C:\Users\jacya\Source\Repos\growers-market\growers_market.client\obj\Debug\growers_market.client.esproj.CoreCompileInputs.cache
+C:\Users\jacya\Source\Repos\growers-market-1\growers_market.client\obj\Debug\growers_market.client.esproj.CoreCompileInputs.cache

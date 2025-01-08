@@ -1,4 +1,4 @@
-﻿using growers_market.Server.Dtos;
+﻿using growers_market.Server.Dtos.Account;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Models;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace growers_market.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/account")]
     [ApiController]
     public class AccountController : ControllerBase
     {

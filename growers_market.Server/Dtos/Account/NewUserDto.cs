@@ -1,4 +1,4 @@
-﻿namespace growers_market.Server.Dtos
+﻿namespace growers_market.Server.Dtos.Account
 {
     public class NewUserDto
     {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace growers_market.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedRoles : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,22 @@ namespace growers_market.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Species",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CommonName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GenusName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SpeciesName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Species", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,29 +175,7 @@ namespace growers_market.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Species",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CommonName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GenusName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SpeciesName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Species", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Species_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Listing",
+                name: "Listings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -190,23 +184,47 @@ namespace growers_market.Server.Migrations
                     IsForTrade = table.Column<bool>(type: "bit", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SpeciesId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Listing", x => x.Id);
+                    table.PrimaryKey("PK_Listings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Listing_AspNetUsers_AppUserId",
+                        name: "FK_Listings_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Listing_Species_SpeciesId",
+                        name: "FK_Listings_Species_SpeciesId",
                         column: x => x.SpeciesId,
                         principalTable: "Species",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Wishlists",
+                columns: table => new
+                {
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SpeciesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Wishlists", x => new { x.AppUserId, x.SpeciesId });
+                    table.ForeignKey(
+                        name: "FK_Wishlists_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Wishlists_Species_SpeciesId",
+                        column: x => x.SpeciesId,
+                        principalTable: "Species",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -214,8 +232,27 @@ namespace growers_market.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "619d856d-6b39-42b4-b2e2-3980f9ceb2f8", null, "Admin", "ADMIN" },
-                    { "8e94f2f7-e61e-45c5-86e4-bd02507241d5", null, "User", "USER" }
+                    { "4419cd74-ea6b-4ffc-b1e8-23a63b42dd43", null, "Admin", "ADMIN" },
+                    { "c7e16d30-a8b1-4037-927d-a8c50cde3355", null, "User", "USER" }
+                });
+            migrationBuilder.InsertData(
+                table: "Species",
+                columns: new[] { "Id", "CommonName", "GenusName", "SpeciesName", "Description" },
+                values: new object[,]
+                {
+                    { 1, "Aloe vera", "Aloe", "vera", "This is the Aloe vera Description." },
+                    { 2, "Christmas Cactus", "Schlumbergera", "truncata", "This is the Christmas Cactus Description." },
+                    { 3, "Green Mound Juniper", "Juniperus", "procumbens", "This is the Green Mound Juniper Description." },
+                    { 4, "Hens and Chicks", "Sempervivum", "tectorum", "This is the Hens and Chicks Description." },
+                    { 5, "Jade Plant", "Crassula", "ovata", "This is the Jade Plant Description." },
+                    { 6, "Kalanchoe", "Kalanchoe", "blossfeldiana", "This is the Kalanchoe Description." },
+                    { 7, "Lavender", "Lavandula", "angustifolia", "This is the Lavender Description." },
+                    { 8, "Moth Orchid", "Phalaenopsis", "spp.", "This is the Moth Orchid Description." },
+                    { 9, "Peace Lily", "Spathiphyllum", "spp.", "This is the Peace Lily Description." },
+                    { 10, "Ponytail Palm", "Beaucarnea", "recurvata", "This is the Ponytail Palm Description." },
+                    { 11, "Snake Plant", "Sansevieria", "trifasciata", "This is the Snake Plant Description." },
+                    { 12, "Spider Plant", "Chlorophytum", "comosum", "This is the Spider Plant Description." },
+                    { 13, "ZZ Plant", "Zamioculcas", "zamiifolia", "This is the ZZ Plant Description." }
                 });
 
             migrationBuilder.CreateIndex(
@@ -258,19 +295,19 @@ namespace growers_market.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Listing_AppUserId",
-                table: "Listing",
+                name: "IX_Listings_AppUserId",
+                table: "Listings",
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Listing_SpeciesId",
-                table: "Listing",
+                name: "IX_Listings_SpeciesId",
+                table: "Listings",
                 column: "SpeciesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Species_AppUserId",
-                table: "Species",
-                column: "AppUserId");
+                name: "IX_Wishlists_SpeciesId",
+                table: "Wishlists",
+                column: "SpeciesId");
         }
 
         /// <inheritdoc />
@@ -292,16 +329,19 @@ namespace growers_market.Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Listing");
+                name: "Listings");
+
+            migrationBuilder.DropTable(
+                name: "Wishlists");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Species");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Species");
         }
     }
 }
