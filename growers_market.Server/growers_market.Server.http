@@ -1,6 +1,23 @@
 @growers_market.Server_HostAddress = http://localhost:5260
 
-GET {{growers_market.Server_HostAddress}}/weatherforecast/
-Accept: application/json
+### Register Account
+POST {{growers_market.Server_HostAddress}}/api/account/register
+Content-Type: application/json
+{
+  "username": "lkcina",
+  "email": "lkcina6@gmail.com",
+  "password": "P@ssword1234"
+}
 
-###
+
+### User Login
+POST {{growers_market.Server_HostAddress}}/api/account/login
+Content-Type: application/json
+{
+  "username": "lkcina",
+  "password": "P@ssword1234"
+}
+
+### Get All Species
+GET {{growers_market.Server_HostAddress}}/api/species
+Accept: application/json

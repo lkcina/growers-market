@@ -10,7 +10,7 @@ namespace growers_market.Server.Models
         [Column(TypeName = "decimal(9, 2)")]
         public decimal Price { get; set; }
         public string Description { get; set; } = string.Empty;
-        public string UserId { get; set; } = string.Empty;
+        public string AppUserId { get; set; } = string.Empty;
         public AppUser? AppUser { get; set; }
         public int? SpeciesId { get; set; }
         public Species? Species { get; set; }

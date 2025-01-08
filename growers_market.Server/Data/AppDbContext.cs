@@ -9,7 +9,11 @@ namespace growers_market.Server.Data
     {
         public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
+
         }
+
+        public DbSet<Species> Species { get; set; }
+        public DbSet<Listing> Listings { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
