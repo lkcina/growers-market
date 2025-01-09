@@ -1,4 +1,5 @@
 ﻿using growers_market.Server.Data;
+using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Mappers;
 using Microsoft.AspNetCore.Http;
@@ -11,10 +12,12 @@ namespace growers_market.Server.Controllers
     public class SpeciesController : ControllerBase
     {
         private readonly ISpeciesRepository _speciesRepository;
+        private readonly IPerenualService _perenualService;
 
-        public SpeciesController(ISpeciesRepository speciesRepo)
+        public SpeciesController(ISpeciesRepository speciesRepo, IPerenualService perenualService)
         {
             _speciesRepository = speciesRepo;
+            _perenualService = perenualService;
         }
 
         [HttpGet]
@@ -26,7 +29,7 @@ namespace growers_market.Server.Controllers
             }
 
             var species = await _speciesRepository.GetAllAsync();
-            var speciesDto = species.Select(spec => spec.ToAllSpeciesDto());
+            var speciesDto = species.Select(spec => spec.ToSpeciesDto());
             return Ok(speciesDto);
         }
 
@@ -42,8 +45,24 @@ namespace growers_market.Server.Controllers
             {
                 return NotFound();
             }
-            var speciesDto = species.ToSpeciesDetailsDto();
+            var speciesDto = species.ToSpeciesDto();
             return Ok(speciesDto);
+        }
+
+        [HttpGet("perenual")]
+        public async Task<IActionResult> GetAllPerenual([FromQuery] PerenualPlantQueryObject query)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var perenual = await _perenualService.PlantSearchAsync(query);
+            if (perenual == null)
+            {
+                return StatusCode(500, "Something Went Wrong");
+            }
+            var perenualDto = perenual.Select(species => species.ToSpeciesDto());
+            return Ok(perenualDto);
         }
     }
 }

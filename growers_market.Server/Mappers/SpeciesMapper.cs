@@ -5,26 +5,54 @@ namespace growers_market.Server.Mappers
 {
     public static class SpeciesMapper
     {
-        public static AllSpeciesDto ToAllSpeciesDto(this Species speciesModel)
+        public static SpeciesDto ToSpeciesDto(this Species speciesModel)
         {
-            return new AllSpeciesDto
+            return new SpeciesDto
             {
                 Id = speciesModel.Id,
                 CommonName = speciesModel.CommonName,
-                GenusName = speciesModel.GenusName,
-                SpeciesName = speciesModel.SpeciesName
+                ScientificName = speciesModel.ScientificName,
+                Cycle = speciesModel.Cycle,
+                Watering = speciesModel.Watering,
+                Sunlight = speciesModel.Sunlight,
+                Indoor = speciesModel.Indoor,
+                Hardiness = speciesModel.Hardiness,
+                Image = speciesModel.Image,
+                Thumbnail = speciesModel.Thumbnail
             };
         }
 
-        public static SpeciesDetailsDto ToSpeciesDetailsDto(this Species speciesModel)
+
+        public static Species ToSpeciesFromPerenual(this SpeciesData speciesData)
         {
-            return new SpeciesDetailsDto
+            if (speciesData.default_image == null)
             {
-                Id = speciesModel.Id,
-                CommonName = speciesModel.CommonName,
-                GenusName = speciesModel.GenusName,
-                SpeciesName = speciesModel.SpeciesName,
-                Description = speciesModel.Description
+                return new Species
+                {
+                    Id = speciesData.id,
+                    CommonName = speciesData.common_name,
+                    ScientificName = speciesData.scientific_name,
+                    Cycle = speciesData.cycle,
+                    Watering = speciesData.watering,
+                    Sunlight = speciesData.sunlight,
+                    Indoor = speciesData.indoor,
+                    Hardiness = speciesData.hardiness,
+                    Image = "",
+                    Thumbnail = ""
+                };
+            }
+            return new Species
+            {
+                Id = speciesData.id,
+                CommonName = speciesData.common_name,
+                ScientificName = speciesData.scientific_name,
+                Cycle = speciesData.cycle,
+                Watering = speciesData.watering,
+                Sunlight = speciesData.sunlight,
+                Indoor = speciesData.indoor,
+                Hardiness = speciesData.hardiness,
+                Image = speciesData.default_image.regular_url,
+                Thumbnail = speciesData.default_image.thumbnail
             };
         }
     }
