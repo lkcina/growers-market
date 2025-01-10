@@ -62,7 +62,6 @@ namespace growers_market.Server.Services
                 }
 
                 var url = urlBuilder.ToString();
-                Console.WriteLine(url);
                 var result = await _httpClient.GetAsync(url);
                 if (result.IsSuccessStatusCode)
                 {
@@ -71,13 +70,43 @@ namespace growers_market.Server.Services
                     {
                         return null;
                     }
-                    var tasks = JsonSerializer.Deserialize<PerenualSpecies>(content);
+                    var tasks = JsonSerializer.Deserialize<AllPerenualSpecies>(content);
                     if (tasks != null)
                     {
-                        var speciesPerenual = tasks.data.ToList<SpeciesData>();
+                        var speciesPerenual = tasks.data.ToList<AllSpeciesData>();
                         var species = speciesPerenual.Select(perenual => perenual.ToSpeciesFromPerenual());
                         
                         return speciesPerenual.Select(perenual => perenual.ToSpeciesFromPerenual()).ToList();
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception occurred: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+                return null;
+            }
+        }
+
+        public async Task<Species> GetPlantByIdAsync(int id)
+        {
+            try
+            {
+                var url = $"https://perenual.com/api/species/{id}?key={_config["PerenualKey"]}";
+                var result = await _httpClient.GetAsync(url);
+                if (result.IsSuccessStatusCode)
+                {
+                    var content = await result.Content.ReadAsStringAsync();
+                    if (content == null)
+                    {
+                        return null;
+                    }
+                    var speciesData = JsonSerializer.Deserialize<DetailsSpeciesData>(content);
+                    if (speciesData != null)
+                    {
+                        return speciesData.ToSpeciesFromDetailsPerenual();
                     }
                     return null;
                 }

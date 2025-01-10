@@ -10,8 +10,8 @@ namespace growers_market.Server.Dtos.Species
         public string? Cycle { get; set; }
         public string? Watering { get; set; }
         public List<string>? Sunlight { get; set; }
-        public int? Hardiness { get; set; }
-        public int? Indoor { get; set; }
+        public Hardiness? Hardiness { get; set; } = new Hardiness();
+        public bool? Indoor { get; set; }
         public string? Image { get; set; }
         public string? Thumbnail { get; set; }
     }

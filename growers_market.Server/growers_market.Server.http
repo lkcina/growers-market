@@ -31,4 +31,4 @@ GET {{growers_market.Server_HostAddress}}/api/species/perenual?Q=rose
 Accept: application/json
 
 ### Get Direct from Perenual
-GET https://perenual.com/api/species-list/?key=sk-uDos677eca3f7332f8182&q=rose
+GET https://perenual.com/api/species/details/3?key=sk-uDos677eca3f7332f8182&indoor=1

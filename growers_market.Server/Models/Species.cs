@@ -1,4 +1,6 @@
-﻿namespace growers_market.Server.Models
+﻿using growers_market.Server.Dtos.Species;
+
+namespace growers_market.Server.Models
 {
     public class Species
     {
@@ -8,8 +10,8 @@
         public string? Cycle { get; set; }
         public string? Watering { get; set; }
         public List<string>? Sunlight { get; set; }
-        public int? Hardiness { get; set; }
-        public int? Indoor { get; set; }
+        public Hardiness? Hardiness { get; set; }
+        public bool? Indoor { get; set; }
         public string? Image { get; set; }
         public string? Thumbnail { get; set; }
         public List<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
