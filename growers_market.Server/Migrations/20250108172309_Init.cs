@@ -235,25 +235,6 @@ namespace growers_market.Server.Migrations
                     { "4419cd74-ea6b-4ffc-b1e8-23a63b42dd43", null, "Admin", "ADMIN" },
                     { "c7e16d30-a8b1-4037-927d-a8c50cde3355", null, "User", "USER" }
                 });
-            migrationBuilder.InsertData(
-                table: "Species",
-                columns: new[] { "Id", "CommonName", "GenusName", "SpeciesName", "Description" },
-                values: new object[,]
-                {
-                    { 1, "Aloe vera", "Aloe", "vera", "This is the Aloe vera Description." },
-                    { 2, "Christmas Cactus", "Schlumbergera", "truncata", "This is the Christmas Cactus Description." },
-                    { 3, "Green Mound Juniper", "Juniperus", "procumbens", "This is the Green Mound Juniper Description." },
-                    { 4, "Hens and Chicks", "Sempervivum", "tectorum", "This is the Hens and Chicks Description." },
-                    { 5, "Jade Plant", "Crassula", "ovata", "This is the Jade Plant Description." },
-                    { 6, "Kalanchoe", "Kalanchoe", "blossfeldiana", "This is the Kalanchoe Description." },
-                    { 7, "Lavender", "Lavandula", "angustifolia", "This is the Lavender Description." },
-                    { 8, "Moth Orchid", "Phalaenopsis", "spp.", "This is the Moth Orchid Description." },
-                    { 9, "Peace Lily", "Spathiphyllum", "spp.", "This is the Peace Lily Description." },
-                    { 10, "Ponytail Palm", "Beaucarnea", "recurvata", "This is the Ponytail Palm Description." },
-                    { 11, "Snake Plant", "Sansevieria", "trifasciata", "This is the Snake Plant Description." },
-                    { 12, "Spider Plant", "Chlorophytum", "comosum", "This is the Spider Plant Description." },
-                    { 13, "ZZ Plant", "Zamioculcas", "zamiifolia", "This is the ZZ Plant Description." }
-                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

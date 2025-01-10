@@ -12,6 +12,7 @@ namespace growers_market.Server.Repositories
         {
             _context = context;
         }
+
         public async Task<List<Species>> GetAllAsync()
         {
             var species = await _context.Species.ToListAsync();
@@ -24,6 +25,23 @@ namespace growers_market.Server.Repositories
             if (species == null)
             {
                 return null;
+            }
+            return species;
+        }
+
+        public async Task<Species> CreateAsync(Species species)
+        {
+            await _context.Species.AddAsync(species);
+            _context.Database.OpenConnection();
+            try
+            {
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Species ON");
+                await _context.SaveChangesAsync();
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Species OFF");
+            }
+            finally
+            {
+                _context.Database.CloseConnection();
             }
             return species;
         }
