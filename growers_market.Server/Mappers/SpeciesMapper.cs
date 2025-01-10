@@ -16,7 +16,8 @@ namespace growers_market.Server.Mappers
                 Watering = speciesModel.Watering,
                 Sunlight = speciesModel.Sunlight,
                 Indoor = speciesModel.Indoor,
-                Hardiness = speciesModel.Hardiness,
+                HardinessMin = speciesModel.HardinessMin,
+                HardinessMax = speciesModel.HardinessMax,
                 Description = speciesModel.Description,
                 Image = speciesModel.Image,
                 Thumbnail = speciesModel.Thumbnail
@@ -35,7 +36,8 @@ namespace growers_market.Server.Mappers
                 Watering = speciesData.watering,
                 Sunlight = speciesData.sunlight == null ? new List<string>() : speciesData.sunlight,
                 Indoor = speciesData.indoor,
-                Hardiness = speciesData.hardiness,
+                HardinessMin = int.TryParse(speciesData.hardiness.min, out int minResult) ? minResult : 0,
+                HardinessMax = int.TryParse(speciesData.hardiness.max, out int maxResult) ? maxResult : 0,
                 Description = "",
                 Image = speciesData.default_image == null ? "" : speciesData.default_image.regular_url,
                 Thumbnail = speciesData.default_image == null ? "" : speciesData.default_image.thumbnail
@@ -53,7 +55,8 @@ namespace growers_market.Server.Mappers
                 Watering = speciesData.watering,
                 Sunlight = speciesData.sunlight,
                 Indoor = speciesData.indoor,
-                Hardiness = speciesData.hardiness,
+                HardinessMin = int.TryParse(speciesData.hardiness.min, out int minResult) ? minResult : 0,
+                HardinessMax = int.TryParse(speciesData.hardiness.max, out int maxResult) ? maxResult : 0,
                 Description = speciesData.description,
                 Image = speciesData.default_image == null ? "" : speciesData.default_image.regular_url,
                 Thumbnail = speciesData.default_image == null ? "" : speciesData.default_image.thumbnail

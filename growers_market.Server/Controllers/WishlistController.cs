@@ -1,6 +1,7 @@
 ﻿using growers_market.Server.Extensions;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace growers_market.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetUserWishlist()
         {
             var username = User.GetUsername();
@@ -33,6 +35,7 @@ namespace growers_market.Server.Controllers
         }
 
         [HttpPost("{id}")]
+        [Authorize]
         public async Task<IActionResult> AddWishlist([FromRoute] int id)
         {
             var username = User.GetUsername();

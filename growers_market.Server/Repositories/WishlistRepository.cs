@@ -38,7 +38,8 @@ namespace growers_market.Server.Repositories
                 Cycle = species.Species.Cycle,
                 Watering = species.Species.Watering,
                 Sunlight = species.Species.Sunlight,
-                Hardiness = species.Species.Hardiness,
+                HardinessMin = species.Species.HardinessMin,
+                HardinessMax = species.Species.HardinessMax,
                 Indoor = species.Species.Indoor,
                 Image = species.Species.Image,
                 Thumbnail = species.Species.Thumbnail

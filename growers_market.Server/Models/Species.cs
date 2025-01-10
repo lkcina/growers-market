@@ -10,7 +10,8 @@ namespace growers_market.Server.Models
         public string? Cycle { get; set; }
         public string? Watering { get; set; }
         public List<string>? Sunlight { get; set; }
-        public HardinessRange? Hardiness { get; set; }
+        public int? HardinessMin { get; set; }
+        public int? HardinessMax { get; set; }
         public bool? Indoor { get; set; }
         public string? Description { get; set; }
         public string? Image { get; set; }

@@ -32,7 +32,17 @@ namespace growers_market.Server.Repositories
         public async Task<Species> CreateAsync(Species species)
         {
             await _context.Species.AddAsync(species);
-            await _context.SaveChangesAsync();
+            _context.Database.OpenConnection();
+            try
+            {
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Species ON");
+                await _context.SaveChangesAsync();
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Species OFF");
+            }
+            finally
+            {
+                _context.Database.CloseConnection();
+            }
             return species;
         }
     }

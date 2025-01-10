@@ -4,6 +4,12 @@ using growers_market.Server.Models;
 
 namespace growers_market.Server.Dtos.Species
 {
+    public class HardinessRange
+    {
+        public string? min { get; set; } = string.Empty;
+        public string? max { get; set; } = string.Empty;
+    }
+
     public class AllSpeciesData
     {
         public int id { get; set; }
