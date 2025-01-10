@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using growers_market.Server.Data;
 
@@ -11,9 +12,11 @@ using growers_market.Server.Data;
 namespace growers_market.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250110154306_UpdateSpecies")]
+    partial class UpdateSpecies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace growers_market.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1b09422e-785c-4d3e-883c-65e08996ec21",
+                            Id = "8b291c11-4623-4399-995c-b07c3466eb27",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b6f1cd74-9ccd-4791-9b99-9dce2a517d9f",
+                            Id = "309ae24a-fa26-43d1-a10f-4aa96a42d02e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -289,12 +292,6 @@ namespace growers_market.Server.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("HardinessMax")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HardinessMin")
-                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");

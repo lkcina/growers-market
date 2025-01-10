@@ -1,8 +1,8 @@
-﻿using growers_market.Server.Dtos.Species;
+﻿using growers_market.Server.Models;
 
-namespace growers_market.Server.Models
+namespace growers_market.Server.Dtos.Species
 {
-    public class Species
+    public class SpeciesDto
     {
         public int Id { get; set; }
         public string CommonName { get; set; } = string.Empty;
@@ -16,6 +16,5 @@ namespace growers_market.Server.Models
         public string? Description { get; set; }
         public string? Image { get; set; }
         public string? Thumbnail { get; set; }
-        public List<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
     }
 }
