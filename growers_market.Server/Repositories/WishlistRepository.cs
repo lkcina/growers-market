@@ -24,7 +24,14 @@ namespace growers_market.Server.Repositories
 
         public async Task<Wishlist> DeleteAsync(AppUser appUser, int id)
         {
-            throw new NotImplementedException();
+            var wishlist = await _context.Wishlists.FirstOrDefaultAsync(w => w.AppUserId == appUser.Id && w.SpeciesId == id);
+            if (wishlist == null)
+            {
+                return null;
+            }
+            _context.Wishlists.Remove(wishlist);
+            await _context.SaveChangesAsync();
+            return wishlist;
         }
 
         public async Task<List<Species>> GetUserWishlistAsync(AppUser user)
