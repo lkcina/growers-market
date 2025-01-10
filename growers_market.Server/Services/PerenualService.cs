@@ -94,16 +94,22 @@ namespace growers_market.Server.Services
         {
             try
             {
-                var url = $"https://perenual.com/api/species/{id}?key={_config["PerenualKey"]}";
+                var url = $"https://perenual.com/api/species/details/{id}?key={_config["PerenualKey"]}";
                 var result = await _httpClient.GetAsync(url);
                 if (result.IsSuccessStatusCode)
                 {
                     var content = await result.Content.ReadAsStringAsync();
-                    if (content == null)
+                    
+                    if (string.IsNullOrWhiteSpace(content))
                     {
                         return null;
                     }
-                    var speciesData = JsonSerializer.Deserialize<DetailsSpeciesData>(content);
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    var speciesData = JsonSerializer.Deserialize<DetailsSpeciesData>(content, options);
                     if (speciesData != null)
                     {
                         return speciesData.ToSpeciesFromDetailsPerenual();
@@ -112,7 +118,7 @@ namespace growers_market.Server.Services
                 }
                 return null;
             }
-            catch (Exception ex)
+            catch (JsonException ex)
             {
                 Console.WriteLine($"Exception occurred: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);

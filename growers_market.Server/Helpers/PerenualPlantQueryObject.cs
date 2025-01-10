@@ -6,12 +6,12 @@
         public string? Q { get; set; }
 
         public string? Order { get; set; }
-        public int? Edible { get; set; }
-        public int? Poisonous { get; set; }
+        public bool? Edible { get; set; }
+        public bool? Poisonous { get; set; }
         public string? Cycle { get; set; }
         public string? Watering { get; set; }
         public string? Sunlight { get; set; }
-        public int? Indoor { get; set; }
+        public bool? Indoor { get; set; }
         public int? Hardiness { get; set; }
     }
 }

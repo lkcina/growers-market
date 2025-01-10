@@ -9,7 +9,6 @@ namespace growers_market.Server.Dtos.Species
         public int id { get; set; }
         public string common_name { get; set; } = string.Empty;
         public List<string>? scientific_name { get; set; } = new List<string>();
-        public List<string>? other_name { get; set; } = new List<string>();
         public string? cycle { get; set; } = string.Empty;
         public string? watering { get; set; } = string.Empty;
         public List<string>? sunlight { get; set; } = new List<string>();
