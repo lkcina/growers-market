@@ -12,6 +12,7 @@ namespace growers_market.Server.Repositories
         {
             _context = context;
         }
+
         public async Task<List<Species>> GetAllAsync()
         {
             var species = await _context.Species.ToListAsync();
@@ -25,6 +26,13 @@ namespace growers_market.Server.Repositories
             {
                 return null;
             }
+            return species;
+        }
+
+        public async Task<Species> CreateAsync(Species species)
+        {
+            await _context.Species.AddAsync(species);
+            await _context.SaveChangesAsync();
             return species;
         }
     }

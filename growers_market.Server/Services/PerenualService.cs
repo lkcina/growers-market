@@ -74,9 +74,9 @@ namespace growers_market.Server.Services
                     if (tasks != null)
                     {
                         var speciesPerenual = tasks.data.ToList<AllSpeciesData>();
-                        var species = speciesPerenual.Select(perenual => perenual.ToSpeciesFromPerenual());
+                        var species = speciesPerenual.Select(perenual => perenual.ToSpeciesFromAllPerenual());
                         
-                        return speciesPerenual.Select(perenual => perenual.ToSpeciesFromPerenual()).ToList();
+                        return speciesPerenual.Select(perenual => perenual.ToSpeciesFromAllPerenual()).ToList();
                     }
                     return null;
                 }

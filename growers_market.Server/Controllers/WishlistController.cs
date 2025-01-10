@@ -23,8 +23,17 @@ namespace growers_market.Server.Controllers
             _perenualService = perenualService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddWishlist(int id)
+        [HttpGet]
+        public async Task<IActionResult> GetUserWishlist()
+        {
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            var wishlist = await _wishlistRepository.GetUserWishlistAsync(appUser);
+            return Ok(wishlist);
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> AddWishlist([FromRoute] int id)
         {
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
@@ -46,7 +55,7 @@ namespace growers_market.Server.Controllers
                 return BadRequest("Species not found");
             }
             var userWishlist = await _wishlistRepository.GetUserWishlistAsync(appUser);
-            if (userWishlist.Any(item => item.SpeciesId == species.Id))
+            if (userWishlist.Any(item => item.Id == species.Id))
             {
                 return BadRequest("Species already in wishlist");
             }

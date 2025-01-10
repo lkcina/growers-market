@@ -1,6 +1,8 @@
 ﻿using growers_market.Server.Data;
+using growers_market.Server.Dtos.Species;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace growers_market.Server.Repositories
 {
@@ -25,9 +27,22 @@ namespace growers_market.Server.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Wishlist>> GetUserWishlistAsync(AppUser user)
+        public async Task<List<Species>> GetUserWishlistAsync(AppUser user)
         {
-            throw new NotImplementedException();
+            return await _context.Wishlists.Where(u => u.AppUserId == user.Id)
+            .Select(species => new Species
+            {
+                Id = species.SpeciesId,
+                CommonName = species.Species.CommonName,
+                ScientificName = species.Species.ScientificName,
+                Cycle = species.Species.Cycle,
+                Watering = species.Species.Watering,
+                Sunlight = species.Species.Sunlight,
+                Hardiness = species.Species.Hardiness,
+                Indoor = species.Species.Indoor,
+                Image = species.Species.Image,
+                Thumbnail = species.Species.Thumbnail
+            }).ToListAsync();
         }
     }
 }

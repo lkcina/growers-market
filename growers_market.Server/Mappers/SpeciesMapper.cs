@@ -17,30 +17,15 @@ namespace growers_market.Server.Mappers
                 Sunlight = speciesModel.Sunlight,
                 Indoor = speciesModel.Indoor,
                 Hardiness = speciesModel.Hardiness,
+                Description = speciesModel.Description,
                 Image = speciesModel.Image,
                 Thumbnail = speciesModel.Thumbnail
             };
         }
 
 
-        public static Species ToSpeciesFromPerenual(this AllSpeciesData speciesData)
+        public static Species ToSpeciesFromAllPerenual(this AllSpeciesData speciesData)
         {
-            if (speciesData.default_image == null)
-            {
-                return new Species
-                {
-                    Id = speciesData.id,
-                    CommonName = speciesData.common_name,
-                    ScientificName = speciesData.scientific_name,
-                    Cycle = speciesData.cycle,
-                    Watering = speciesData.watering,
-                    Sunlight = speciesData.sunlight,
-                    Indoor = speciesData.indoor,
-                    Hardiness = speciesData.hardiness,
-                    Image = "",
-                    Thumbnail = ""
-                };
-            }
             return new Species
             {
                 Id = speciesData.id,
@@ -48,32 +33,17 @@ namespace growers_market.Server.Mappers
                 ScientificName = speciesData.scientific_name,
                 Cycle = speciesData.cycle,
                 Watering = speciesData.watering,
-                Sunlight = speciesData.sunlight,
+                Sunlight = speciesData.sunlight == null ? new List<string>() : speciesData.sunlight,
                 Indoor = speciesData.indoor,
                 Hardiness = speciesData.hardiness,
-                Image = speciesData.default_image.regular_url,
-                Thumbnail = speciesData.default_image.thumbnail
+                Description = "",
+                Image = speciesData.default_image == null ? "" : speciesData.default_image.regular_url,
+                Thumbnail = speciesData.default_image == null ? "" : speciesData.default_image.thumbnail
             };
         }
 
         public static Species ToSpeciesFromDetailsPerenual(this DetailsSpeciesData speciesData)
         {
-            if (speciesData.default_image == null)
-            {
-                return new Species
-                {
-                    Id = speciesData.id,
-                    CommonName = speciesData.common_name,
-                    ScientificName = speciesData.scientific_name,
-                    Cycle = speciesData.cycle,
-                    Watering = speciesData.watering,
-                    Sunlight = speciesData.sunlight,
-                    Indoor = speciesData.indoor,
-                    Hardiness = speciesData.hardiness,
-                    Image = "",
-                    Thumbnail = ""
-                };
-            }
             return new Species
             {
                 Id = speciesData.id,
@@ -84,8 +54,9 @@ namespace growers_market.Server.Mappers
                 Sunlight = speciesData.sunlight,
                 Indoor = speciesData.indoor,
                 Hardiness = speciesData.hardiness,
-                Image = speciesData.default_image.regular_url,
-                Thumbnail = speciesData.default_image.thumbnail
+                Description = speciesData.description,
+                Image = speciesData.default_image == null ? "" : speciesData.default_image.regular_url,
+                Thumbnail = speciesData.default_image == null ? "" : speciesData.default_image.thumbnail
             };
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using growers_market.Server.Models;
 
 namespace growers_market.Server.Dtos.Species
 {
@@ -62,7 +63,7 @@ namespace growers_market.Server.Dtos.Species
         public List<string>? propagation { get; set; } = new List<string>();
         public string? growth_rate { get; set; } = string.Empty;
         public bool? indoor { get; set; }
-        public Hardiness? hardiness { get; set; } = new Hardiness();
+        public HardinessRange? hardiness { get; set; } = new HardinessRange();
         public HardinessLocation? hardiness_location { get; set; } = new HardinessLocation();
         public bool? flowers { get; set; }
         public string? flowering_season { get; set; } = string.Empty;
