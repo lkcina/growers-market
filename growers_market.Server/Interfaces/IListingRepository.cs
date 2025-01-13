@@ -4,10 +4,10 @@ namespace growers_market.Server.Interfaces
 {
     public interface IListingRepository
     {
-        Task<List<Listing>> GetAllListingsAsync(); // Add Query Object
-        Task<List<Listing>> GetUserListingsAsync();
-        Task<Listing> CreateAsync();
-        Task<Listing> UpdateAsync();
-        Task<Listing> DeleteAsync();
+        Task<List<Listing>> GetAllListingsAsync(AppUser appUser); // Add Query Object
+        Task<List<Listing>> GetUserListingsAsync(AppUser appUser);
+        Task<Listing> CreateAsync(Listing listing);
+        Task<Listing> UpdateAsync(int id, Listing listing);
+        Task<Listing> DeleteAsync(int id);
     }
 }
