@@ -2,7 +2,6 @@
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace growers_market.Server.Repositories
@@ -55,6 +54,10 @@ namespace growers_market.Server.Repositories
             if (!string.IsNullOrWhiteSpace(query.AppUserName))
             {
                 listings = listings.Where(l => l.AppUserName == query.AppUserName);
+            }
+            if (query.SpeciesId.HasValue)
+            {
+                listings = listings.Where(l => l.SpeciesId == query.SpeciesId);
             }
             if (!string.IsNullOrWhiteSpace(query.SortBy))
             {

@@ -12,5 +12,6 @@ namespace growers_market.Server.Helpers
         public bool? IsForTrade { get; set; }
         public decimal? PriceMax { get; set; }
         public string? AppUserName { get; set; }
+        public int? SpeciesId { get; set; }
     }
 }
