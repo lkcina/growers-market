@@ -62,6 +62,7 @@ builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
 builder.Services.AddScoped<IPerenualService, PerenualService>();
 builder.Services.AddHttpClient<IPerenualService, PerenualService>();
+builder.Services.AddScoped<IListingRepository, ListingRepository>();
 
 var app = builder.Build();
 

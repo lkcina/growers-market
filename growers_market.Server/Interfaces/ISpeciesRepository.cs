@@ -4,8 +4,8 @@ namespace growers_market.Server.Interfaces
 {
     public interface ISpeciesRepository
     {
-        Task<List<Species>> GetAllAsync(); // Add Queryable Object to allow for filtering
-        Task<Species> GetByIdAsync(int id);
+        Task<List<Species>> GetAllAsync();
+        Task<Species> GetByIdAsync(int? id);
         Task<Species> CreateAsync(Species species);
     }
 }
