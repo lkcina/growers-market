@@ -12,14 +12,16 @@ namespace growers_market.Server.Controllers
     public class SpeciesController : ControllerBase
     {
         private readonly IPerenualService _perenualService;
+        private readonly ISpeciesRepository _speciesRepository;
 
-        public SpeciesController(IPerenualService perenualService)
+        public SpeciesController(IPerenualService perenualService, ISpeciesRepository speciesRepo)
         {
             _perenualService = perenualService;
+            _speciesRepository = speciesRepo;
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetPerenualById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -48,6 +50,19 @@ namespace growers_market.Server.Controllers
             }
             var perenualDto = perenual.Select(species => species.ToSpeciesDto());
             return Ok(perenualDto);
+        }
+
+        [HttpGet("used")]
+        public async Task<IActionResult> GetAllUsedSpecies()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var species = await _speciesRepository.GetAllAsync();
+            var speciesDto = species.Select(species => species.ToSpeciesDto());
+            return Ok(speciesDto);
         }
     }
 }

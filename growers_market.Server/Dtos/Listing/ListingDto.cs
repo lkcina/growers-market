@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using growers_market.Server.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace growers_market.Server.Models
+namespace growers_market.Server.Dtos.Listing
 {
-    public class Listing
+    public class ListingDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
@@ -12,10 +13,7 @@ namespace growers_market.Server.Models
         public int Quantity { get; set; }
         public string Description { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public string AppUserId { get; set; } = string.Empty;
-        public string AppUserName { get; set; } = string.Empty;
-        public AppUser? AppUser { get; set; }
+        public string AppUserName { get; set; }
         public int? SpeciesId { get; set; }
-        public Species? Species { get; set; }
     }
 }

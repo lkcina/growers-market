@@ -62,6 +62,7 @@ namespace growers_market.Server.Services
                 }
 
                 var url = urlBuilder.ToString();
+                Console.WriteLine(url);
                 var result = await _httpClient.GetAsync(url);
                 if (result.IsSuccessStatusCode)
                 {
@@ -90,8 +91,12 @@ namespace growers_market.Server.Services
             }
         }
 
-        public async Task<Species> GetPlantByIdAsync(int id)
+        public async Task<Species> GetPlantByIdAsync(int? id)
         {
+            if (id == null)
+            {
+                return null;
+            }
             try
             {
                 var url = $"https://perenual.com/api/species/details/{id}?key={_config["PerenualKey"]}";

@@ -1,5 +1,6 @@
 ﻿using growers_market.Server.Extensions;
 using growers_market.Server.Interfaces;
+using growers_market.Server.Mappers;
 using growers_market.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -36,14 +37,14 @@ namespace growers_market.Server.Controllers
 
         [HttpPost("{id}")]
         [Authorize]
-        public async Task<IActionResult> AddWishlist([FromRoute] int id)
+        public async Task<IActionResult> AddWishlist([FromRoute] int speciesId)
         {
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
-            var species = await _speciesRepository.GetByIdAsync(id);
+            var species = await _speciesRepository.GetByIdAsync(speciesId);
             if (species == null)
             {
-                species = await _perenualService.GetPlantByIdAsync(id);
+                species = await _perenualService.GetPlantByIdAsync(speciesId);
                 if (species == null)
                 {
                     return BadRequest("Species does not exist");
@@ -78,6 +79,24 @@ namespace growers_market.Server.Controllers
             {
                 return Created();
             }
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            var wishlist = await _wishlistRepository.DeleteAsync(appUser, id);
+            if (wishlist == null)
+            {
+                return NotFound("Species not found in wishlist");
+            }
+            return NoContent();
         }
     }
 }
