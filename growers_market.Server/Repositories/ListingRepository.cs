@@ -87,7 +87,7 @@ namespace growers_market.Server.Repositories
             return await listings.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
-        public async Task<Listing> GetByIdAsync(int id)
+        public async Task<Listing> GetByIdAsync(int? id)
         {
             return await _context.Listings.Include(l => l.Species).Include(l => l.AppUser).FirstOrDefaultAsync(l => l.Id == id);
         }

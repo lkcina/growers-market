@@ -61,12 +61,12 @@ namespace growers_market.Server.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var listings = await _listingRepository.GetUserListingsAsync(appUser);
-            var listingsDto = listings.Select(l => l.ToListingDto());
+            var listingsDto = listings.Select(l => l.ToListingDto()).ToList();
             return Ok(listingsDto);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {

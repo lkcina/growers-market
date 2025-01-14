@@ -15,6 +15,8 @@ namespace growers_market.Server.Data
         public DbSet<Species> Species { get; set; }
         public DbSet<Listing> Listings { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
