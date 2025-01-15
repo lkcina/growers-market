@@ -17,5 +17,6 @@ namespace growers_market.Server.Models
         public AppUser? AppUser { get; set; }
         public int? SpeciesId { get; set; }
         public Species? Species { get; set; }
+        public List<Chat> Chats { get; set; } = new List<Chat>();
     }
 }
