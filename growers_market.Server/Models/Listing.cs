@@ -20,3 +20,4 @@ namespace growers_market.Server.Models
         public List<Chat> Chats { get; set; } = new List<Chat>();
     }
 }
+
