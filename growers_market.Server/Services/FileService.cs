@@ -10,26 +10,23 @@ namespace growers_market.Server.Services
             _environment = environment;
         }
 
-        public async Task<string> DeleteFile(string fileName, string folderName)
+        public async Task<string> DeleteFile(string filePath)
         {
-            if (string.IsNullOrWhiteSpace(fileName))
+            if (string.IsNullOrWhiteSpace(filePath))
             {
                 return null;
             }
 
-            var contentPath = _environment.ContentRootPath;
-            var path = Path.Combine(contentPath, "Uploads", folderName, fileName);
-
-            if (!File.Exists(path))
+            if (!File.Exists(filePath))
             {
                 return null;
             }
 
-            File.Delete(path);
-            return fileName;
+            File.Delete(filePath);
+            return filePath;
         }
 
-        public async Task<string> SaveFileAsync(IFormFile file, List<string> allowedExtensions, string folderName)
+        public async Task<string> SaveFileAsync(IFormFile file, string folderName)
         {
             if (file == null)
             {
@@ -38,23 +35,22 @@ namespace growers_market.Server.Services
 
             var contentPath = _environment.ContentRootPath;
             var path = Path.Combine(contentPath, "Uploads", folderName);
+            var existingFilePath = Path.Combine(path, file.FileName);
 
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-
-            var extension = Path.GetExtension(file.FileName);
-            if (!allowedExtensions.Contains(extension))
+            if (File.Exists(existingFilePath))
             {
-                return null;
+                return existingFilePath;
             }
-
+            var extension = Path.GetExtension(file.FileName);
             var fileName = $"{Guid.NewGuid().ToString() + extension}";
             var filePath = Path.Combine(path, fileName);
             var stream = new FileStream(filePath, FileMode.Create);
             await file.CopyToAsync(stream);
-            return fileName;
+            return filePath;
         }
     }
 }

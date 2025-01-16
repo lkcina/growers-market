@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Uploads\" />
+    <Folder Include="Uploads\ListingImages\" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using growers_market.Server.Dtos.Listing;
 using growers_market.Server.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace growers_market.Server.Mappers
 {
@@ -17,7 +18,8 @@ namespace growers_market.Server.Mappers
                 Description = listing.Description,
                 CreatedAt = listing.CreatedAt,
                 AppUserName = listing.AppUserName,
-                SpeciesId = listing.SpeciesId
+                SpeciesId = listing.SpeciesId,
+                Images = listing.Images
             };
         }
 
