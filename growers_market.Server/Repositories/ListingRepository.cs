@@ -10,10 +10,12 @@ namespace growers_market.Server.Repositories
     {
         private readonly AppDbContext _context;
         private readonly IChatRepository _chatRepository;
-        public ListingRepository(AppDbContext context, IChatRepository chatRepository)
+        private readonly IFileService _fileService;
+        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService)
         {
             _context = context;
             _chatRepository = chatRepository;
+            _fileService = fileService;
         }
 
         public async Task<Listing> CreateAsync(Listing listing)
@@ -35,6 +37,11 @@ namespace growers_market.Server.Repositories
             {
                 chats.Select(chat => _context.Chats.Remove(chat));
                 await _context.SaveChangesAsync();
+            }
+
+            foreach (var image in listing.Images)
+            {
+                await _fileService.DeleteFile(image);
             }
 
             _context.Listings.Remove(listing);
@@ -114,12 +121,22 @@ namespace growers_market.Server.Repositories
             {
                 return null;
             }
+
+            foreach (var image in currentListing.Images)
+            {
+                if (!listing.Images.Contains(image))
+                {
+                     await _fileService.DeleteFile(image);
+                }
+            }
+
             currentListing.Title = listing.Title;
             currentListing.IsForTrade = listing.IsForTrade;
             currentListing.Price = listing.Price;
             currentListing.Quantity = listing.Quantity;
             currentListing.Description = listing.Description;
             currentListing.SpeciesId = listing.SpeciesId;
+            currentListing.Images = listing.Images;
             await _context.SaveChangesAsync();
             return currentListing;
 

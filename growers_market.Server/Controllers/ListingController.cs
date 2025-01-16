@@ -20,12 +20,14 @@ namespace growers_market.Server.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IPerenualService _perenualService;
         private readonly ISpeciesRepository _speciesRepository;
-        public ListingController(IListingRepository listingRepo, UserManager<AppUser> userManager, IPerenualService perenualService, ISpeciesRepository speciesRepository)
+        private readonly IFileService _fileService;
+        public ListingController(IListingRepository listingRepo, UserManager<AppUser> userManager, IPerenualService perenualService, ISpeciesRepository speciesRepository, IFileService fileService)
         {
             _listingRepository = listingRepo;
             _userManager = userManager;
             _perenualService = perenualService;
             _speciesRepository = speciesRepository;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -83,12 +85,32 @@ namespace growers_market.Server.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateListing([FromBody] CreateListingRequestDto listingDto)
+        public async Task<IActionResult> CreateListing([FromForm] CreateListingRequestDto listingDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            if (listingDto.Images.Count > 5)
+            {
+                return BadRequest("You can only upload 5 images");
+            }
+            List<string> imagePaths = new List<string>();
+            foreach (var image in listingDto.Images)
+            {
+                if (image.Length > 1 * 1024 * 1024)
+                {
+                    return BadRequest("File size cannot exceed 1 MB");
+                }
+                var extension = Path.GetExtension(image.FileName);
+                if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
+                {
+                    return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
+                }
+                imagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
+            }
+            
 
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
@@ -108,6 +130,7 @@ namespace growers_market.Server.Controllers
             }
             listing.AppUserId = appUser.Id;
             listing.AppUserName = appUser.UserName;
+            listing.Images = imagePaths;
             await _listingRepository.CreateAsync(listing);
             if (listing == null)
             {
@@ -123,6 +146,25 @@ namespace growers_market.Server.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (listingDto.Images.Count > 5)
+            {
+                return BadRequest("You can only upload 5 images");
+            }
+            List<string> imagePaths = new List<string>();
+            foreach (var image in listingDto.Images)
+            {
+                if (image.Length > 1 * 1024 * 1024)
+                {
+                    return BadRequest("File size cannot exceed 1 MB");
+                }
+                var extension = Path.GetExtension(image.FileName);
+                if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
+                {
+                    return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
+                }
+                imagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
             }
 
             var species = await _speciesRepository.GetByIdAsync(listingDto.SpeciesId);
@@ -145,7 +187,9 @@ namespace growers_market.Server.Controllers
             {
                 return Unauthorized();
             }
-            var listing = await _listingRepository.UpdateAsync(id, listingDto.ToListingFromUpdateDto());
+            var listing = listingDto.ToListingFromUpdateDto();
+            listing.Images = imagePaths;
+            await _listingRepository.UpdateAsync(id, listing);
             if (listing == null)
             {
                 return NotFound("Listing not found");
