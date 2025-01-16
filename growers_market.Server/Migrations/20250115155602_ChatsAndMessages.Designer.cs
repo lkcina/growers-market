@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using growers_market.Server.Data;
 
@@ -11,9 +12,11 @@ using growers_market.Server.Data;
 namespace growers_market.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250115155602_ChatsAndMessages")]
+    partial class ChatsAndMessages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace growers_market.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "da96ffe5-08b2-4fa3-9ac2-e0832ed59161",
+                            Id = "41ca1cfc-a5d1-4624-adc6-58be94c07e62",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "8f2de6f0-3477-446b-bbd4-f49b3988cf2f",
+                            Id = "ac127c34-f497-4a7b-af6d-7bb33a49720b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -250,7 +253,7 @@ namespace growers_market.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ListingId")
+                    b.Property<int?>("ListingId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -259,7 +262,7 @@ namespace growers_market.Server.Migrations
 
                     b.HasIndex("ListingId");
 
-                    b.ToTable("Chats", (string)null);
+                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("growers_market.Server.Models.Listing", b =>
@@ -307,7 +310,7 @@ namespace growers_market.Server.Migrations
 
                     b.HasIndex("SpeciesId");
 
-                    b.ToTable("Listings", (string)null);
+                    b.ToTable("Listings");
                 });
 
             modelBuilder.Entity("growers_market.Server.Models.Message", b =>
@@ -342,7 +345,7 @@ namespace growers_market.Server.Migrations
 
                     b.HasIndex("ChatId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("growers_market.Server.Models.Species", b =>
@@ -389,7 +392,7 @@ namespace growers_market.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Species", (string)null);
+                    b.ToTable("Species");
                 });
 
             modelBuilder.Entity("growers_market.Server.Models.Wishlist", b =>
@@ -404,7 +407,7 @@ namespace growers_market.Server.Migrations
 
                     b.HasIndex("SpeciesId");
 
-                    b.ToTable("Wishlists", (string)null);
+                    b.ToTable("Wishlists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -469,8 +472,7 @@ namespace growers_market.Server.Migrations
                     b.HasOne("growers_market.Server.Models.Listing", "Listing")
                         .WithMany("Chats")
                         .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AppUser");
 

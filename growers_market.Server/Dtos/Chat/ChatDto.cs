@@ -1,4 +1,5 @@
 ﻿using growers_market.Server.Dtos.Listing;
+using growers_market.Server.Dtos.Message;
 using growers_market.Server.Models;
 
 namespace growers_market.Server.Dtos.Chat

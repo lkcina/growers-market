@@ -22,7 +22,6 @@ namespace growers_market.Server.Mappers
             return new Chat
             {
                 ListingId = chatDto.ListingId,
-                
             };
         }
     }

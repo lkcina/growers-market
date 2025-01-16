@@ -8,10 +8,12 @@ namespace growers_market.Server.Repositories
     public class ChatRepository : IChatRepository
     {
         private readonly AppDbContext _context;
+        private readonly IMessageRepository _messageRepository;
 
-        public ChatRepository(AppDbContext context)
+        public ChatRepository(AppDbContext context, IMessageRepository messageRepository)
         {
             _context = context;
+            _messageRepository = messageRepository;
         }
 
         public async Task<Chat> CreateChat(Chat chat)
@@ -27,6 +29,12 @@ namespace growers_market.Server.Repositories
             if (chat == null)
             {
                 return null;
+            }
+            var messages = await _messageRepository.GetChatMessages(id);
+            if (messages != null)
+            {
+                messages.Select(message => _context.Messages.Remove(message));
+                await _context.SaveChangesAsync();
             }
             _context.Chats.Remove(chat);
             await _context.SaveChangesAsync();

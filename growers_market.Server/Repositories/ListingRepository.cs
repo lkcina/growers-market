@@ -9,9 +9,11 @@ namespace growers_market.Server.Repositories
     public class ListingRepository : IListingRepository
     {
         private readonly AppDbContext _context;
-        public ListingRepository(AppDbContext context)
+        private readonly IChatRepository _chatRepository;
+        public ListingRepository(AppDbContext context, IChatRepository chatRepository)
         {
             _context = context;
+            _chatRepository = chatRepository;
         }
 
         public async Task<Listing> CreateAsync(Listing listing)
@@ -27,6 +29,12 @@ namespace growers_market.Server.Repositories
             if (listing == null)
             {
                 return null;
+            }
+            var chats = await _chatRepository.GetListingChats(id);
+            if (chats != null)
+            {
+                chats.Select(chat => _context.Chats.Remove(chat));
+                await _context.SaveChangesAsync();
             }
 
             _context.Listings.Remove(listing);
