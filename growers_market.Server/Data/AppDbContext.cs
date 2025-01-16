@@ -9,7 +9,7 @@ namespace growers_market.Server.Data
     {
         public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-
+            
         }
 
         public DbSet<Species> Species { get; set; }
@@ -26,10 +26,17 @@ namespace growers_market.Server.Data
                 .HasOne(wish => wish.AppUser)
                 .WithMany(user => user.Wishlists)
                 .HasForeignKey(wish => wish.AppUserId);
+
             builder.Entity<Wishlist>()
                 .HasOne(wish => wish.Species)
                 .WithMany(species => species.Wishlists)
                 .HasForeignKey(wish => wish.SpeciesId);
+
+            builder.Entity<Listing>()
+                .HasMany(listing => listing.Chats)
+                .WithOne(chat => chat.Listing)
+                .HasForeignKey(chat => chat.ListingId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             List<IdentityRole> roles = new List<IdentityRole>
             {
@@ -37,7 +44,6 @@ namespace growers_market.Server.Data
                 {
                     Name = "Admin",
                     NormalizedName = "ADMIN",
-
                 },
                 new IdentityRole
                 {

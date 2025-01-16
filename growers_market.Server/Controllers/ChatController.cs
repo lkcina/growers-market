@@ -15,12 +15,14 @@ namespace growers_market.Server.Controllers
     public class ChatController : ControllerBase
     {
         private readonly IChatRepository _chatRepository;
+        private readonly IListingRepository _listingRepository;
         private readonly UserManager<AppUser> _userManager;
 
-        public ChatController(IChatRepository chatRepo, UserManager<AppUser> userManager)
+        public ChatController(IChatRepository chatRepo, UserManager<AppUser> userManager, IListingRepository listingRepository)
         {
             _chatRepository = chatRepo;
             _userManager = userManager;
+            _listingRepository = listingRepository;
         }
 
         [HttpGet("user")]
@@ -48,9 +50,22 @@ namespace growers_market.Server.Controllers
                 return BadRequest(ModelState);
             }
 
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            var listing = await _listingRepository.GetByIdAsync(listingId);
+
             var chats = await _chatRepository.GetListingChats(listingId);
-            var chatsDto = chats.Select(c => c.ToChatDto()).ToList();
-            return Ok(chatsDto);
+            if (chats == null)
+            {
+                return NotFound();
+            }
+            if (listing.AppUserId == appUser.Id)
+            {
+                var chatsDto = chats.Select(c => c.ToChatDto()).ToList();
+                return Ok(chatsDto);
+            }
+
+            return Unauthorized();
         }
 
         [HttpGet("{id}")]
@@ -91,10 +106,12 @@ namespace growers_market.Server.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var chat = createDto.ToChatFromCreateDto();
+            var listing = await _listingRepository.GetByIdAsync(chat.ListingId);
+            chat.Listing = listing;
             chat.AppUserName = appUser.UserName;
             chat.AppUserId = appUser.Id;
-            var createdChat = await _chatRepository.CreateChat(chat);
-            if (createdChat == null)
+            await _chatRepository.CreateChat(chat);
+            if (chat == null)
             {
                 return StatusCode(500, "Failed to create chat");
             }
