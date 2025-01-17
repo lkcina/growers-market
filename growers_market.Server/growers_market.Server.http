@@ -31,7 +31,7 @@ GET {{growers_market.Server_HostAddress}}/api/species/perenual?Page=2&Q=rose
 Accept: application/json
 
 ### Get Direct from Perenual
-GET https://perenual.com/api/species/details/46?key=sk-uDos677eca3f7332f8182
+GET https://perenual.com/api/species-list?key=sk-uDos677eca3f7332f8182
 
 ### Create Wishlist
 POST {{growers_market.Server_HostAddress}}/api/wishlist/

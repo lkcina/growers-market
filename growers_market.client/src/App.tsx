@@ -1,58 +1,67 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import './App.css';
+import SpeciesSearchBar from './Components/SpeciesSearch/SpeciesSearch';
+import { SpeciesInfo } from './types';
+import { getSpeciesDetails, searchSpecies } from './api';
+import SpeciesList from './Components/SpeciesList/SpeciesList';
+import ListWishlist from './Components/Wishlist/ListWishlist/ListWishlist';
 
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
-}
 
 function App() {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
+    const [speciesSearch, setSpeciesSearch] = useState<string>("");
+    const [speciesSearchResult, setSpeciesSearchResult] = useState<SpeciesInfo[]>([]);
+    const [wishlistValues, setWishlistValues] = useState<SpeciesInfo[]>([]);
+    const [serverError, setServerError] = useState<string | null>(null);
 
-    useEffect(() => {
-        populateWeatherData();
-    }, []);
+    const handleSpeciesSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSpeciesSearch(e.target.value);
+    }
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tableLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
+    const onWishlistCreate = async (e: any) => {
+        e.preventDefault();
+        console.log(e.target.getElementsByClassName("add-wishlist-input")[0].value);
+        if (wishlistValues.find((species) => species.id === e.target.getElementsByClassName("add-wishlist-input")[0].value)) {
+            return;
+        }
+
+        console.log(wishlistValues);
+        const result = await getSpeciesDetails(e.target.getElementsByClassName("add-wishlist-input")[0].value);
+        if (typeof result === "string") {
+            setServerError(result);
+        } else if (Array.isArray(result.data)) {
+            const updatedWishlist = [...wishlistValues, result.data];
+            setWishlistValues(updatedWishlist);
+        }
+        
+    }
+
+    const onWishlistRemove = (e: any) => {
+        e.preventDefault();
+        const updatedWishlist = wishlistValues.filter((species) => species.id !== e.target.getElementsByClassName("rem-wishlist-input")[0].value);
+        setWishlistValues(updatedWishlist);
+    }
+
+    const onSearchSubmit = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        const result = await searchSpecies(speciesSearch);
+        if (typeof result === "string") {
+            setServerError(result);
+        } else if (Array.isArray(result.data)) {
+            setSpeciesSearchResult(result.data);
+        }
+        console.log(speciesSearchResult, serverError);
+    }
 
     return (
-        <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
+        <div className="app">
+            {serverError ?? <h2>{serverError}</h2>}
+            <h1>Wishlist</h1>
+            <ListWishlist wishlistValues={wishlistValues} onWishlistRemove={onWishlistRemove} />
+            <h1>Plant Finder</h1>
+            <SpeciesSearchBar onSearchSubmit={onSearchSubmit} search={speciesSearch} handleChange={handleSpeciesSearchChange} />
+            <SpeciesList searchResult={speciesSearchResult} onWishlistCreate={onWishlistCreate} />
         </div>
     );
-
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        if (response.ok) {
-            const data = await response.json();
-            setForecasts(data);
-        }
-    }
 }
 
 export default App;
