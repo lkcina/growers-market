@@ -23,13 +23,9 @@ export const searchSpecies = async (query: string) => {
     }
 }
 
-interface SpeciesDetailsResponse {
-    data: SpeciesInfo;
-}
-
 export const getSpeciesDetails = async (id: number) => {
     try {
-        const data = await axios.get<SpeciesDetailsResponse>(`https://localhost:7234/api/species/${id}`);
+        const data = await axios.get<SpeciesInfo>(`https://localhost:7234/api/species/${id}`);
         return data.data;
     }
     catch (error) {
@@ -50,7 +46,7 @@ interface GetWishlistResponse {
 
 export const getWishlist = async () => {
     try {
-        const data = await axios.get<GetWishlistResponse>('https:/https://localhost:7234/api/wishlist');
+        const data = await axios.get<GetWishlistResponse>('https://localhost:7234/api/wishlist');
         return data;
     }
     catch (error) {

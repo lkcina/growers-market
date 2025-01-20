@@ -9,11 +9,19 @@
     <PackageJsonScriptsBuild Condition="$(PackageJsonScriptsBuild) == ''">tsc -b &amp;&amp; vite build</PackageJsonScriptsBuild>
     <PackageJsonScriptsLint Condition="$(PackageJsonScriptsLint) == ''">eslint .</PackageJsonScriptsLint>
     <PackageJsonScriptsPreview Condition="$(PackageJsonScriptsPreview) == ''">vite preview</PackageJsonScriptsPreview>
+    <PackageJsonDependenciesHookformResolvers Condition="$(PackageJsonDependenciesHookformResolvers) == ''">^3.10.0</PackageJsonDependenciesHookformResolvers>
+    <PackageJsonDependenciesTypesReactRouter Condition="$(PackageJsonDependenciesTypesReactRouter) == ''">^5.1.20</PackageJsonDependenciesTypesReactRouter>
+    <PackageJsonDependenciesTypesReactRouterDom Condition="$(PackageJsonDependenciesTypesReactRouterDom) == ''">^5.3.3</PackageJsonDependenciesTypesReactRouterDom>
     <PackageJsonDependenciesAxios Condition="$(PackageJsonDependenciesAxios) == ''">^1.7.9</PackageJsonDependenciesAxios>
     <PackageJsonDependenciesDotenv Condition="$(PackageJsonDependenciesDotenv) == ''">^16.4.7</PackageJsonDependenciesDotenv>
     <PackageJsonDependenciesReact Condition="$(PackageJsonDependenciesReact) == ''">^18.3.1</PackageJsonDependenciesReact>
     <PackageJsonDependenciesReactDom Condition="$(PackageJsonDependenciesReactDom) == ''">^18.3.1</PackageJsonDependenciesReactDom>
+    <PackageJsonDependenciesReactHookForm Condition="$(PackageJsonDependenciesReactHookForm) == ''">^7.54.2</PackageJsonDependenciesReactHookForm>
+    <PackageJsonDependenciesReactRouter Condition="$(PackageJsonDependenciesReactRouter) == ''">^7.1.3</PackageJsonDependenciesReactRouter>
+    <PackageJsonDependenciesReactRouterDom Condition="$(PackageJsonDependenciesReactRouterDom) == ''">^7.1.3</PackageJsonDependenciesReactRouterDom>
+    <PackageJsonDependenciesReactToastify Condition="$(PackageJsonDependenciesReactToastify) == ''">^11.0.3</PackageJsonDependenciesReactToastify>
     <PackageJsonDependenciesUuid Condition="$(PackageJsonDependenciesUuid) == ''">^11.0.5</PackageJsonDependenciesUuid>
+    <PackageJsonDependenciesYup Condition="$(PackageJsonDependenciesYup) == ''">^1.6.1</PackageJsonDependenciesYup>
     <PackageJsonDevdependenciesEslintJs Condition="$(PackageJsonDevdependenciesEslintJs) == ''">^9.17.0</PackageJsonDevdependenciesEslintJs>
     <PackageJsonDevdependenciesTypesNode Condition="$(PackageJsonDevdependenciesTypesNode) == ''">^22.10.5</PackageJsonDevdependenciesTypesNode>
     <PackageJsonDevdependenciesTypesReact Condition="$(PackageJsonDevdependenciesTypesReact) == ''">^18.3.18</PackageJsonDevdependenciesTypesReact>

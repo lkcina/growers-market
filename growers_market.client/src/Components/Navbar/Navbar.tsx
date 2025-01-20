@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 
 
 interface Props {
@@ -8,10 +9,9 @@ const Navbar: React.FC<Props> = ({ }: Props): JSX.Element => {
         <nav>
             <h1>Growers Market</h1>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/wishlist">Wishlist</a></li>
-                <li><a href="/market">Market</a></li>
-                <li><a href="/plants">Search For Plants</a></li>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/market">Market</Link></li>
+                <li><Link to="/plant-search">Search Plants</Link></li>
             </ul>
         </nav>
     );

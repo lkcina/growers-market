@@ -10,7 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\Components\ListingForm\" />
-    <Folder Include="src\Pages\" />
+    <Folder Include="src\Components\Listing\ListingList\" />
+    <Folder Include="src\Components\Listing\ListingCard\" />
+    <Folder Include="src\Components\UserListing\UserListingCard\" />
+    <Folder Include="src\Components\UserListing\UserListingList\" />
+    <Folder Include="src\Pages\HomePage\" />
+    <Folder Include="src\Pages\MarketPage\" />
+    <Folder Include="src\Pages\PlantSearchPage\" />
+    <Folder Include="src\Routes\" />
     <Folder Include="src\Pages\ListingsPage\" />
   </ItemGroup>
 </Project>
