@@ -17,27 +17,34 @@ function App() {
         setSpeciesSearch(e.target.value);
     }
 
-    const onWishlistCreate = async (e: any) => {
+    const onWishlistCreate = async (e: SyntheticEvent) => {
         e.preventDefault();
-        console.log(e.target.getElementsByClassName("add-wishlist-input")[0].value);
-        if (wishlistValues.find((species) => species.id === e.target.getElementsByClassName("add-wishlist-input")[0].value)) {
+        const target = e.target as HTMLFormElement;
+        const input = target.getElementsByClassName("add-wishlist-input")[0] as HTMLInputElement;
+        const value = Number(input.value);
+        if (wishlistValues.find((species) => species.id === value)) {
             return;
         }
 
-        console.log(wishlistValues);
-        const result = await getSpeciesDetails(e.target.getElementsByClassName("add-wishlist-input")[0].value);
+        const result = await getSpeciesDetails(value);
         if (typeof result === "string") {
             setServerError(result);
-        } else if (Array.isArray(result.data)) {
-            const updatedWishlist = [...wishlistValues, result.data];
+        } else {
+            const updatedWishlist = [...wishlistValues, result];
+            console.log(updatedWishlist);
             setWishlistValues(updatedWishlist);
         }
         
     }
 
-    const onWishlistRemove = (e: any) => {
+    const onWishlistRemove = (e: SyntheticEvent) => {
         e.preventDefault();
-        const updatedWishlist = wishlistValues.filter((species) => species.id !== e.target.getElementsByClassName("rem-wishlist-input")[0].value);
+        const target = e.target as HTMLFormElement;
+        const input = target.getElementsByClassName("rem-wishlist-input")[0] as HTMLInputElement;
+        const value = Number(input.value);
+        console.log(value);
+        const updatedWishlist = wishlistValues.filter((species) => species.id !== value);
+        console.log(updatedWishlist);
         setWishlistValues(updatedWishlist);
     }
 
@@ -56,10 +63,10 @@ function App() {
         <div className="app">
             {serverError ?? <h2>{serverError}</h2>}
             <h1>Wishlist</h1>
-            <ListWishlist wishlistValues={wishlistValues} onWishlistRemove={onWishlistRemove} />
+            <ListWishlist wishlistValues={wishlistValues} onWishlistRemove={onWishlistRemove} onWishlistCreate={onWishlistCreate} />
             <h1>Plant Finder</h1>
             <SpeciesSearchBar onSearchSubmit={onSearchSubmit} search={speciesSearch} handleChange={handleSpeciesSearchChange} />
-            <SpeciesList searchResult={speciesSearchResult} onWishlistCreate={onWishlistCreate} />
+            <SpeciesList searchResult={speciesSearchResult} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} />
         </div>
     );
 }
