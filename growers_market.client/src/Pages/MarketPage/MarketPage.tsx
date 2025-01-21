@@ -5,7 +5,7 @@ interface Props {
 
 const MarketPage: React.FC<Props> = () => {
     return (
-        <div>
+        <div id="market">
             <h1>Market Page</h1>
         </div>
     );

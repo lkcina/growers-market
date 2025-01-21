@@ -17,7 +17,6 @@
     <Folder Include="src\Pages\HomePage\" />
     <Folder Include="src\Pages\MarketPage\" />
     <Folder Include="src\Pages\PlantSearchPage\" />
-    <Folder Include="src\Routes\" />
     <Folder Include="src\Pages\ListingsPage\" />
   </ItemGroup>
 </Project>

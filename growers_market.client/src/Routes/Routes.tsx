@@ -9,6 +9,8 @@ import UserListingsPage from "../Pages/UserListingsPage/UserListingsPage";
 import WishlistPage from "../Pages/WishlistPage/WishlistPage";
 import UserListingChatsList from "../Components/UserListing/UserListingChatsList/UserListingChatsList";
 import LoginPage from "../Pages/LoginPage/LoginPage";
+import RegisterPage from "../Pages/RegisterPage/RegisterPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +26,10 @@ export const router = createBrowserRouter([
                 element: <LoginPage />
             },
             {
+                path: "register",
+                element: <RegisterPage />
+            },
+            {
                 path: "market",
                 element: <MarketPage />,
                 children: [
@@ -33,11 +39,11 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "chats",
-                        element: <ChatsPage />
+                        element: <ProtectedRoute><ChatsPage /></ProtectedRoute>
                     },
                     {
                         path: "my-listings",
-                        element: <UserListingsPage />,
+                        element: <ProtectedRoute><UserListingsPage /></ProtectedRoute>,
                         children: [
                             {
                                 path: "listing/:id",
@@ -47,7 +53,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "my-wishlist",
-                        element: <WishlistPage />
+                        element: <ProtectedRoute><WishlistPage /></ProtectedRoute>
                     }
                 ]
             },

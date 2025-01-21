@@ -27,8 +27,8 @@ export const UserProvider = ({ children }: Props) => {
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        const user = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
+        const user = sessionStorage.getItem("user");
+        const token = sessionStorage.getItem("token");
         if (user && token) {
             setUser(JSON.parse(user));
             setToken(token);
@@ -40,9 +40,9 @@ export const UserProvider = ({ children }: Props) => {
     const registerUser = async (email: string, username: string, password: string) => {
         await registerApi(username, email, password).then((response) => {
             if (response) {
-                localStorage.setItem("token", response?.data.token);
+                sessionStorage.setItem("token", response?.data.token);
                 const userObj = { userName: response?.data.userName, email: response?.data.email };
-                localStorage.setItem("user", JSON.stringify(userObj));
+                sessionStorage.setItem("user", JSON.stringify(userObj));
                 setUser(response?.data);
                 setToken(response?.data.token);
                 toast.success("Registration successful");
@@ -54,9 +54,9 @@ export const UserProvider = ({ children }: Props) => {
     const loginUser = async (username: string, password: string) => {
         await loginApi(username, password).then((response) => {
             if (response) {
-                localStorage.setItem("token", response?.data.token);
+                sessionStorage.setItem("token", response?.data.token);
                 const userObj = { userName: response?.data.userName, email: response?.data.email };
-                localStorage.setItem("user", JSON.stringify(userObj));
+                sessionStorage.setItem("user", JSON.stringify(userObj));
                 setUser(response?.data);
                 setToken(response?.data.token);
                 toast.success("Login successful");
@@ -70,8 +70,8 @@ export const UserProvider = ({ children }: Props) => {
     };
 
     const logoutUser = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
         setUser(null);
         setToken(null);
         navigate("/");
