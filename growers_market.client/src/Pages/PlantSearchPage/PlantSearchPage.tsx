@@ -54,17 +54,17 @@ const PlantSearchPage: React.FC<Props> = () => {
     }
 
     const handleIndoorChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value === "null" ? null : Boolean(e.target.value);
+        const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
         setSpeciesSearchIndoor(value);
     }
 
     const handleEdibleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value === "null" ? null : Boolean(e.target.value);
+        const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
         setSpeciesSearchEdible(value);
     }
 
     const handlePoisonousChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value === "null" ? null : Boolean(e.target.value);
+        const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
         setSpeciesSearchPoisonous(value);
     }
 
