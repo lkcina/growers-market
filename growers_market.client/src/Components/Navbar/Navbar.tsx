@@ -26,7 +26,7 @@ const Navbar: React.FC<Props> = ({ }: Props): JSX.Element => {
             )}
             <ul>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/market">Market</Link></li>
+                <li><Link to="/market/browse">Market</Link></li>
                 <li><Link to="/plant-search">Search Plants</Link></li>
             </ul>
         </nav>
