@@ -18,7 +18,7 @@ namespace growers_market.Server.Services
             _config = config;
         }
 
-        public async Task<List<Species>> PlantSearchAsync(PerenualPlantQueryObject query)
+        public async Task<AllSpeciesDto> PlantSearchAsync(PerenualPlantQueryObject query)
         {
             try
             {
@@ -74,10 +74,9 @@ namespace growers_market.Server.Services
                     var tasks = JsonSerializer.Deserialize<AllPerenualSpecies>(content);
                     if (tasks != null)
                     {
-                        var speciesPerenual = tasks.data.ToList<AllSpeciesData>();
-                        var species = speciesPerenual.Select(perenual => perenual.ToSpeciesFromAllPerenual());
+                        var species = tasks.ToAllSpeciesDtoFromPerenual();
                         
-                        return speciesPerenual.Select(perenual => perenual.ToSpeciesFromAllPerenual()).ToList();
+                        return species;
                     }
                     return null;
                 }

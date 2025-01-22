@@ -1,21 +1,71 @@
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { getSpeciesDetails, searchSpecies } from '../../api';
 import SpeciesList from '../../Components/SpeciesList/SpeciesList';
-import SpeciesSearchBar from '../../Components/SpeciesSearch/SpeciesSearch';
-import ListWishlist from '../../Components/Wishlist/ListWishlist/ListWishlist';
+import SpeciesSearchBar from '../../Components/SpeciesSearch/SpeciesSearchBar/SpeciesSearchBar';
 import { SpeciesInfo } from '../../types';
+import SearchInfo from '../../Components/SearchInfo/SearchInfo';
 
 interface Props {
 }
 
 const PlantSearchPage: React.FC<Props> = () => {
-    const [speciesSearch, setSpeciesSearch] = useState<string>("");
+    const [speciesSearchQuery, setSpeciesSearchQuery] = useState<string>("");
+    const [speciesSearchCycle, setSpeciesSearchCycle] = useState<string | null>(null);
+    const [speciesSearchSunlight, setSpeciesSearchSunlight] = useState<string | null>(null);
+    const [speciesSearchWatering, setSpeciesSearchWatering] = useState<string | null>(null);
+    const [speciesSearchHardiness, setSpeciesSearchHardiness] = useState<number | null>(null);
+    const [speciesSearchIndoor, setSpeciesSearchIndoor] = useState<boolean | null>(null);
+    const [speciesSearchEdible, setSpeciesSearchEdible] = useState<boolean | null>(null);
+    const [speciesSearchPoisonous, setSpeciesSearchPoisonous] = useState<boolean | null>(null);
+
     const [speciesSearchResult, setSpeciesSearchResult] = useState<SpeciesInfo[]>([]);
+
+    const [speciesSearchCurrentPage, setSpeciesSearchCurrentPage] = useState<number>(1);
+    const [speciesSearchLastPage, setSpeciesSearchLastPage] = useState<number>(1);
+    const [speciesSearchFrom, setSpeciesSearchFrom] = useState<number>(1);
+    const [speciesSearchTo, setSpeciesSearchTo] = useState<number>(30);
+    const [speciesSearchTotal, setSpeciesSearchTotal] = useState<number>(0);
+
     const [wishlistValues, setWishlistValues] = useState<SpeciesInfo[]>([]);
     const [serverError, setServerError] = useState<string | null>(null);
 
-    const handleSpeciesSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSpeciesSearch(e.target.value);
+    const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSpeciesSearchQuery(e.target.value);
+    }
+
+    const handleCycleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value === "null" ? null : e.target.value;
+        setSpeciesSearchCycle(value);
+    }
+
+    const handleSunlightChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value === "null" ? null : e.target.value;
+        setSpeciesSearchSunlight(value);
+    }
+
+    const handleWateringChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value === "null" ? null : e.target.value;
+        setSpeciesSearchWatering(value);
+    }
+
+    const handleHardinessChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value === "null" ? null : Number(e.target.value);
+        setSpeciesSearchHardiness(value);
+    }
+
+    const handleIndoorChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
+        setSpeciesSearchIndoor(value);
+    }
+
+    const handleEdibleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
+        setSpeciesSearchEdible(value);
+    }
+
+    const handlePoisonousChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
+        setSpeciesSearchPoisonous(value);
     }
 
     const onWishlistCreate = async (e: SyntheticEvent) => {
@@ -51,20 +101,60 @@ const PlantSearchPage: React.FC<Props> = () => {
 
     const onSearchSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
-        const result = await searchSpecies(speciesSearch);
+        const result = await searchSpecies(1, speciesSearchQuery, speciesSearchCycle, speciesSearchWatering, speciesSearchSunlight, speciesSearchHardiness, speciesSearchIndoor, speciesSearchEdible, speciesSearchPoisonous);
         if (typeof result === "string") {
             setServerError(result);
-        } else if (Array.isArray(result.data)) {
-            setSpeciesSearchResult(result.data);
+        } else if (Array.isArray(result.data.data)) {
+            setSpeciesSearchResult(result.data.data);
+            setSpeciesSearchCurrentPage(result.data.currentPage);
+            setSpeciesSearchLastPage(result.data.lastPage);
+            setSpeciesSearchFrom(result.data.from);
+            setSpeciesSearchTo(result.data.to);
+            setSpeciesSearchTotal(result.data.total);
         }
         console.log(speciesSearchResult, serverError);
     }
+
+    const onSearchNextPage = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        const result = await searchSpecies(speciesSearchCurrentPage + 1, speciesSearchQuery, speciesSearchCycle, speciesSearchWatering, speciesSearchSunlight, speciesSearchHardiness, speciesSearchIndoor, speciesSearchEdible, speciesSearchPoisonous);
+        if (typeof result === "string") {
+            setServerError(result);
+        } else if (Array.isArray(result.data.data)) {
+            setSpeciesSearchResult(result.data.data);
+            setSpeciesSearchCurrentPage(result.data.currentPage);
+            setSpeciesSearchLastPage(result.data.lastPage);
+            setSpeciesSearchFrom(result.data.from);
+            setSpeciesSearchTo(result.data.to);
+            setSpeciesSearchTotal(result.data.total);
+        }
+        console.log(speciesSearchResult, serverError);
+    }
+
+    const onSearchPreviousPage = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        const result = await searchSpecies(speciesSearchCurrentPage - 1, speciesSearchQuery, speciesSearchCycle, speciesSearchWatering, speciesSearchSunlight, speciesSearchHardiness, speciesSearchIndoor, speciesSearchEdible, speciesSearchPoisonous);
+        if (typeof result === "string") {
+            setServerError(result);
+        } else if (Array.isArray(result.data.data)) {
+            setSpeciesSearchResult(result.data.data);
+            setSpeciesSearchCurrentPage(result.data.currentPage);
+            setSpeciesSearchLastPage(result.data.lastPage);
+            setSpeciesSearchFrom(result.data.from);
+            setSpeciesSearchTo(result.data.to);
+            setSpeciesSearchTotal(result.data.total);
+        }
+        console.log(speciesSearchResult, serverError);
+    }
+
     return (
         <div className="plant-search-page">
             {serverError ?? <h2>{serverError}</h2>}
-            <h2>Plant Finder</h2>
-            <SpeciesSearchBar onSearchSubmit={onSearchSubmit} search={speciesSearch} handleChange={handleSpeciesSearchChange} />
+            <h1>Plant Finder</h1>
+            <SpeciesSearchBar onSearchSubmit={onSearchSubmit} query={speciesSearchQuery} handleQueryChange={handleQueryChange} cycle={speciesSearchCycle} handleCycleChange={handleCycleChange} sunlight={speciesSearchSunlight} handleSunlightChange={handleSunlightChange} watering={speciesSearchWatering} handleWateringChange={handleWateringChange} hardiness={speciesSearchHardiness} handleHardinessChange={handleHardinessChange} indoor={speciesSearchIndoor} handleIndoorChange={handleIndoorChange} edible={speciesSearchEdible} handleEdibleChange={handleEdibleChange} poisonous={speciesSearchPoisonous} handlePoisonousChange={handlePoisonousChange} />
+            <SearchInfo currentPage={speciesSearchCurrentPage} lastPage={speciesSearchLastPage} from={speciesSearchFrom} to={speciesSearchTo} total={speciesSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
             <SpeciesList searchResult={speciesSearchResult} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} />
+            <SearchInfo currentPage={speciesSearchCurrentPage} lastPage={speciesSearchLastPage} from={speciesSearchFrom} to={speciesSearchTo} total={speciesSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
         </div>
     );
 };

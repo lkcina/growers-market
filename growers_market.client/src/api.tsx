@@ -3,12 +3,27 @@ import axios from 'axios';
 
 interface SpeciesSearchResponse {
     data: SpeciesInfo[];
+    from: number;
+    to: number;
+    total: number;
+    lastPage: number;
+    currentPage: number;
+    perPage: number;
 }
 
-export const searchSpecies = async (query: string) => {
+export const searchSpecies = async (page: number, query: string, cycle: string | null, watering: string | null, sunlight: string | null, hardiness: number | null, indoor: boolean | null, edible: boolean | null, poisonous: boolean | null) => {
     try {
+        let url = `https://localhost:7234/api/species?Page=${page}&Q=${query}`;
+        if (cycle) url += `&Cycle=${cycle}`;
+        if (watering) url += `&Watering=${watering}`;
+        if (sunlight) url += `&Sunlight=${sunlight}`;
+        if (hardiness) url += `&Hardiness=${hardiness}`;
+        if (indoor !== null) url += `&Indoor=${indoor}`;
+        if (edible !== null) url += `&Edible=${edible}`;
+        if (poisonous !== null) url += `&Poisonous=${poisonous}`;
 
-        const data = await axios.get<SpeciesSearchResponse>(`https://localhost:7234/api/species?Q=${query}`);
+        const data = await axios.get<SpeciesSearchResponse>(url);
+        console.log(data);
         return data;
     }
     catch (error) {

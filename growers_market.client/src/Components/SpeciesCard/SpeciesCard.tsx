@@ -3,6 +3,7 @@ import "./SpeciesCard.css";
 import AddWishlist from "../Wishlist/AddWishlist/AddWishlist";
 import { SpeciesInfo } from "../../types";
 import RemoveWishlist from "../Wishlist/RemoveWishlist/RemoveWishlist";
+import { UserProvider } from "../../Context/UseAuth";
 
 interface Props {
     id: string;
