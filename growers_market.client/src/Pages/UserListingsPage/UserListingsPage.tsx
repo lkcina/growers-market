@@ -3,12 +3,12 @@ import React from 'react';
 interface Props {
 }
 
-const MarketPage: React.FC<Props> = () => {
+const UserListingsPage: React.FC<Props> = () => {
     return (
         <div>
-            <h1>Market Page</h1>
+            <h1>UserListings Page</h1>
         </div>
     );
 };
 
-export default MarketPage;
+export default UserListingsPage;
