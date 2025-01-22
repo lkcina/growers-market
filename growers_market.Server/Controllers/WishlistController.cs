@@ -35,10 +35,11 @@ namespace growers_market.Server.Controllers
             return Ok(wishlist);
         }
 
-        [HttpPost("{id}")]
+        [HttpPost("{speciesId}")]
         [Authorize]
         public async Task<IActionResult> AddWishlist([FromRoute] int speciesId)
         {
+            Console.WriteLine("ID:" + speciesId);
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var species = await _speciesRepository.GetByIdAsync(speciesId);
