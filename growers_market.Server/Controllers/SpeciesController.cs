@@ -47,9 +47,8 @@ namespace growers_market.Server.Controllers
             if (perenual == null)
             {
                 return StatusCode(500, "One or more species are unavailable");
-            }
-            var perenualDto = perenual.Select(species => species.ToSpeciesDto()).ToList();
-            return Ok(perenualDto);
+            };
+            return Ok(perenual);
         }
 
         [HttpGet("used")]

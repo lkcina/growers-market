@@ -62,5 +62,19 @@ namespace growers_market.Server.Mappers
                 Thumbnail = speciesData.default_image == null ? "" : speciesData.default_image.thumbnail
             };
         }
+
+        public static AllSpeciesDto ToAllSpeciesDtoFromPerenual(this AllPerenualSpecies speciesData)
+        {
+            return new AllSpeciesDto
+            {
+                Data = speciesData.data.Select(species => species.ToSpeciesFromAllPerenual().ToSpeciesDto()).ToList(),
+                To = speciesData.to,
+                PerPage = speciesData.per_page,
+                CurrentPage = speciesData.current_page,
+                From = speciesData.from,
+                LastPage = speciesData.last_page,
+                Total = speciesData.total
+            };
+        }
     }
 }
