@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginApi, registerApi } from "../Services/AuthService";
 import axios from "axios";
+import { getWishlist } from "../api";
+import { SpeciesInfo } from "../types";
 
 type UserContextType = {
     user: UserProfile | null;
@@ -62,8 +64,9 @@ export const UserProvider = ({ children }: Props) => {
                 sessionStorage.setItem("user", JSON.stringify(userObj));
                 setUser(response?.data);
                 setToken(response?.data.token);
-                toast.success("Login successful");
                 navigate("/");
+                window.location.reload();
+                toast.success("Login successful");
             }
         }).catch((error) => toast.warning("Server error occured"));
     };

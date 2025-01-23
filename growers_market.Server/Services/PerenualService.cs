@@ -34,11 +34,13 @@ namespace growers_market.Server.Services
                 }
                 if (query.Edible.HasValue)
                 {
-                    urlBuilder.Append($"&edible={query.Edible}");
+                    var edible = query.Edible.Value ? 1 : 0;
+                    urlBuilder.Append($"&edible={edible}");
                 }
                 if (query.Poisonous.HasValue)
                 {
-                    urlBuilder.Append($"&poisonous={query.Poisonous}");
+                    var poisonous = query.Poisonous.Value ? 1 : 0;
+                    urlBuilder.Append($"&poisonous={poisonous}");
                 }
                 if (!string.IsNullOrEmpty(query.Cycle))
                 {
@@ -54,7 +56,8 @@ namespace growers_market.Server.Services
                 }
                 if (query.Indoor.HasValue)
                 {
-                    urlBuilder.Append($"&indoor={query.Indoor}");
+                    var indoor = query.Indoor.Value ? 1 : 0;
+                    urlBuilder.Append($"&indoor={indoor}");
                 }
                 if (query.Hardiness.HasValue)
                 {
