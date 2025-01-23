@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { postWishlist, getSpeciesDetails, deleteWishlist, getWishlist } from '../../api';
 import ListWishlist from '../../Components/Wishlist/ListWishlist/ListWishlist';
 import { SpeciesInfo } from '../../types';
@@ -10,6 +10,8 @@ interface Props {
 const WishlistPage: React.FC<Props> = () => {
     const [wishlistSearchQuery, setWishlistSearchQuery] = useState<string>("");
     const [wishlistSearchResult, setWishlistSearchResult] = useState<SpeciesInfo[]>([]);
+
+    const [speciesDetails, setSpeciesDetails] = useState<number | null>(null);
 
     const [wishlistValues, setWishlistValues] = useState<SpeciesInfo[]>([]);
     const [serverError, setServerError] = useState<string | null>(null);
@@ -33,6 +35,7 @@ const WishlistPage: React.FC<Props> = () => {
     const onSearchSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         const result = wishlistValues.filter((species) => species.commonName.toLowerCase().includes(wishlistSearchQuery.toLowerCase()) || species.scientificName[0].toLowerCase().includes(wishlistSearchQuery.toLowerCase()));
+        console.log(result);
         setWishlistSearchResult(result);
     }
 
@@ -85,11 +88,23 @@ const WishlistPage: React.FC<Props> = () => {
         setWishlistSearchResult(updatedSearchResult);
     }
 
+    const showDetails = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const target = e.target as HTMLFormElement;
+        const input = target.elements.namedItem("speciesId") as HTMLInputElement;
+        const value = Number(input.value);
+        if (speciesDetails === value) {
+            setSpeciesDetails(null);
+            return;
+        }
+        setSpeciesDetails(value);
+    }
+
     return (
         <div>
             <h1>Wishlist Page</h1>
             <WishlistSearchBar handleQueryChange={handleQueryChange} onSearchSubmit={onSearchSubmit} query={wishlistSearchQuery} />
-            <ListWishlist wishlistValues={wishlistValues} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistSearchResult={wishlistSearchResult} />
+            <ListWishlist wishlistValues={wishlistValues} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistSearchResult={wishlistSearchResult} showDetails={showDetails} speciesDetails={speciesDetails} />
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { getSpeciesDetails, getWishlist, postWishlist, searchSpecies, deleteWishlist } from '../../api';
 import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 import SpeciesSearchBar from '../../Components/SpeciesSearch/SpeciesSearchBar/SpeciesSearchBar';
@@ -27,6 +27,7 @@ const PlantSearchPage: React.FC<Props> = () => {
     const [speciesSearchTotal, setSpeciesSearchTotal] = useState<number>(0);
 
     const [wishlistValues, setWishlistValues] = useState<SpeciesInfo[]>([]);
+    const [speciesDetails, setSpeciesDetails] = useState<number | null>(null);
 
     const [serverError, setServerError] = useState<string | null>(null);
 
@@ -174,13 +175,25 @@ const PlantSearchPage: React.FC<Props> = () => {
         console.log(speciesSearchResult, serverError);
     }
 
+    const showDetails = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const target = e.target as HTMLFormElement;
+        const input = target.elements.namedItem("speciesId") as HTMLInputElement;
+        const value = Number(input.value);
+        if (speciesDetails === value) {
+            setSpeciesDetails(null);
+            return;
+        }
+        setSpeciesDetails(value);
+    }
+
     return (
         <div className="plant-search-page">
             {serverError ?? <h2>{serverError}</h2>}
             <h1>Plant Finder</h1>
             <SpeciesSearchBar onSearchSubmit={onSearchSubmit} query={speciesSearchQuery} handleQueryChange={handleQueryChange} cycle={speciesSearchCycle} handleCycleChange={handleCycleChange} sunlight={speciesSearchSunlight} handleSunlightChange={handleSunlightChange} watering={speciesSearchWatering} handleWateringChange={handleWateringChange} hardiness={speciesSearchHardiness} handleHardinessChange={handleHardinessChange} indoor={speciesSearchIndoor} handleIndoorChange={handleIndoorChange} edible={speciesSearchEdible} handleEdibleChange={handleEdibleChange} poisonous={speciesSearchPoisonous} handlePoisonousChange={handlePoisonousChange} />
             <SearchInfo currentPage={speciesSearchCurrentPage} lastPage={speciesSearchLastPage} from={speciesSearchFrom} to={speciesSearchTo} total={speciesSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
-            <SpeciesList searchResult={speciesSearchResult} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} />
+            <SpeciesList searchResult={speciesSearchResult} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} speciesDetails={speciesDetails} showDetails={showDetails} />
             <SearchInfo currentPage={speciesSearchCurrentPage} lastPage={speciesSearchLastPage} from={speciesSearchFrom} to={speciesSearchTo} total={speciesSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
         </div>
     );
