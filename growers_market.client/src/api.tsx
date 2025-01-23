@@ -74,5 +74,37 @@ export const getWishlist = async () => {
             return "An unexpected error has occurred"
         }
     }
-
 }
+
+export const postWishlist = async (id: number) => {
+    try {
+        const data = await axios.post(`https://localhost:7234/api/wishlist/${id}`);
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
+export const deleteWishlist = async (id: number) => {
+    try {
+        const data = await axios.delete(`https://localhost:7234/api/wishlist/${id}`);
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+

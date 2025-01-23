@@ -48,6 +48,7 @@ namespace growers_market.Server.Repositories
                 HardinessMin = species.Species.HardinessMin,
                 HardinessMax = species.Species.HardinessMax,
                 Indoor = species.Species.Indoor,
+                Description = species.Species.Description,
                 Image = species.Species.Image,
                 Thumbnail = species.Species.Thumbnail
             }).ToListAsync();

@@ -35,7 +35,7 @@ namespace growers_market.Server.Controllers
             return Ok(wishlist);
         }
 
-        [HttpPost("{id}")]
+        [HttpPost("{speciesId}")]
         [Authorize]
         public async Task<IActionResult> AddWishlist([FromRoute] int speciesId)
         {
@@ -45,6 +45,7 @@ namespace growers_market.Server.Controllers
             if (species == null)
             {
                 species = await _perenualService.GetPlantByIdAsync(speciesId);
+                Console.WriteLine(species.Description);
                 if (species == null)
                 {
                     return BadRequest("Species does not exist");

@@ -1,10 +1,10 @@
 export interface SpeciesInfo {
     id: number;
     commonName: string;
-    scientificName: string;
+    scientificName: string[];
     cycle: string;
     watering: string;
-    sunlight: string;
+    sunlight: string[];
     hardinessMin: number;
     hardinessMax: number;
     indoor: boolean;
