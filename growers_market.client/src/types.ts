@@ -1,7 +1,7 @@
 export interface SpeciesInfo {
     id: number;
     commonName: string;
-    scientificName: string;
+    scientificName: string[];
     cycle: string;
     watering: string;
     sunlight: string;

@@ -39,13 +39,13 @@ namespace growers_market.Server.Controllers
         [Authorize]
         public async Task<IActionResult> AddWishlist([FromRoute] int speciesId)
         {
-            Console.WriteLine("ID:" + speciesId);
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var species = await _speciesRepository.GetByIdAsync(speciesId);
             if (species == null)
             {
                 species = await _perenualService.GetPlantByIdAsync(speciesId);
+                Console.WriteLine(species.Description);
                 if (species == null)
                 {
                     return BadRequest("Species does not exist");
