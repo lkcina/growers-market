@@ -175,7 +175,7 @@ const PlantSearchPage: React.FC<Props> = () => {
         console.log(speciesSearchResult, serverError);
     }
 
-    const showDetails = (e: FormEvent<HTMLFormElement>) => {
+    const showDetails = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as HTMLFormElement;
         const input = target.elements.namedItem("speciesId") as HTMLInputElement;
@@ -184,6 +184,13 @@ const PlantSearchPage: React.FC<Props> = () => {
             setSpeciesDetails(null);
             return;
         }
+        const species = await getSpeciesDetails(value);
+        if (typeof species === "string") {
+            setServerError(species);
+            return;
+        }
+        const updatedSpeciesSearchResult = speciesSearchResult.map(s => s.id === value ? species : s);
+        setSpeciesSearchResult(updatedSpeciesSearchResult);
         setSpeciesDetails(value);
     }
 
