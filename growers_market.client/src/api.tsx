@@ -143,3 +143,22 @@ export const createListing = async (form: FormData) => {
         }
     }
 }
+
+export const updateListing = async (id: number, form: FormData) => {
+    try {
+        const data = await axios.put<Listing>(`https://localhost:7234/api/listing/${id}`, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error);
+            return "An unexpected error has occurred";
+        }
+    }
+}

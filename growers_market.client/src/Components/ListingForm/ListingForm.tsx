@@ -1,6 +1,7 @@
 import React, { FormEvent } from "react";
 import { SpeciesInfo } from "../../types";
 import { v4 as uuidv4 } from 'uuid';
+import ListingFormImages from "../ListingFormImages/ListingFormImages";
 
 interface Props {
     onListingFormSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -17,12 +18,13 @@ interface Props {
     handleSpeciesChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     listingDescription: string;
     handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    listingImages: FileList | null;
+    listingInputImages: FileList | string | null;
     handleImagesChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    listingImageValues: (File | string)[] | null;
     speciesSelectOptions: SpeciesInfo[];
 }
 
-const ListingForm: React.FC<Props> = ({ onListingFormSubmit, listingId, listingTitle, handleTitleChange, listingIsForTrade, handleIsForTradChange, listingPrice, handlePriceChange, listingQuantity, handleQuantityChange, listingSpecies, handleSpeciesChange, listingDescription, handleDescriptionChange, listingImages, handleImagesChange, speciesSelectOptions }: Props): JSX.Element => {
+const ListingForm: React.FC<Props> = ({ onListingFormSubmit, listingId, listingTitle, handleTitleChange, listingIsForTrade, handleIsForTradChange, listingPrice, handlePriceChange, listingQuantity, handleQuantityChange, listingSpecies, handleSpeciesChange, listingDescription, handleDescriptionChange, listingInputImages, handleImagesChange, listingImageValues, speciesSelectOptions }: Props): JSX.Element => {
     return (
         <form onSubmit={onListingFormSubmit}>
             <fieldset>
@@ -56,10 +58,7 @@ const ListingForm: React.FC<Props> = ({ onListingFormSubmit, listingId, listingT
                 <label htmlFor="listing-description">Description</label>
                 <textarea id="listing-description" name="Description" value={listingDescription} onChange={handleDescriptionChange} />
             </fieldset>
-            <fieldset>
-                <label htmlFor="listing-images">Images</label>
-                <input id="listing-images" type="file" name="Images" multiple onChange={handleImagesChange} />
-            </fieldset>
+            <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} />
             <fieldset>
                 <button type="submit">Submit</button>
                 <button type="button" >Cancel</button>

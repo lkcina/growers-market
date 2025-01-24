@@ -95,20 +95,20 @@ namespace growers_market.Server.Controllers
             Console.WriteLine(listingDto.Quantity);
             Console.WriteLine(listingDto.SpeciesId);
             Console.WriteLine(listingDto.Description);
-            Console.WriteLine(listingDto.Images[0].FileName);
+            Console.WriteLine(listingDto.UploadedImages[0].FileName);
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("22222222222222222222222222222222222222222222222222222222222222222222");
                 return BadRequest(ModelState);
             }
 
-            if (listingDto.Images.Count > 5)
+            if (listingDto.UploadedImages.Count + listingDto.ImagePaths.Count > 5)
             {
                 Console.WriteLine("33333333333333333333333333333333333333333333333333333333333333");
                 return BadRequest("You can only upload 5 images");
             }
-            List<string> imagePaths = new List<string>();
-            foreach (var image in listingDto.Images)
+            List<string> newImagePaths = new List<string>();
+            foreach (var image in listingDto.UploadedImages)
             {
                 if (image.Length > 1 * 1024 * 1024)
                 {
@@ -121,10 +121,10 @@ namespace growers_market.Server.Controllers
                     Console.WriteLine("555555555555555555555555555555555555555555555555555555555555");
                     return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
                 }
-                imagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
+                newImagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
                 Console.WriteLine(image.FileName);
             }
-            foreach (var image in imagePaths)
+            foreach (var image in newImagePaths)
             {
                 Console.WriteLine($"path: {image}");
             }
@@ -132,9 +132,7 @@ namespace growers_market.Server.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var listing = listingDto.ToListingFromCreateDto();
-            Console.WriteLine(listing.ToString());
             var species = await _speciesRepository.GetByIdAsync(listing.SpeciesId);
-            Console.WriteLine(species.ToString());
             if (species == null)
             {
                 
@@ -152,7 +150,7 @@ namespace growers_market.Server.Controllers
             }
             listing.AppUserId = appUser.Id;
             listing.AppUserName = appUser.UserName;
-            listing.Images = imagePaths;
+            listing.Images = listingDto.ImagePaths.Concat(newImagePaths).ToList();
             Console.WriteLine(listing.Title);
             Console.WriteLine(listing.IsForTrade);
             Console.WriteLine(listing.Price);

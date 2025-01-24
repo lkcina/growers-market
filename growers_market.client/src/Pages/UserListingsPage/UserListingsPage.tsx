@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';  
 import ListingForm from '../../Components/ListingForm/ListingForm';  
 import { Listing, SpeciesInfo } from '../../types';  
-import { createListing, getUsedSpecies } from '../../api';  
+import { createListing, getUsedSpecies, updateListing } from '../../api';  
   
 interface Props {  
 }  
@@ -14,7 +14,8 @@ const UserListingsPage: React.FC<Props> = () => {
     const [listingQuantity, setListingQuantity] = useState<number>(1);  
     const [listingSpecies, setListingSpecies] = useState<SpeciesInfo | null>(null);  
     const [listingDescription, setListingDescription] = useState<string>("");
-    const [listingImages, setListingImages] = useState<FileList | null>(null);
+    const [listingInputImages, setListingInputImages] = useState<FileList | null>(null);
+    const [listingImageValues, setListingImageValues] = useState<(File | string)[]>([]);
   
     const [speciesSelectOptions, setSpeciesSelectOptions] = useState<SpeciesInfo[]>([]);  
   
@@ -61,17 +62,22 @@ const UserListingsPage: React.FC<Props> = () => {
     }
 
     const handleListingImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setListingImages(e.target.files || new FileList);
+        setListingInputImages(e.target.files || new FileList);
+        const updatedImageValues: (File | string)[] = [...listingImageValues.filter(i => typeof i === "string"), ...Array.from(e.target.files || [])];
+        console.log(updatedImageValues);
+        setListingImageValues(updatedImageValues);
     }
   
     const onListingFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {  
-        e.preventDefault();  
+        e.preventDefault();
+        const form = e.target as HTMLFormElement;
+        const data = new FormData(form);
+        data.set('IsForTrade', listingIsForTrade.toString());
+
+        console.log(Object.fromEntries(data.entries()));
+
         if (listingId === null) {  
-            const form = e.target as HTMLFormElement;  
-            const data = new FormData(form);
-            data.set('IsForTrade', listingIsForTrade.toString());
             
-            console.log(Object.fromEntries(data.entries()));  
             const listingResult = await createListing(data);  
 
             if (typeof listingResult === "string") {  
@@ -84,14 +90,26 @@ const UserListingsPage: React.FC<Props> = () => {
                 setListingValues(updatedListingValues);  
             }  
         } else {
-            // update listing  
+            const listingResult = await updateListing(listingId, data);
+
+            if (typeof listingResult === "string") {
+                setServerError(listingResult);
+                return;
+            } else if (listingResult.status === 201) {
+                console.log(listingResult.data);
+                const updatedListingValues = [...listingValues, listingResult.data];
+                console.log(updatedListingValues);
+                setListingValues(updatedListingValues);
+            }   
         }  
     }  
   
     return (  
         <div>  
-            <h1>UserListings Page</h1>  
-            <ListingForm onListingFormSubmit={onListingFormSubmit} listingId={listingId} listingTitle={listingTitle} handleTitleChange={handleListingTitleChange} listingIsForTrade={listingIsForTrade} handleIsForTradChange={handleListingIsForTradeChange} listingPrice={listingPrice} handlePriceChange={handleListingPriceChange} listingQuantity={listingQuantity} handleQuantityChange={handleListingQuantityChange} listingSpecies={listingSpecies} handleSpeciesChange={handleListingSpeciesChange} listingDescription={listingDescription} handleDescriptionChange={handleListingDescriptionChange} listingImages={listingImages} handleImagesChange={handleListingImagesChange} speciesSelectOptions={speciesSelectOptions} />  
+            <h1>UserListings Page</h1>
+            <button onClick={() => setListingId(null)}>Create New Listing</button>
+            <button onClick={() => { setListingId(7); setListingImageValues(["C:\\Users\\jacya\\Source\\Repos\\growers-market-1\\growers_market.Server\\Uploads\\ListingImages\\01882a32-0463-40e6-b4f0-bc3562572cb1.jpg", "C:\\Users\\jacya\\Source\\Repos\\growers-market-1\\growers_market.Server\\Uploads\\ListingImages\\d6e0e0c3-4f85-4cbb-86b1-7ea71381b4f7.jpg"]) }}>Edit Listing</button>
+            <ListingForm onListingFormSubmit={onListingFormSubmit} listingId={listingId} listingTitle={listingTitle} handleTitleChange={handleListingTitleChange} listingIsForTrade={listingIsForTrade} handleIsForTradChange={handleListingIsForTradeChange} listingPrice={listingPrice} handlePriceChange={handleListingPriceChange} listingQuantity={listingQuantity} handleQuantityChange={handleListingQuantityChange} listingSpecies={listingSpecies} handleSpeciesChange={handleListingSpeciesChange} listingDescription={listingDescription} handleDescriptionChange={handleListingDescriptionChange} listingInputImages={listingInputImages} handleImagesChange={handleListingImagesChange} listingImageValues={listingImageValues} speciesSelectOptions={speciesSelectOptions} />  
         </div>  
     );  
 };  
