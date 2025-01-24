@@ -85,15 +85,26 @@ namespace growers_market.Server.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateListing([FromForm] CreateListingRequestDto listingDto)
+        public async Task<IActionResult> CreateListing([FromForm] ListingFormDto formListingDto)
         {
+            Console.WriteLine("11111111111111111111111111111111111111111111111111111111111111");
+            var listingDto = formListingDto.ToCreateListingRequestDtoFromListingFormDto();
+            Console.WriteLine(listingDto.Title);
+            Console.WriteLine(listingDto.IsForTrade);
+            Console.WriteLine(listingDto.Price);
+            Console.WriteLine(listingDto.Quantity);
+            Console.WriteLine(listingDto.SpeciesId);
+            Console.WriteLine(listingDto.Description);
+            Console.WriteLine(listingDto.Images[0].FileName);
             if (!ModelState.IsValid)
             {
+                Console.WriteLine("22222222222222222222222222222222222222222222222222222222222222222222");
                 return BadRequest(ModelState);
             }
 
             if (listingDto.Images.Count > 5)
             {
+                Console.WriteLine("33333333333333333333333333333333333333333333333333333333333333");
                 return BadRequest("You can only upload 5 images");
             }
             List<string> imagePaths = new List<string>();
@@ -101,26 +112,37 @@ namespace growers_market.Server.Controllers
             {
                 if (image.Length > 1 * 1024 * 1024)
                 {
+                    Console.WriteLine("44444444444444444444444444444444444444444444444444444444444444");
                     return BadRequest("File size cannot exceed 1 MB");
                 }
                 var extension = Path.GetExtension(image.FileName);
                 if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
                 {
+                    Console.WriteLine("555555555555555555555555555555555555555555555555555555555555");
                     return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
                 }
                 imagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
+                Console.WriteLine(image.FileName);
             }
-            
+            foreach (var image in imagePaths)
+            {
+                Console.WriteLine($"path: {image}");
+            }
 
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var listing = listingDto.ToListingFromCreateDto();
+            Console.WriteLine(listing.ToString());
             var species = await _speciesRepository.GetByIdAsync(listing.SpeciesId);
+            Console.WriteLine(species.ToString());
             if (species == null)
             {
+                
                 species = await _perenualService.GetPlantByIdAsync(listing.SpeciesId);
+                Console.WriteLine(species.ToString());
                 if (species == null)
                 {
+                    Console.WriteLine("6666666666666666666666666666666666666666666666666666666666666");
                     return BadRequest("Species does not exist");
                 }
                 else
@@ -131,11 +153,21 @@ namespace growers_market.Server.Controllers
             listing.AppUserId = appUser.Id;
             listing.AppUserName = appUser.UserName;
             listing.Images = imagePaths;
+            Console.WriteLine(listing.Title);
+            Console.WriteLine(listing.IsForTrade);
+            Console.WriteLine(listing.Price);
+            Console.WriteLine(listing.Quantity);
+            Console.WriteLine(listing.SpeciesId);
+            Console.WriteLine(listing.Description);
+            Console.WriteLine(listing.Images[0]);
+            Console.WriteLine(listing.Images[1]);
             await _listingRepository.CreateAsync(listing);
             if (listing == null)
             {
+                Console.WriteLine("77777777777777777777777777777777777777777777777777777777777777777");
                 return StatusCode(500, "Failed to create listing");
             }
+            Console.WriteLine("8888888888888888888888888888888888888888888888888888888888888888");
             return CreatedAtAction(nameof(GetById), new { id = listing.Id }, listing.ToListingDto());
         }
 

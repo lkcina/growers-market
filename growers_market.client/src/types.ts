@@ -12,3 +12,13 @@ export interface SpeciesInfo {
     image: string;
     thumbnail: string;
 }
+
+export interface Listing {
+    id: number;
+    title: string;
+    isForTrade: boolean;
+    price: number;
+    quantity: number;
+    speciesId: number;
+    description: string;
+}

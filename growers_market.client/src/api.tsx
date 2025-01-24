@@ -1,4 +1,4 @@
-import { SpeciesInfo } from "./types";
+import { Listing, SpeciesInfo } from "./types";
 import axios from 'axios';
 
 interface SpeciesSearchResponse {
@@ -41,6 +41,23 @@ export const searchSpecies = async (page: number, query: string, cycle: string |
 export const getSpeciesDetails = async (id: number) => {
     try {
         const data = await axios.get<SpeciesInfo>(`https://localhost:7234/api/species/${id}`);
+        return data.data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
+export const getUsedSpecies = async () => {
+    try {
+        const data = await axios.get<SpeciesInfo[]>(`https://localhost:7234/api/species/used`);
         return data.data;
     }
     catch (error) {
@@ -108,3 +125,21 @@ export const deleteWishlist = async (id: number) => {
     }
 }
 
+export const createListing = async (form: FormData) => {
+    try {
+        const data = await axios.post<Listing>('https://localhost:7234/api/listing', form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error);
+            return "An unexpected error has occurred";
+        }
+    }
+}

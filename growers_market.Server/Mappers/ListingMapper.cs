@@ -48,5 +48,19 @@ namespace growers_market.Server.Mappers
                 SpeciesId = updateDto.SpeciesId
             };
         }
+
+        public static CreateListingRequestDto ToCreateListingRequestDtoFromListingFormDto(this ListingFormDto formDto)
+        {
+            return new CreateListingRequestDto
+            {
+                Title = formDto.Title,
+                IsForTrade = formDto.IsForTrade == "true",
+                Price = decimal.Parse(formDto.Price),
+                Quantity = int.Parse(formDto.Quantity),
+                Description = formDto.Description,
+                SpeciesId = int.Parse(formDto.SpeciesId),
+                Images = formDto.Images.ToList()
+            };
+        }
     }
 }

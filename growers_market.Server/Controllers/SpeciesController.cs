@@ -2,6 +2,8 @@
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Mappers;
+using growers_market.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,6 +64,45 @@ namespace growers_market.Server.Controllers
             var species = await _speciesRepository.GetAllAsync();
             var speciesDto = species.Select(species => species.ToSpeciesDto()).ToList();
             return Ok(speciesDto);
+        }
+
+        [HttpGet("used/{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int it)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var species = await _speciesRepository.GetByIdAsync(it);
+            if (species == null)
+            {
+                return NotFound();
+            }
+            var speciesDto = species.ToSpeciesDto();
+            return Ok(speciesDto);
+        }
+
+        [HttpPost("{id}")]
+        [Authorize]
+        public async Task<IActionResult> AddSpecies([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var species = await _speciesRepository.GetByIdAsync(id);
+            if (species != null)
+            {
+                return StatusCode(500, "Species Already Exists");
+            }
+            var perenualSpecies = await _perenualService.GetPlantByIdAsync(id);
+            var createdSpecies = await _speciesRepository.CreateAsync(perenualSpecies);
+            if (createdSpecies == null)
+            {
+                return StatusCode(500, "Species could not be added");
+            }
+            var speciesDto = createdSpecies.ToSpeciesDto();
+            return CreatedAtAction(nameof(GetById), new { id = createdSpecies.Id }, createdSpecies.ToSpeciesDto());
         }
     }
 }

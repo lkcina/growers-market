@@ -38,6 +38,12 @@ namespace growers_market.Server.Data
                 .HasForeignKey(chat => chat.ListingId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Chat>()
+                .HasMany(chat => chat.Messages)
+                .WithOne(message => message.Chat)
+                .HasForeignKey(message => message.ChatId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             List<IdentityRole> roles = new List<IdentityRole>
             {
                 new IdentityRole
