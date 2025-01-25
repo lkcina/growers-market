@@ -14,8 +14,10 @@ const UserListingsPage: React.FC<Props> = () => {
     const [listingQuantity, setListingQuantity] = useState<number>(1);  
     const [listingSpecies, setListingSpecies] = useState<SpeciesInfo | null>(null);  
     const [listingDescription, setListingDescription] = useState<string>("");
-    const [listingInputImages, setListingInputImages] = useState<FileList | null>(null);
+    const [listingInputImages, setListingInputImages] = useState<File[]>([]);
     const [listingImageValues, setListingImageValues] = useState<(File | string)[]>([]);
+
+    const [fileInputCount, setFileInputCount] = useState<number>(0);
   
     const [speciesSelectOptions, setSpeciesSelectOptions] = useState<SpeciesInfo[]>([]);  
   
@@ -62,8 +64,9 @@ const UserListingsPage: React.FC<Props> = () => {
     }
 
     const handleListingImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setListingInputImages(e.target.files || new FileList);
-        const updatedImageValues: (File | string)[] = [...listingImageValues.filter(i => typeof i === "string"), ...Array.from(e.target.files || [])];
+        const updatedInputImages = listingInputImages.concat(Array.from(e.target.files || []));
+        setListingInputImages(updatedInputImages);
+        const updatedImageValues: (File | string)[] = [...listingImageValues, ...Array.from(e.target.files || [])];
         console.log(updatedImageValues);
         setListingImageValues(updatedImageValues);
     }
@@ -73,22 +76,29 @@ const UserListingsPage: React.FC<Props> = () => {
         const form = e.target as HTMLFormElement;
         const data = new FormData(form);
         data.set('IsForTrade', listingIsForTrade.toString());
+        const uploadedImages = Array.from(listingInputImages || []).filter(image => listingImageValues.includes(image));
+        console.log(uploadedImages);
+        data.set('UploadedImages', uploadedImages[0]);
+
+        for (let i = 1; i < uploadedImages.length; i++) {
+            data.append('UploadedImages', uploadedImages[i]);
+        }
 
         console.log(Object.fromEntries(data.entries()));
 
-        if (listingId === null) {  
-            
-            const listingResult = await createListing(data);  
+        if (listingId === null) {
 
-            if (typeof listingResult === "string") {  
-                setServerError(listingResult);  
-                return;  
-            } else if (listingResult.status === 201) {  
-                console.log(listingResult.data);  
-                const updatedListingValues = [...listingValues, listingResult.data];  
-                console.log(updatedListingValues);  
-                setListingValues(updatedListingValues);  
-            }  
+            const listingResult = await createListing(data);
+
+            if (typeof listingResult === "string") {
+                setServerError(listingResult);
+                return;
+            } else if (listingResult.status === 201) {
+                console.log(listingResult.data);
+                const updatedListingValues = [...listingValues, listingResult.data];
+                console.log(updatedListingValues);
+                setListingValues(updatedListingValues);
+            }
         } else {
             const listingResult = await updateListing(listingId, data);
 
@@ -100,16 +110,31 @@ const UserListingsPage: React.FC<Props> = () => {
                 const updatedListingValues = [...listingValues, listingResult.data];
                 console.log(updatedListingValues);
                 setListingValues(updatedListingValues);
-            }   
+            }
         }  
-    }  
+    }
+
+    const onRemoveImage = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const button = e.target as HTMLButtonElement;
+        const imageIndex = Number(button.parentElement?.id);
+        const updatedImageValues = [...listingImageValues];
+        updatedImageValues.splice(imageIndex, 1);
+        console.log(updatedImageValues);
+        setListingImageValues(updatedImageValues);
+    }
+
+    const onAddImage = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setFileInputCount(fileInputCount + 1);
+    }
   
     return (  
         <div>  
             <h1>UserListings Page</h1>
             <button onClick={() => setListingId(null)}>Create New Listing</button>
             <button onClick={() => { setListingId(7); setListingImageValues(["C:\\Users\\jacya\\Source\\Repos\\growers-market-1\\growers_market.Server\\Uploads\\ListingImages\\01882a32-0463-40e6-b4f0-bc3562572cb1.jpg", "C:\\Users\\jacya\\Source\\Repos\\growers-market-1\\growers_market.Server\\Uploads\\ListingImages\\d6e0e0c3-4f85-4cbb-86b1-7ea71381b4f7.jpg"]) }}>Edit Listing</button>
-            <ListingForm onListingFormSubmit={onListingFormSubmit} listingId={listingId} listingTitle={listingTitle} handleTitleChange={handleListingTitleChange} listingIsForTrade={listingIsForTrade} handleIsForTradChange={handleListingIsForTradeChange} listingPrice={listingPrice} handlePriceChange={handleListingPriceChange} listingQuantity={listingQuantity} handleQuantityChange={handleListingQuantityChange} listingSpecies={listingSpecies} handleSpeciesChange={handleListingSpeciesChange} listingDescription={listingDescription} handleDescriptionChange={handleListingDescriptionChange} listingInputImages={listingInputImages} handleImagesChange={handleListingImagesChange} listingImageValues={listingImageValues} speciesSelectOptions={speciesSelectOptions} />  
+            <ListingForm onListingFormSubmit={onListingFormSubmit} listingId={listingId} listingTitle={listingTitle} handleTitleChange={handleListingTitleChange} listingIsForTrade={listingIsForTrade} handleIsForTradChange={handleListingIsForTradeChange} listingPrice={listingPrice} handlePriceChange={handleListingPriceChange} listingQuantity={listingQuantity} handleQuantityChange={handleListingQuantityChange} listingSpecies={listingSpecies} handleSpeciesChange={handleListingSpeciesChange} listingDescription={listingDescription} handleDescriptionChange={handleListingDescriptionChange} listingInputImages={listingInputImages} handleImagesChange={handleListingImagesChange} listingImageValues={listingImageValues} speciesSelectOptions={speciesSelectOptions} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} />  
         </div>  
     );  
 };  

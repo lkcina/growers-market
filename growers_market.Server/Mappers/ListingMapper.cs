@@ -66,5 +66,20 @@ namespace growers_market.Server.Mappers
                 UploadedImages = formDto.UploadedImages.ToList()
             };
         }
+
+        public static UpdateListingRequestDto ToUpdateListingRequestDtoFromListingFormDto(this ListingFormDto formDto)
+        {
+            return new UpdateListingRequestDto
+            {
+                Title = formDto.Title,
+                IsForTrade = formDto.IsForTrade == "true",
+                Price = decimal.Parse(formDto.Price),
+                Quantity = int.Parse(formDto.Quantity),
+                Description = formDto.Description,
+                SpeciesId = int.Parse(formDto.SpeciesId),
+                ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
+                UploadedImages = formDto.UploadedImages.ToList()
+            };
+        }
     }
 }

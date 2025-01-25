@@ -18,13 +18,16 @@ interface Props {
     handleSpeciesChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     listingDescription: string;
     handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    listingInputImages: FileList | string | null;
+    listingInputImages: File[];
     handleImagesChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    listingImageValues: (File | string)[] | null;
+    listingImageValues: (File | string)[];
     speciesSelectOptions: SpeciesInfo[];
+    onRemoveImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onAddImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    fileInputCount: number;
 }
 
-const ListingForm: React.FC<Props> = ({ onListingFormSubmit, listingId, listingTitle, handleTitleChange, listingIsForTrade, handleIsForTradChange, listingPrice, handlePriceChange, listingQuantity, handleQuantityChange, listingSpecies, handleSpeciesChange, listingDescription, handleDescriptionChange, listingInputImages, handleImagesChange, listingImageValues, speciesSelectOptions }: Props): JSX.Element => {
+const ListingForm: React.FC<Props> = ({ onListingFormSubmit, listingId, listingTitle, handleTitleChange, listingIsForTrade, handleIsForTradChange, listingPrice, handlePriceChange, listingQuantity, handleQuantityChange, listingSpecies, handleSpeciesChange, listingDescription, handleDescriptionChange, listingInputImages, handleImagesChange, listingImageValues, speciesSelectOptions, onRemoveImage, onAddImage, fileInputCount }: Props): JSX.Element => {
     return (
         <form onSubmit={onListingFormSubmit}>
             <fieldset>
@@ -58,7 +61,7 @@ const ListingForm: React.FC<Props> = ({ onListingFormSubmit, listingId, listingT
                 <label htmlFor="listing-description">Description</label>
                 <textarea id="listing-description" name="Description" value={listingDescription} onChange={handleDescriptionChange} />
             </fieldset>
-            <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} />
+            <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} />
             <fieldset>
                 <button type="submit">Submit</button>
                 <button type="button" >Cancel</button>
