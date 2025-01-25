@@ -54,6 +54,8 @@ namespace growers_market.Server.Mappers
 
         public static CreateListingRequestDto ToCreateListingRequestDtoFromListingFormDto(this ListingFormDto formDto)
         {
+            var uploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>();
+
             return new CreateListingRequestDto
             {
                 Title = formDto.Title,
@@ -63,12 +65,14 @@ namespace growers_market.Server.Mappers
                 Description = formDto.Description,
                 SpeciesId = int.Parse(formDto.SpeciesId),
                 ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
-                UploadedImages = formDto.UploadedImages.ToList()
+                UploadedImages = uploadedImages
             };
         }
 
         public static UpdateListingRequestDto ToUpdateListingRequestDtoFromListingFormDto(this ListingFormDto formDto)
         {
+            var uploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>();
+
             return new UpdateListingRequestDto
             {
                 Title = formDto.Title,
@@ -78,7 +82,7 @@ namespace growers_market.Server.Mappers
                 Description = formDto.Description,
                 SpeciesId = int.Parse(formDto.SpeciesId),
                 ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
-                UploadedImages = formDto.UploadedImages.ToList()
+                UploadedImages = uploadedImages
             };
         }
     }

@@ -161,6 +161,7 @@ namespace growers_market.Server.Controllers
                 return BadRequest("You can only upload 5 images");
             }
             List<string> newImagePaths = new List<string>();
+            
             foreach (var image in listingDto.UploadedImages)
             {
                 if (image.Length > 1 * 1024 * 1024)

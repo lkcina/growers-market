@@ -11,6 +11,6 @@ namespace growers_market.Server.Dtos.Listing
         public string Description { get; set; }
         public string SpeciesId { get; set; }
         public string ImagePaths { get; set; }
-        public IFormFile[] UploadedImages { get; set; }
+        public IFormFile[]? UploadedImages { get; set; }
     }
 }
