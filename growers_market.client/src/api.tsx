@@ -125,6 +125,38 @@ export const deleteWishlist = async (id: number) => {
     }
 }
 
+export const getUserListings = async () => {
+    try {
+        const data = await axios.get<Listing[]>('https://localhost:7234/api/listing/user');
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
+export const getListing = async (id: number) => {
+    try {
+        const data = await axios.get<Listing>(`https://localhost:7234/api/listing/${id}`);
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
 export const createListing = async (form: FormData) => {
     try {
         const data = await axios.post<Listing>('https://localhost:7234/api/listing', form, {

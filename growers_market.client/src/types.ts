@@ -19,6 +19,7 @@ export interface Listing {
     isForTrade: boolean;
     price: number;
     quantity: number;
-    speciesId: number;
+    species: SpeciesInfo;
     description: string;
+    images: string[];
 }

@@ -21,7 +21,7 @@ namespace growers_market.Server.Mappers
                 Description = listing.Description,
                 CreatedAt = listing.CreatedAt,
                 AppUserName = listing.AppUserName,
-                SpeciesId = listing.SpeciesId,
+                Species = listing.Species?.ToSpeciesDto(),
                 Images = listing.Images
             };
         }

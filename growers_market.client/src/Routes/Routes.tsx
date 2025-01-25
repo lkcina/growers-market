@@ -11,6 +11,9 @@ import UserListingChatsList from "../Components/UserListing/UserListingChatsList
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import ProtectedRoute from "./ProtectedRoute";
+import ListingForm from "../Pages/ListingForm/ListingForm";
+import UserListing from "../Pages/UserListing/UserListing";
+import AllUserListings from "../Pages/AllUserListings/AllUserListings";
 
 export const router = createBrowserRouter([
     {
@@ -46,8 +49,22 @@ export const router = createBrowserRouter([
                         element: <ProtectedRoute><UserListingsPage /></ProtectedRoute>,
                         children: [
                             {
-                                path: "listing/:id",
-                                element: <UserListingChatsList />
+                                path: "all",
+                                element: <AllUserListings />
+                            },
+                            {
+                                path: "listing/:listingId",
+                                element: <UserListing />,
+                                children: [
+                                    {
+                                        path: "edit",
+                                        element: <ListingForm />
+                                    }
+                                ]
+                            },
+                            {
+                                path: "newListing",
+                                element: <ListingForm />
                             }
                         ]
                     },
