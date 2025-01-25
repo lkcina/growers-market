@@ -32,7 +32,7 @@ const ListingForm: React.FC<Props> = ({ onListingFormSubmit, listingId, listingT
         <form onSubmit={onListingFormSubmit}>
             <fieldset>
                 <label htmlFor="listing-title">Title</label>
-                <input type="text" id="listing-title" name="Title" value={listingTitle} onChange={handleTitleChange} />
+                <input type="text" id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} />
             </fieldset>
             <fieldset>
                 <label htmlFor="listing-is-for-trade">For Trade</label>
@@ -40,11 +40,11 @@ const ListingForm: React.FC<Props> = ({ onListingFormSubmit, listingId, listingT
             </fieldset>
             <fieldset>
                 <label htmlFor="listing-price">Price</label>
-                <input type="number" id="listing-price" name="Price" value={listingPrice} step="0.01" onChange={handlePriceChange} />
+                <input type="number" id="listing-price" name="Price" min="0.00" max="9999.99" value={listingPrice} step="0.01" onChange={handlePriceChange} />
             </fieldset>
             <fieldset>
                 <label htmlFor="listing-quantity">Quantity</label>
-                <input type="number" id="listing-quantity" name="Quantity" value={listingQuantity} onChange={handleQuantityChange} />
+                <input type="number" id="listing-quantity" name="Quantity" min="0" max="999" value={listingQuantity} onChange={handleQuantityChange} />
             </fieldset>
             <fieldset>
                 <label htmlFor="listing-species">Species</label>

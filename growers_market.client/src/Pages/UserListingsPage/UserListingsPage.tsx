@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ListingForm from '../../Components/ListingForm/ListingForm';  
 import { Listing, SpeciesInfo } from '../../types';  
 import { createListing, getUsedSpecies, updateListing } from '../../api';  
+import { toast } from 'react-toastify';
   
 interface Props {  
 }  
@@ -73,6 +74,13 @@ const UserListingsPage: React.FC<Props> = () => {
   
     const onListingFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {  
         e.preventDefault();
+        if (listingTitle === "") {
+            toast.warning("Title is required");
+            return;
+        } else if (listingImageValues.length > 5) {
+            toast.warning("Exceeded maximum of 5 images");
+            return;
+        }
         const form = e.target as HTMLFormElement;
         const data = new FormData(form);
         data.set('IsForTrade', listingIsForTrade.toString());
