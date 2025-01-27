@@ -1,10 +1,12 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, MouseEvent, SyntheticEvent, useEffect, useState } from "react";
 import { Listing, SpeciesInfo } from "../../types";
 import { v4 as uuidv4 } from 'uuid';
 import ListingFormImages from "../../Components/ListingFormImages/ListingFormImages";
 import { toast } from "react-toastify";
-import { getUsedSpecies, createListing, updateListing, getListing } from "../../api";
+import { getUsedSpecies, createListing, updateListing, getListing, searchSpecies } from "../../api";
 import { useNavigate, useParams } from "react-router-dom";
+import SearchBar from "../../Components/SearchBar/SearchBar";
+import PopupSpeciesList from "../../Components/PopupSpeciesList/PopupSpeciesList";
 
 interface Props {
 }
@@ -21,6 +23,12 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const [listingImageValues, setListingImageValues] = useState<(File | string)[]>([]);
     const [fileInputCount, setFileInputCount] = useState<number>(0);
     const [speciesSelectOptions, setSpeciesSelectOptions] = useState<SpeciesInfo[]>([]);
+
+    const [speciesSearchQuery, setSpeciesSearchQuery] = useState<string>("");
+    const [speciesSearchPage, setSpeciesSearchPage] = useState<number>(1);
+    const [speciesSearchLastPage, setSpeciesSearchLastPage] = useState<number>(1);
+    const [speciesSearchResult, setSpeciesSearchResult] = useState<SpeciesInfo[]>([]);
+    const [isSpeciesSearchOpen, setIsSpeciesSearchOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -57,33 +65,33 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
             })
     }, [listingId])
 
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setListingTitle(e.target.value);
     }
 
-    const handleIsForTradeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleIsForTradeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setListingIsForTrade(e.target.checked);
     }
 
-    const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
         setListingPrice(Number(e.target.value));
     }
 
-    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
         setListingQuantity(Number(e.target.value));
     }
 
-    const handleSpeciesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSpeciesChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const speciesId = Number(e.target.value);
         const species = speciesSelectOptions.find(s => s.id === speciesId) || null;
         setListingSpecies(species);
     }
 
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setListingDescription(e.target.value);
     }
 
-    const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImagesChange = (e: ChangeEvent<HTMLInputElement>) => {
         const updatedInputImages = listingInputImages.concat(Array.from(e.target.files || []));
         setListingInputImages(updatedInputImages);
         const updatedImageValues: (File | string)[] = [...listingImageValues, ...Array.from(e.target.files || [])];
@@ -91,7 +99,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         setListingImageValues(updatedImageValues);
     }
 
-    const onListingFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const onListingFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (listingTitle === "") {
             toast.warning("Title is required");
@@ -139,7 +147,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         }
     }
 
-    const onRemoveImage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const onRemoveImage = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const button = e.target as HTMLButtonElement;
         const imageIndex = Number(button.parentElement?.id);
@@ -149,50 +157,120 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         setListingImageValues(updatedImageValues);
     }
 
-    const onAddImage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const onAddImage = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setFileInputCount(fileInputCount + 1);
     }
 
+    const handleSpeciesSearchQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSpeciesSearchQuery(e.target.value);
+    }
+
+    const onSpeciesSearchSubmit = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        const result = await searchSpecies(1, speciesSearchQuery, null, null, null, null, null, null, null);
+        console.log(result);
+        if (typeof result === "string") {
+            setServerError(result);
+            return;
+        } else if (Array.isArray(result.data.data)) {
+            setSpeciesSearchResult(result.data.data);
+            setSpeciesSearchPage(result.data.currentPage);
+            setSpeciesSearchLastPage(result.data.lastPage);
+        }
+    }
+
+    const onSpeciesSearchScroll = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        const target = e.target as HTMLDivElement;
+        if (target.scrollHeight - target.scrollTop >= target.clientHeight + 20) {
+            return;
+        }
+        console.log(speciesSearchPage, speciesSearchLastPage);
+        if (speciesSearchPage >= speciesSearchLastPage) {
+            return;
+        }
+
+        const result = await searchSpecies(speciesSearchPage + 1, speciesSearchQuery, null, null, null, null, null, null, null);
+        if (typeof result === "string") {
+            setServerError(result);
+            return;
+        } else if (Array.isArray(result.data.data)) {
+            const updatedResult = speciesSearchResult.concat(result.data.data);
+            setSpeciesSearchResult(updatedResult);
+            setSpeciesSearchPage(speciesSearchPage + 1);
+        }
+    }
+
+    const onSpeciesSearchSelect = (e: SyntheticEvent) => {
+        e.preventDefault();
+        const target = e.target as HTMLFormElement;
+        const input = target.elements.namedItem("speciesId") as HTMLInputElement;
+        const speciesId = Number(input.value);
+        const updatedSelectOptions = speciesSelectOptions.concat(speciesSearchResult.filter(s => s.id === speciesId));
+        setSpeciesSelectOptions(updatedSelectOptions);
+        const species = updatedSelectOptions.find(s => s.id === speciesId) || null;
+        setListingSpecies(species);
+        closeSpeciesSearch();
+    }
+
+    const openSpeciesSearch = () => {
+        setIsSpeciesSearchOpen(true);
+    }
+
+    const closeSpeciesSearch = () => {
+        setIsSpeciesSearchOpen(false);
+    }
+
     return (
-        <form onSubmit={onListingFormSubmit}>
-            <fieldset>
-                <label htmlFor="listing-title">Title</label>
-                <input type="text" id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} />
-            </fieldset>
-            <fieldset>
-                <label htmlFor="listing-is-for-trade">For Trade</label>
-                <input type="checkbox" id="listing-is-for-trade" name="IsForTrade" checked={listingIsForTrade} onChange={handleIsForTradeChange} />
-            </fieldset>
-            <fieldset>
-                <label htmlFor="listing-price">Price</label>
-                <input type="number" id="listing-price" name="Price" min="0.00" max="9999.99" value={listingPrice} step="0.01" onChange={handlePriceChange} />
-            </fieldset>
-            <fieldset>
-                <label htmlFor="listing-quantity">Quantity</label>
-                <input type="number" id="listing-quantity" name="Quantity" min="0" max="999" value={listingQuantity} onChange={handleQuantityChange} />
-            </fieldset>
-            <fieldset>
-                <label htmlFor="listing-species">Species</label>
-                <select id="listing-species" name="SpeciesId" value={listingSpecies ? listingSpecies.id : "0"} onChange={handleSpeciesChange} >
-                    <option value="0" disabled>Select a species</option>
-                    {
-                        speciesSelectOptions.map(s => {
-                            return <option key={uuidv4()} id={String(s.id)} value={s.id}>{s.commonName} ({s.scientificName[0]})</option>
-                        })
-                    }
-                </select>
-            </fieldset>
-            <fieldset>
-                <label htmlFor="listing-description">Description</label>
-                <textarea id="listing-description" name="Description" value={listingDescription} onChange={handleDescriptionChange} />
-            </fieldset>
-            <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} />
-            <fieldset>
-                <button type="submit">Submit</button>
-                <button type="button" >Cancel</button>
-            </fieldset>
-        </form>
+        <div id="listing-form">
+            <form onSubmit={onListingFormSubmit}>
+                <fieldset>
+                    <label htmlFor="listing-title">Title</label>
+                    <input type="text" id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="listing-is-for-trade">For Trade</label>
+                    <input type="checkbox" id="listing-is-for-trade" name="IsForTrade" checked={listingIsForTrade} onChange={handleIsForTradeChange} />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="listing-price">Price</label>
+                    <input type="number" id="listing-price" name="Price" min="0.00" max="9999.99" value={listingPrice} step="0.01" onChange={handlePriceChange} />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="listing-quantity">Quantity</label>
+                    <input type="number" id="listing-quantity" name="Quantity" min="0" max="999" value={listingQuantity} onChange={handleQuantityChange} />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="listing-species">Species</label>
+                    <select id="listing-species" name="SpeciesId" value={listingSpecies ? listingSpecies.id : "0"} onChange={handleSpeciesChange} >
+                        <option value="0" disabled>Select a species</option>
+                        {
+                            speciesSelectOptions.map(s => {
+                                return <option key={uuidv4()} id={String(s.id)} value={s.id}>{s.commonName} ({s.scientificName[0]})</option>
+                            })
+                        }
+                    </select>
+                    <button type="button" onClick={openSpeciesSearch}>Search</button>
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="listing-description">Description</label>
+                    <textarea id="listing-description" name="Description" value={listingDescription} onChange={handleDescriptionChange} />
+                </fieldset>
+                <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} />
+                <fieldset>
+                    <button type="submit">Submit</button>
+                    <button type="button" >Cancel</button>
+                </fieldset>
+            </form>
+            {isSpeciesSearchOpen ? (
+                <div id="species-search">
+                    <SearchBar query={speciesSearchQuery} handleQueryChange={handleSpeciesSearchQueryChange} onSearchSubmit={onSpeciesSearchSubmit} />
+                    <button onClick={closeSpeciesSearch}>X</button>
+                    <PopupSpeciesList searchResult={speciesSearchResult} onSelect={onSpeciesSearchSelect} onScroll={onSpeciesSearchScroll} />
+                </div>
+            ) : (null)}
+        </div>
     )
 }
 

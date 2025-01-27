@@ -11,7 +11,7 @@ const SpeciesSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryC
         <form onSubmit={onSearchSubmit}>
             <input type="text" value={query} onChange={(e) => handleQueryChange(e)} />
             
-            <button onClick={(e) => onSearchSubmit(e)}>Search</button>
+            <button type="submit">Search</button>
         </form>
     );
 }
