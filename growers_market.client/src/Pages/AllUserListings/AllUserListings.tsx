@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Listing } from '../../types';
 import { toast } from 'react-toastify';
 import { getUserListings } from '../../api';
 import ListingList from '../../Components/ListingList/ListingList';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
 }
 
 const AllUserListings: React.FC<Props> = (): JSX.Element => {
     const [userListings, setUserListings] = useState<Listing[]>([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getUserListings().then((result) => {
@@ -22,10 +24,19 @@ const AllUserListings: React.FC<Props> = (): JSX.Element => {
         })
     }, [])
 
+    const onListingSelect = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const target = e.target as HTMLFormElement;
+        const input = target.elements.namedItem("listingId") as HTMLInputElement;
+        const listingId = Number(input.value);
+        navigate(`/market/my-listings/listing/${listingId}/info`);
+    }
+
+
     return (
         <div>
-            <h1>AllUserListings Page</h1>
-            <ListingList />
+            <h1>All User Listings Page</h1>
+            <ListingList listings={userListings} onSelect={onListingSelect} />
         </div>
     );
 }
