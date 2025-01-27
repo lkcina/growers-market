@@ -1,4 +1,5 @@
-﻿using growers_market.Server.Models;
+﻿using growers_market.Server.Dtos.Species;
+using growers_market.Server.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace growers_market.Server.Dtos.Listing
@@ -14,7 +15,7 @@ namespace growers_market.Server.Dtos.Listing
         public string Description { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string AppUserName { get; set; }
-        public int? SpeciesId { get; set; }
+        public SpeciesDto? Species { get; set; }
         public List<string> Images { get; set; }
     }
 }

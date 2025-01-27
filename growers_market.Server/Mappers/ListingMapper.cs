@@ -1,6 +1,9 @@
-﻿using growers_market.Server.Dtos.Listing;
+﻿using System.Text.Json;
+using growers_market.Server.Dtos.Listing;
+using growers_market.Server.Dtos.Species;
 using growers_market.Server.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Options;
 
 namespace growers_market.Server.Mappers
 {
@@ -18,7 +21,7 @@ namespace growers_market.Server.Mappers
                 Description = listing.Description,
                 CreatedAt = listing.CreatedAt,
                 AppUserName = listing.AppUserName,
-                SpeciesId = listing.SpeciesId,
+                Species = listing.Species?.ToSpeciesDto(),
                 Images = listing.Images
             };
         }
@@ -46,6 +49,40 @@ namespace growers_market.Server.Mappers
                 Quantity = updateDto.Quantity,
                 Description = updateDto.Description,
                 SpeciesId = updateDto.SpeciesId
+            };
+        }
+
+        public static CreateListingRequestDto ToCreateListingRequestDtoFromListingFormDto(this ListingFormDto formDto)
+        {
+            var uploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>();
+
+            return new CreateListingRequestDto
+            {
+                Title = formDto.Title,
+                IsForTrade = formDto.IsForTrade == "true",
+                Price = decimal.Parse(formDto.Price),
+                Quantity = int.Parse(formDto.Quantity),
+                Description = formDto.Description,
+                SpeciesId = int.Parse(formDto.SpeciesId),
+                ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
+                UploadedImages = uploadedImages
+            };
+        }
+
+        public static UpdateListingRequestDto ToUpdateListingRequestDtoFromListingFormDto(this ListingFormDto formDto)
+        {
+            var uploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>();
+
+            return new UpdateListingRequestDto
+            {
+                Title = formDto.Title,
+                IsForTrade = formDto.IsForTrade == "true",
+                Price = decimal.Parse(formDto.Price),
+                Quantity = int.Parse(formDto.Quantity),
+                Description = formDto.Description,
+                SpeciesId = int.Parse(formDto.SpeciesId),
+                ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
+                UploadedImages = uploadedImages
             };
         }
     }
