@@ -124,7 +124,6 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         }
 
         console.log(Object.fromEntries(data.entries()));
-
         if (listingId === undefined) {
 
             const listingResult = await createListing(data);
@@ -133,16 +132,15 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 setServerError(listingResult);
                 return;
             } else if (listingResult.status === 201) {
-                navigate(`/`);
+                navigate(`/market/my-listings/listing/${listingResult.data.id}/info`);
             }
         } else {
             const listingResult = await updateListing(Number(listingId), data);
-
             if (typeof listingResult === "string") {
                 setServerError(listingResult);
                 return;
-            } else if (listingResult.status === 201) {
-                navigate(`/listing/${listingId}`);
+            } else if (listingResult.status === 200) {
+                navigate(`/market/my-listings/listing/${listingId}/info`);
             }
         }
     }

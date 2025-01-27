@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router";
 import { Chat, Listing } from "../../types";
 import { getListing, getListingChats } from "../../api";
 import ChatList from "../../Components/ChatList/ChatList";
+import ListingImages from "../../Components/ListingImages/ListingImages";
+import { SpeciesInfo } from "../../types";
 
 interface Props {
 
@@ -10,7 +12,30 @@ interface Props {
 
 const UserListingInfo: React.FC<Props> = (): JSX.Element => {
     const { listingId } = useParams();
-    const [listing, setListing] = useState<Listing | null>(null);
+    const [listing, setListing] = useState<Listing>({
+        title: "",
+        isForTrade: false,
+        price: 0,
+        quantity: 0,
+        species: {
+            id: 0,
+            commonName: "",
+            scientificName: [""],
+            cycle: "",
+            watering: "",
+            sunlight: [""],
+            hardinessMin: 0,
+            hardinessMax: 0,
+            indoor: false,
+            description: "",
+            image: "",
+            thumbnail: ""
+        },
+        images: [],
+        description: "",
+        appUsername: "",
+        id: Number(listingId)
+    });
     const [chats, setChats] = useState<Chat[]>([]);
     const [imageIndex, setImageIndex] = useState<number>(0);
     const [serverError, setServerError] = useState<string | null>(null);
@@ -61,11 +86,7 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
         <div id="user-listing-info">
             <div className="info-card">
                 <h1>{listing?.title}</h1>
-                <div className="image-container">
-                    <button onClick={onPreviousImage}>{"<"}</button>
-                    <img src={listing?.images[imageIndex]} alt={listing?.title} />
-                    <button onClick={onNextImage}>{">"}</button>
-                </div>
+                <ListingImages listingTitle={listing.title} images={listing?.images} imageIndex={imageIndex} onNextImage={onNextImage} onPreviousImage={onPreviousImage} />
                 <div className="listing-info">
                     {listing?.isForTrade ? <p>Tradable</p> : null}
                     <p>Price: ${(Math.round(listing?.price * 100) / 100).toFixed(2)}</p>
