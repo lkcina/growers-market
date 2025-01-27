@@ -15,7 +15,7 @@ const MarketSidebar: React.FC<Props> = ({ }: Props): JSX.Element => {
                 <Link to="/market/chats">Chats</Link>
             </div>
             <div>
-                <Link to="/market/my-listings">My Listings</Link>
+                <Link to="/market/my-listings/all">My Listings</Link>
             </div>
             <div>
                 <Link to="/market/my-wishlist">My Wishlist</Link>

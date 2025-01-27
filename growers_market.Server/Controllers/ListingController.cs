@@ -85,19 +85,25 @@ namespace growers_market.Server.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateListing([FromForm] CreateListingRequestDto listingDto)
+        public async Task<IActionResult> CreateListing([FromForm] ListingFormDto formListingDto)
         {
+            foreach (var image in formListingDto.UploadedImages)
+            {
+                Console.WriteLine(image.FileName);
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (listingDto.Images.Count > 5)
+            var listingDto = formListingDto.ToCreateListingRequestDtoFromListingFormDto();
+
+            if (listingDto.UploadedImages.Count + listingDto.ImagePaths.Count > 5)
             {
                 return BadRequest("You can only upload 5 images");
             }
-            List<string> imagePaths = new List<string>();
-            foreach (var image in listingDto.Images)
+            List<string> newImagePaths = new List<string>();
+            foreach (var image in listingDto.UploadedImages)
             {
                 if (image.Length > 1 * 1024 * 1024)
                 {
@@ -108,9 +114,8 @@ namespace growers_market.Server.Controllers
                 {
                     return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
                 }
-                imagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
+                newImagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
             }
-            
 
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
@@ -118,6 +123,7 @@ namespace growers_market.Server.Controllers
             var species = await _speciesRepository.GetByIdAsync(listing.SpeciesId);
             if (species == null)
             {
+                
                 species = await _perenualService.GetPlantByIdAsync(listing.SpeciesId);
                 if (species == null)
                 {
@@ -130,7 +136,7 @@ namespace growers_market.Server.Controllers
             }
             listing.AppUserId = appUser.Id;
             listing.AppUserName = appUser.UserName;
-            listing.Images = imagePaths;
+            listing.Images = listingDto.ImagePaths.Concat(newImagePaths).ToList();
             await _listingRepository.CreateAsync(listing);
             if (listing == null)
             {
@@ -141,19 +147,22 @@ namespace growers_market.Server.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdateListing([FromRoute] int id, [FromBody] UpdateListingRequestDto listingDto)
+        public async Task<IActionResult> UpdateListing([FromRoute] int id, [FromForm] ListingFormDto formListingDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (listingDto.Images.Count > 5)
+            var listingDto = formListingDto.ToUpdateListingRequestDtoFromListingFormDto();
+
+            if (listingDto.ImagePaths.Count + listingDto.UploadedImages.Count > 5)
             {
                 return BadRequest("You can only upload 5 images");
             }
-            List<string> imagePaths = new List<string>();
-            foreach (var image in listingDto.Images)
+            List<string> newImagePaths = new List<string>();
+            
+            foreach (var image in listingDto.UploadedImages)
             {
                 if (image.Length > 1 * 1024 * 1024)
                 {
@@ -164,7 +173,7 @@ namespace growers_market.Server.Controllers
                 {
                     return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
                 }
-                imagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
+                newImagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
             }
 
             var species = await _speciesRepository.GetByIdAsync(listingDto.SpeciesId);
@@ -188,7 +197,7 @@ namespace growers_market.Server.Controllers
                 return Unauthorized();
             }
             var listing = listingDto.ToListingFromUpdateDto();
-            listing.Images = imagePaths;
+            listing.Images = listingDto.ImagePaths.Concat(newImagePaths).ToList();
             await _listingRepository.UpdateAsync(id, listing);
             if (listing == null)
             {

@@ -1,4 +1,6 @@
-﻿using growers_market.Server.Data;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using growers_market.Server.Data;
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Models;
@@ -20,8 +22,20 @@ namespace growers_market.Server.Repositories
 
         public async Task<Listing> CreateAsync(Listing listing)
         {
+            Console.WriteLine(JsonSerializer.Serialize(listing));
             await _context.Listings.AddAsync(listing);
-            await _context.SaveChangesAsync();
+            Console.WriteLine("Added");
+            try
+            {
+                await _context.SaveChangesAsync();
+                Console.WriteLine("Saved");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving changes: {ex.Message}");
+                throw;
+            }
+            Console.WriteLine("Saved");
             return listing;
         }
 
@@ -109,7 +123,7 @@ namespace growers_market.Server.Repositories
 
         public async Task<List<Listing>> GetUserListingsAsync(AppUser appUser)
         {
-            var listings = _context.Listings.Include(l => l.AppUser).AsQueryable();
+            var listings = _context.Listings.Include(l => l.AppUser).Include(l => l.Species).AsQueryable();
             listings = listings.Where(l => l.AppUser.Id == appUser.Id);
             return await listings.ToListAsync();
         }
