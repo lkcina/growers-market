@@ -14,6 +14,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import ListingForm from "../Pages/ListingForm/ListingForm";
 import UserListing from "../Pages/UserListing/UserListing";
 import AllUserListings from "../Pages/AllUserListings/AllUserListings";
+import UserListingInfo from "../Pages/UserListingInfo/UserListingInfo";
 
 export const router = createBrowserRouter([
     {
@@ -57,13 +58,17 @@ export const router = createBrowserRouter([
                                 element: <UserListing />,
                                 children: [
                                     {
+                                        path: "info",
+                                        element: <UserListingInfo />
+                                    },
+                                    {
                                         path: "edit",
                                         element: <ListingForm />
                                     }
                                 ]
                             },
                             {
-                                path: "newListing",
+                                path: "new",
                                 element: <ListingForm />
                             }
                         ]

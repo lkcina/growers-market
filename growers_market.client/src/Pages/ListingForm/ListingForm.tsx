@@ -222,6 +222,17 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         setIsSpeciesSearchOpen(false);
     }
 
+
+    const onCancel = () => {
+        if (window.confirm("Are you sure? All changes will be lost.")) {
+            if (listingId !== undefined) {
+                navigate(`/market/my-listings/listing/${listingId}/info`);
+            } else {
+                navigate("/market/my-listings/all");
+            }
+        }
+    }
+
     return (
         <div id="listing-form">
             <form onSubmit={onListingFormSubmit}>
@@ -260,7 +271,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} />
                 <fieldset>
                     <button type="submit">Submit</button>
-                    <button type="button" >Cancel</button>
+                    <button type="button" onClick={onCancel} >Cancel</button>
                 </fieldset>
             </form>
             {isSpeciesSearchOpen ? (
