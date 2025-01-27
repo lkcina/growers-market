@@ -1,4 +1,4 @@
-import { Listing, SpeciesInfo } from "./types";
+import { Chat, Listing, SpeciesInfo } from "./types";
 import axios from 'axios';
 
 interface SpeciesSearchResponse {
@@ -183,6 +183,21 @@ export const updateListing = async (id: number, form: FormData) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error);
+            return "An unexpected error has occurred";
+        }
+    }
+}
+
+export const getListingChats = async (listingId: number) => {
+    try {
+        const data = await axios.get<Chat[]>(`https://localhost:7234/api/chat/listing/${listingId}`);
         return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {

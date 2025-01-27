@@ -6,12 +6,8 @@ interface Props {
 }
 
 const UserListing: React.FC<Props> = (): JSX.Element => {
-    const { listingId } = useParams();
     return (
-        <div>
-            <h1>UserListing Page</h1>
             <Outlet />
-        </div>
     );
 }
 
