@@ -18,7 +18,7 @@ namespace growers_market.Server.Services
             _config = config;
         }
 
-        public async Task<AllSpeciesDto> PlantSearchAsync(PerenualPlantQueryObject query)
+        public async Task<AllListingsDto> PlantSearchAsync(PerenualPlantQueryObject query)
         {
             try
             {

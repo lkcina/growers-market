@@ -21,7 +21,7 @@ export interface Listing {
     quantity: number;
     species: SpeciesInfo;
     description: string;
-    appUsername: string;
+    appUserName: string;
     images: string[];
 }
 

@@ -209,3 +209,37 @@ export const getListingChats = async (listingId: number) => {
         }
     }
 }
+
+interface ListingSearchResponse {
+    data: Listing[];
+    from: number;
+    to: number;
+    total: number;
+    lastPage: number;
+    currentPage: number;
+    perPage: number;
+}
+
+export const searchListings = async (page: number, query: string, isForTrade: boolean | null, priceMax: number, speciesId: number | null, username: string | null, sort: string | null) => {
+    try {
+        let url = `https://localhost:7234/api/listing?Page=${page}&Q=${query}&PriceMax=${priceMax}`;
+        if (isForTrade) url += `&IsForTrade=${isForTrade}`;
+        if (speciesId) url += `&SpeciesId=${speciesId}`;
+        if (username) url += `&AppUserName=${username}`;
+        if (sort) url += `&SortBy=${sort}`;
+
+        const data = await axios.get<ListingSearchResponse>(url);
+        console.log(data);
+        return data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}

@@ -1,8 +1,10 @@
-﻿namespace growers_market.Server.Dtos.Species
+﻿using growers_market.Server.Dtos.Listing;
+
+namespace growers_market.Server.Dtos.Listing
 {
     public class AllListingsDto
     {
-        public List<SpeciesDto> Data { get; set; }
+        public List<ListingDto> Data { get; set; }
         public int To { get; set; }
         public int PerPage { get; set; }
         public int CurrentPage { get; set; }
