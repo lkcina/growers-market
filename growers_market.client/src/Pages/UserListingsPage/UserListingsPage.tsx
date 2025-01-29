@@ -10,10 +10,6 @@ interface Props {
   
 const UserListingsPage: React.FC<Props> = () => {  
     
-
-    const updateUserListings = (newUserListings: Listing[]) => {
-        setUserListings(newUserListings);
-    }
   
     return (  
         <div>  

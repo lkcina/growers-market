@@ -37,7 +37,7 @@ const AllUserListings: React.FC<Props> = (): JSX.Element => {
         <div>
             <h1>All User Listings Page</h1>
             <button onClick={() => navigate("/market/my-listings/new")}>Create New Listing</button>
-            <ListingList listings={userListings} onSelect={onListingSelect} />
+            <ListingList listings={userListings} onSelect={onListingSelect} listingDetails={null} userChats={null}  />
         </div>
     );
 }

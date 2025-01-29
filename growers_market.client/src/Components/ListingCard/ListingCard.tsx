@@ -7,7 +7,7 @@ interface Props {
     listing: Listing;
     onSelect: (e: FormEvent<HTMLFormElement>) => void;
     listingDetails: number | null;
-    chat: Chat | undefined;
+    chat: Chat | undefined | null;
     setUserChats: Dispatch<SetStateAction<Chat[]>>;
 }
 

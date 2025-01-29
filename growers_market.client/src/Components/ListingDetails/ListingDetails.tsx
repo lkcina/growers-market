@@ -6,7 +6,7 @@ import { useAuth } from "../../Context/UseAuth";
 
 interface Props {
     listing: Listing;
-    chat: Chat | undefined;
+    chat: Chat | undefined | null;
     setUserChats: Dispatch<SetStateAction<Chat[]>>;
 }
 
@@ -22,7 +22,7 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, setUserChats }: Props,
             <div className="listing-details-description">
                 {listing.description}
             </div>
-            {isLoggedIn() ? <ListingChat chat={chat} listingId={listing.id} setUserChats={setUserChats} /> : null}
+            {isLoggedIn() && chat !== null ? <ListingChat chat={chat} listingId={listing.id} setUserChats={setUserChats} /> : null}
         </div>
     );
 }
