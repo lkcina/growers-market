@@ -5,16 +5,15 @@ import ChatCard from '../ChatCard/ChatCard';
 interface Props {
     chats: Chat[];
     setUserChats: Dispatch<SetStateAction<Chat[]>>;
-    listingId: number;
 }
 
-const ChatList: React.FC<Props> = ({ chats, setUserChats, listingId }: Props): JSX.Element => {
+const ChatList: React.FC<Props> = ({ chats, setUserChats }: Props): JSX.Element => {
     return (
         <div className="chat-list">
             {chats.length > 0 ? (
                 chats.map((chat) => {
                     return (
-                        <ChatCard key={chat.id} chat={chat} setUserChats={setUserChats} listingId={listingId} />
+                        <ChatCard key={chat.id} chat={chat} setUserChats={setUserChats} />
                     )
                 })
             ) : (

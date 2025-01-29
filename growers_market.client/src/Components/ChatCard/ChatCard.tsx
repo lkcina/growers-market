@@ -6,10 +6,9 @@ import { getListingChats, getUserChats, sendMessage } from '../../api';
 interface Props {
     chat: Chat;
     setUserChats: Dispatch<SetStateAction<Chat[]>>;
-    listingId: number;
 }
 
-const ChatCard: React.FC<Props> = ({ chat, setUserChats, listingId }: Props): JSX.Element => {
+const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element => {
     const [newMessage, setNewMessage] = React.useState<string>('');
     const [serverError, setServerError] = React.useState<string | null>(null);
 
@@ -35,7 +34,7 @@ const ChatCard: React.FC<Props> = ({ chat, setUserChats, listingId }: Props): JS
                 setServerError(result);
                 return
             } else {
-                getListingChats(listingId).then((chatResult) => {
+                getListingChats(chat.listing.id).then((chatResult) => {
                     if (typeof chatResult === "string") {
                         setServerError(chatResult);
                     } else if (Array.isArray(chatResult)) {
