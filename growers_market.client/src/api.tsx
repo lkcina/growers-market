@@ -1,4 +1,4 @@
-import { Chat, Listing, SpeciesInfo } from "./types";
+import { Chat, Listing, Message, SpeciesInfo } from "./types";
 import axios from 'axios';
 
 interface SpeciesSearchResponse {
@@ -235,6 +235,95 @@ export const searchListings = async (page: number, query: string, isForTrade: bo
     catch (error) {
         if (axios.isAxiosError(error)) {
 
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
+interface ChatResponse {
+    id: number;
+    listing: Listing;
+    appUsername: string;
+    messages: MessageResponse[];
+}
+
+interface MessageResponse {
+    id: number;
+    chatId: number;
+    appUsername: string;
+    content: string;
+    createdAt: string;
+}
+
+const formatChat = (chat: ChatResponse): Chat => {
+    const messages = chat.messages.map((message) => {
+        return {
+            id: message.id,
+            chatId: message.chatId,
+            appUsername: message.appUsername,
+            content: message.content,
+            createdAt: new Date(Date.parse(message.createdAt))
+        } as Message;
+    });
+    return {
+        id: chat.id,
+        listing: chat.listing,
+        appUsername: chat.appUsername,
+        messages: messages
+    }
+}
+
+export const getUserChats = async () => {
+    try {
+        const data = await axios.get<ChatResponse[]>(`https://localhost:7234/api/chat/user`);
+        if (typeof data === "string") {
+            return data;
+        }
+
+        const chatsFormatted = data.data.map((chat) => {
+            return formatChat(chat);
+        });
+        return chatsFormatted;
+        
+    }
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
+export const createChat = async (listingId: number) => {
+    try {
+        const data = await axios.post<Chat>(`https://localhost:7234/api/chat/new/${listingId}`);
+        return data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
+export const sendMessage = async (chatId: number, content: string) => {
+    try {
+        const data = await axios.post(`https://localhost:7234/api/message`, { content, chatId });
+        return data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error)) {
             console.log("error message: ", error.message);
             return error.message;
         } else {

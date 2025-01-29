@@ -9,6 +9,7 @@ namespace growers_market.Server.Mappers
         {
             return new MessageDto
             {
+                Id = message.Id,
                 Content = message.Content,
                 CreatedAt = message.CreatedAt,
                 ChatId = message.ChatId,

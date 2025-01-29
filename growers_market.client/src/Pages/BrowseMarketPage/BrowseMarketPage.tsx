@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import ListingSearchBar from '../../Components/ListingSearch/ListingSearchBar/ListingSearchBar';
-import { Listing, SpeciesInfo } from '../../types';
-import { getUsedSpecies, searchListings } from '../../api';
+import { Chat, Listing, SpeciesInfo } from '../../types';
+import { getUsedSpecies, getUserChats, searchListings } from '../../api';
 import SearchInfo from '../../Components/SearchInfo/SearchInfo';
 import ListingList from '../../Components/ListingList/ListingList';
 
@@ -23,6 +23,7 @@ const BrowseMarketPage: React.FC<Props> = () => {
     const [listingSearchTo, setListingSearchTo] = useState<number>(1);
     const [listingSearchTotal, setListingSearchTotal] = useState<number>(0);
 
+    const [userChats, setUserChats] = useState<Chat[]>([]);
     const [listingDetails, setListingDetails] = useState<number | null>(null);
 
     const [serverError, setServerError] = useState<string | null>(null);
@@ -35,6 +36,17 @@ const BrowseMarketPage: React.FC<Props> = () => {
             } else if (Array.isArray(result)) {
                 console.log(result);
                 setSpeciesSelectOptions(result);
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        getUserChats().then((result) => {
+            if (typeof result === "string") {
+                setServerError(result);
+                return;
+            } else if (Array.isArray(result)) {
+                setUserChats(result);
             }
         })
     }, [])
@@ -128,7 +140,7 @@ const BrowseMarketPage: React.FC<Props> = () => {
         <div id="browse-market-page">
             <ListingSearchBar query={listingSearchQuery} handleQueryChange={handleQueryChange} isForTrade={listingIsForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={listingPriceMax} handlePriceMaxChange={handlePriceMaxChange} species={listingSpecies} handleSpeciesChange={handleSpeciesChange} sort={listingSort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} onSearchSubmit={onSearchSubmit} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
-            <ListingList listings={listingSearchResult} onSelect={showDetails} listingDetails={listingDetails} />
+            <ListingList listings={listingSearchResult} onSelect={showDetails} listingDetails={listingDetails} userChats={userChats} setUserChats={setUserChats} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
         </div>
     );
