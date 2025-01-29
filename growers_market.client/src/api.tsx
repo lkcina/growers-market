@@ -197,8 +197,17 @@ export const updateListing = async (id: number, form: FormData) => {
 
 export const getListingChats = async (listingId: number) => {
     try {
-        const data = await axios.get<Chat[]>(`https://localhost:7234/api/chat/listing/${listingId}`);
-        return data;
+        const data = await axios.get<ChatResponse[]>(`https://localhost:7234/api/chat/listing/${listingId}`);
+        console.log(data);
+        if (typeof data === "string") {
+            return data;
+        }
+
+        const chatsFormatted = data.data.map((chat) => {
+            return formatChat(chat);
+        });
+        console.log(chatsFormatted);
+        return chatsFormatted;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.message);
@@ -247,14 +256,14 @@ export const searchListings = async (page: number, query: string, isForTrade: bo
 interface ChatResponse {
     id: number;
     listing: Listing;
-    appUsername: string;
+    appUserName: string;
     messages: MessageResponse[];
 }
 
 interface MessageResponse {
     id: number;
     chatId: number;
-    appUsername: string;
+    appUserName: string;
     content: string;
     createdAt: string;
 }
@@ -264,7 +273,7 @@ const formatChat = (chat: ChatResponse): Chat => {
         return {
             id: message.id,
             chatId: message.chatId,
-            appUsername: message.appUsername,
+            appUsername: message.appUserName,
             content: message.content,
             createdAt: new Date(Date.parse(message.createdAt))
         } as Message;
@@ -272,7 +281,7 @@ const formatChat = (chat: ChatResponse): Chat => {
     return {
         id: chat.id,
         listing: chat.listing,
-        appUsername: chat.appUsername,
+        appUsername: chat.appUserName,
         messages: messages
     }
 }
