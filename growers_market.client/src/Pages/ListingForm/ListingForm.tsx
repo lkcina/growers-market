@@ -7,6 +7,7 @@ import { getUsedSpecies, createListing, updateListing, getListing, searchSpecies
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import PopupSpeciesList from "../../Components/PopupSpeciesList/PopupSpeciesList";
+import FormSpeciesSelect from "../../Components/FormSpeciesSelect/FormSpeciesSelect";
 
 interface Props {
 }
@@ -250,18 +251,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                     <label htmlFor="listing-quantity">Quantity</label>
                     <input type="number" id="listing-quantity" name="Quantity" min="0" max="999" value={listingQuantity} onChange={handleQuantityChange} />
                 </fieldset>
-                <fieldset>
-                    <label htmlFor="listing-species">Species</label>
-                    <select id="listing-species" name="SpeciesId" value={listingSpecies ? listingSpecies.id : "0"} onChange={handleSpeciesChange} >
-                        <option value="0" disabled>Select a species</option>
-                        {
-                            speciesSelectOptions.map(s => {
-                                return <option key={uuidv4()} id={String(s.id)} value={s.id}>{s.commonName} ({s.scientificName[0]})</option>
-                            })
-                        }
-                    </select>
-                    <button type="button" onClick={openSpeciesSearch}>Search</button>
-                </fieldset>
+                <FormSpeciesSelect speciesValue={listingSpecies} handleSpeciesChange={handleSpeciesChange} speciesSelectOptions={speciesSelectOptions} isSpeciesSearch={true} openSpeciesSearch={openSpeciesSearch} />
                 <fieldset>
                     <label htmlFor="listing-description">Description</label>
                     <textarea id="listing-description" name="Description" value={listingDescription} onChange={handleDescriptionChange} />

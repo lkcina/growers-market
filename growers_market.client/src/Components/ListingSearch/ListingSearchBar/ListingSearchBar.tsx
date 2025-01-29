@@ -1,0 +1,37 @@
+import React, { ChangeEvent, SyntheticEvent } from "react";
+import { SpeciesInfo } from "../../../types";
+import ListingAdvancedSearch from "../ListingAdvancedSearch/ListingAdvancedSearch";
+
+interface Props {
+    query: string | undefined;
+    handleQueryChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    isForTrade: boolean | null;
+    handleIsForTradeChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    priceMax: number;
+    handlePriceMaxChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    species: SpeciesInfo | null;
+    handleSpeciesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+    sort: string | null;
+    handleSortChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+
+    speciesSelectOptions: SpeciesInfo[];
+    
+    onSearchSubmit: (e: SyntheticEvent) => void;
+};
+
+const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange, isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions }: Props): JSX.Element => {
+    return (
+        <form onSubmit={onSearchSubmit}>
+            <input type="text" value={query} onChange={handleQueryChange} />
+            
+            <button type="submit">Search</button>
+            <details >
+                <summary>Advanced Search</summary>
+                <ListingAdvancedSearch isForTrade={isForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={priceMax} handlePriceMaxChange={handlePriceMaxChange} species={species} handleSpeciesChange={handleSpeciesChange} sort={sort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} />
+            </details>
+
+        </form>
+    );
+}
+
+export default ListingSearchBar;
