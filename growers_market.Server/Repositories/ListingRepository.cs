@@ -1,8 +1,10 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using growers_market.Server.Data;
+using growers_market.Server.Dtos.Listing;
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
+using growers_market.Server.Mappers;
 using growers_market.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -63,7 +65,7 @@ namespace growers_market.Server.Repositories
             return listing;
         }
 
-        public async Task<List<Listing>> GetAllListingsAsync(AppUser appUser, ListingQueryObject query)
+        public async Task<AllListingsDto> GetAllListingsAsync(AppUser appUser, ListingQueryObject query)
         {
             var listings = _context.Listings.Include(l => l.AppUser).Include(l => l.Species).AsQueryable();
 
@@ -88,24 +90,24 @@ namespace growers_market.Server.Repositories
             {
                 listings = listings.Where(l => l.SpeciesId == query.SpeciesId);
             }
-            if (!string.IsNullOrWhiteSpace(query.SortBy))
+            switch (query.SortBy)
             {
-                switch (query.SortBy)
-                {
-                    case "price":
-                        listings = listings.OrderBy(l => l.Price);
-                        break;
-                    case "priceDesc":
-                        listings = listings.OrderByDescending(l => l.Price);
-                        break;
-                    case "dateAsc":
-                        listings = listings.OrderBy(l => l.CreatedAt);
-                        break;
-                    default:
-                        listings = listings.OrderByDescending(l => l.CreatedAt);
-                        break;
-                }
+                case "price":
+                    listings = listings.OrderBy(l => l.Price);
+                    break;
+                case "priceDesc":
+                    listings = listings.OrderByDescending(l => l.Price);
+                    break;
+                case "dateAsc":
+                    Console.WriteLine("Date Asc");
+                    listings = listings.OrderBy(l => l.CreatedAt);
+                    break;
+                default:
+                    Console.WriteLine("Date Desc");
+                    listings = listings.OrderByDescending(l => l.CreatedAt);
+                    break;
             }
+            
             var skipNumber = (query.Page - 1) * query.PageSize;
 
             if (appUser != null)
@@ -113,7 +115,21 @@ namespace growers_market.Server.Repositories
                 listings = listings.Where(l => l.AppUser.Id != appUser.Id);
             }
 
-            return await listings.Skip(skipNumber).Take(query.PageSize).ToListAsync();
+            var listingsList = listings.ToList();
+            var totalListings = listingsList.Count;
+            var listingsListDto = listingsList.Select(l => l.ToListingDto()).Skip(skipNumber).Take(query.PageSize).ToList();
+            var listingsDto = new AllListingsDto
+            {
+                Data = listingsListDto,
+                To = ((query.Page - 1) * query.PageSize) + listingsList.Count,
+                PerPage = query.PageSize,
+                CurrentPage = query.Page,
+                From = skipNumber + 1,
+                LastPage = (int)Math.Ceiling((double)totalListings / query.PageSize),
+                Total = totalListings
+            };
+
+            return listingsDto;
         }
 
         public async Task<Listing> GetByIdAsync(int? id)

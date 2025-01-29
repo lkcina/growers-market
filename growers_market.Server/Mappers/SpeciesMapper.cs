@@ -63,9 +63,9 @@ namespace growers_market.Server.Mappers
             };
         }
 
-        public static AllSpeciesDto ToAllSpeciesDtoFromPerenual(this AllPerenualSpecies speciesData)
+        public static AllListingsDto ToAllSpeciesDtoFromPerenual(this AllPerenualSpecies speciesData)
         {
-            return new AllSpeciesDto
+            return new AllListingsDto
             {
                 Data = speciesData.data.Select(species => species.ToSpeciesFromAllPerenual().ToSpeciesDto()).ToList(),
                 To = speciesData.to,

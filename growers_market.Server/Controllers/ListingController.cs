@@ -40,15 +40,13 @@ namespace growers_market.Server.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 var allListings = await _listingRepository.GetAllListingsAsync(null, queryObject);
-                var allListingsDto = allListings.Select(l => l.ToListingDto());
-                return Ok(allListingsDto);
+                return Ok(allListings);
             }
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
 
             var listings = await _listingRepository.GetAllListingsAsync(appUser, queryObject);
-            var listingsDto = listings.Select(l => l.ToListingDto());
-            return Ok(listingsDto);
+            return Ok(listings);
         }
 
         [HttpGet("user")]

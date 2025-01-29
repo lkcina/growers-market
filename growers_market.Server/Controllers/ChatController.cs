@@ -37,6 +37,7 @@ namespace growers_market.Server.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var chats = await _chatRepository.GetBuyerChats(appUser);
+            Console.Write(chats.Count);
             var chatsDto = chats.Select(c => c.ToChatDto()).ToList();
             return Ok(chatsDto);
         }
@@ -94,9 +95,9 @@ namespace growers_market.Server.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]
+        [HttpPost("new/{listingId}")]
         [Authorize]
-        public async Task<IActionResult> CreateChat([FromBody] CreateChatRequestDto createDto)
+        public async Task<IActionResult> CreateChat([FromRoute] int listingId)
         {
             if (!ModelState.IsValid)
             {
@@ -105,7 +106,10 @@ namespace growers_market.Server.Controllers
 
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
-            var chat = createDto.ToChatFromCreateDto();
+            var chat = new Chat
+            {
+                ListingId = listingId
+            };
             var listing = await _listingRepository.GetByIdAsync(chat.ListingId);
             chat.Listing = listing;
             chat.AppUserName = appUser.UserName;

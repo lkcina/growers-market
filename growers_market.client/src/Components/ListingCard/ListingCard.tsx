@@ -1,13 +1,17 @@
-import React, { FormEvent, MouseEvent } from 'react';
-import { Listing } from '../../types';
+import React, { Dispatch, FormEvent, MouseEvent, SetStateAction } from 'react';
+import { Chat, Listing } from '../../types';
 import ListingImages from '../ListingImages/ListingImages';
+import ListingDetails from '../ListingDetails/ListingDetails';
 
 interface Props {
     listing: Listing;
     onSelect: (e: FormEvent<HTMLFormElement>) => void;
+    listingDetails: number | null;
+    chat: Chat | undefined | null;
+    setUserChats: Dispatch<SetStateAction<Chat[]>>;
 }
 
-const ListingCard: React.FC<Props> = ({ listing, onSelect }: Props): JSX.Element => {
+const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, chat, setUserChats }: Props): JSX.Element => {
     const [imageIndex, setImageIndex] = React.useState(0);
 
     const onNextImage = (e: MouseEvent<HTMLButtonElement>) => {
@@ -48,6 +52,9 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect }: Props): JSX.Element
                 <input type="hidden" name="listingId" value={listing.id.toString()} />
                 <button type="submit">View Listing</button>
             </form>
+            {listingDetails === listing.id ? (
+                <ListingDetails listing={listing} chat={chat} setUserChats={setUserChats} />
+            ) : null}
         </div>
     );
 }

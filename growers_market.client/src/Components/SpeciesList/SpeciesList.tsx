@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from "react";
+import React, { FormEvent, SyntheticEvent } from "react";
 import "./SpeciesList.css";
 import SpeciesCard from "../SpeciesCard/SpeciesCard";
 import { SpeciesInfo } from "../../types";
@@ -10,12 +10,12 @@ interface Props {
     onWishlistRemove: (e: SyntheticEvent) => void;
     wishlistValues: SpeciesInfo[];
     speciesDetails: number | null;
-    showDetails: (e: SyntheticEvent) => void;
+    showDetails: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 const SpeciesList: React.FC<Props> = ({searchResult, onWishlistCreate, onWishlistRemove, wishlistValues, showDetails, speciesDetails }: Props): JSX.Element => {
     return(
-        <div className = "speciesList" >
+        <div className = "species-list" >
             {searchResult.length > 0 ? (
                 searchResult.map((s) => {
                     return (

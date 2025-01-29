@@ -18,6 +18,11 @@ namespace growers_market.Server.Repositories
 
         public async Task<Chat> CreateChat(Chat chat)
         {
+            var existingChat = await _context.Chats.FirstOrDefaultAsync(c => c.ListingId == chat.ListingId && c.AppUserId == chat.AppUserId);
+            if (existingChat != null)
+            {
+                return null;
+            }
             await _context.Chats.AddAsync(chat);
             await _context.SaveChangesAsync();
             return chat;
@@ -43,7 +48,7 @@ namespace growers_market.Server.Repositories
 
         public async Task<List<Chat>> GetBuyerChats(AppUser appUser)
         {
-            var chats = _context.Chats.Include(c => c.Listing).AsQueryable();
+            var chats = _context.Chats.Include(c => c.Listing).Include(c => c.Messages).AsQueryable();
             chats = chats.Where(c => c.AppUserId == appUser.Id);
             return await chats.ToListAsync();
         }

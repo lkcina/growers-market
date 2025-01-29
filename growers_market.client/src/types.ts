@@ -21,7 +21,7 @@ export interface Listing {
     quantity: number;
     species: SpeciesInfo;
     description: string;
-    appUsername: string;
+    appUserName: string;
     images: string[];
 }
 
@@ -33,8 +33,9 @@ export interface Chat {
 }
 
 export interface Message {
+    id: number;
     chatId: number;
     appUsername: string;
     content: string;
-    timeStamp: Date;
+    createdAt: Date;
 }

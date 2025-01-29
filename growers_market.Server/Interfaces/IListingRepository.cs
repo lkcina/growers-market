@@ -1,11 +1,12 @@
-﻿using growers_market.Server.Helpers;
+﻿using growers_market.Server.Dtos.Listing;
+using growers_market.Server.Helpers;
 using growers_market.Server.Models;
 
 namespace growers_market.Server.Interfaces
 {
     public interface IListingRepository
     {
-        Task<List<Listing>> GetAllListingsAsync(AppUser appUser, ListingQueryObject queryObject);
+        Task<AllListingsDto> GetAllListingsAsync(AppUser appUser, ListingQueryObject queryObject);
         Task<List<Listing>> GetUserListingsAsync(AppUser appUser);
         Task<Listing> GetByIdAsync(int? id);
         Task<Listing> CreateAsync(Listing listing);

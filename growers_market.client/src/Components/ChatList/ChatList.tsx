@@ -13,7 +13,7 @@ const ChatList: React.FC<Props> = ({ chats, isSeller }: Props): JSX.Element => {
             {chats.length > 0 ? (
                 chats.map((chat) => {
                     return (
-                        <ChatCard chat={chat} isSeller={isSeller} />
+                        <ChatCard key={chat.id} chat={chat} isSeller={isSeller} />
                     )
                 })
             ) : (

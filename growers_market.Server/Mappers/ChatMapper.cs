@@ -16,13 +16,5 @@ namespace growers_market.Server.Mappers
                 Messages = chat.Messages.Select(m => m.ToMessageDto()).ToList()
             };
         }
-
-        public static Chat ToChatFromCreateDto(this CreateChatRequestDto chatDto)
-        {
-            return new Chat
-            {
-                ListingId = chatDto.ListingId,
-            };
-        }
     }
 }
