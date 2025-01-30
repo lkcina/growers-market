@@ -48,7 +48,7 @@ namespace growers_market.Server.Repositories
 
         public async Task<List<Chat>> GetBuyerChats(AppUser appUser)
         {
-            var chats = _context.Chats.Include(c => c.Listing).Include(c => c.Messages).AsQueryable();
+            var chats = _context.Chats.Include(c => c.Listing).ThenInclude(l => l.Species).Include(c => c.Messages).AsQueryable();
             chats = chats.Where(c => c.AppUserId == appUser.Id);
             return await chats.ToListAsync();
         }

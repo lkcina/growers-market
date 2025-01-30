@@ -7,10 +7,12 @@ import { useAuth } from "../../Context/UseAuth";
 interface Props {
     listing: Listing;
     chat: Chat | undefined | null;
-    setUserChats: Dispatch<SetStateAction<Chat[]>>;
+    newMessage: string;
+    onNewMessageSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    handleMessageInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ListingDetails: React.FC<Props> = ({ listing, chat, setUserChats }: Props,): JSX.Element => {
+const ListingDetails: React.FC<Props> = ({ listing, chat, newMessage, onNewMessageSubmit, handleMessageInputChange }: Props,): JSX.Element => {
     const { isLoggedIn } = useAuth();
 
     return (
@@ -22,7 +24,7 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, setUserChats }: Props,
             <div className="listing-details-description">
                 {listing.description}
             </div>
-            {isLoggedIn() && chat !== null ? <ListingChat chat={chat} listingId={listing.id} setUserChats={setUserChats} /> : null}
+            {isLoggedIn() && chat !== null ? <ListingChat chat={chat} newMessage={newMessage} onNewMessageSubmit={onNewMessageSubmit} handleMessageInputChange={handleMessageInputChange} /> : null}
         </div>
     );
 }

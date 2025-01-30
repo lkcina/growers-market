@@ -35,7 +35,7 @@ export interface Chat {
 export interface Message {
     id: number;
     chatId: number;
-    appUsername: string;
+    appUserame: string;
     content: string;
     createdAt: Date;
 }
