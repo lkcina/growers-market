@@ -1,7 +1,7 @@
 import React, { useEffect, useState, MouseEvent } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Chat, Listing } from "../../types";
-import { getListing, getListingChats } from "../../api";
+import { deleteListing, getListing, getListingChats } from "../../api";
 import ChatList from "../../Components/ChatList/ChatList";
 import ListingImages from "../../Components/ListingImages/ListingImages";
 import { SpeciesInfo } from "../../types";
@@ -83,6 +83,20 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
         }
     }
 
+    const removeListing = async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (window.confirm("Are you sure you want to delete this listing?")) {
+            const result = await deleteListing(Number(listingId));
+            if (typeof result === "string") {
+                setServerError(result);
+            } else {
+                navigate("/market/my-listings/all");
+            }
+        } else {
+            return;
+        }
+    }
+
     return (
         <div id="user-listing-info">
             <div className="info-card">
@@ -98,10 +112,11 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
                     <p>{listing?.description}</p>
                 </div>
                 <button id="edit-listing-btn" onClick={() => navigate(`/market/my-listings/listing/${listing?.id}/edit`)}>Edit</button>
+                <button id="delete-listing-btn" onClick={removeListing}>Delete</button>
             </div>
             <div>
                 <h2>Chats</h2>
-                <ChatList chats={userChats} setUserChats={setUserChats} listingId={Number(listingId)} />
+                <ChatList chats={userChats} setUserChats={setUserChats} />
             </div>
         </div>
     );

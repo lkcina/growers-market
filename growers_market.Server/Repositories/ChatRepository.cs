@@ -30,19 +30,28 @@ namespace growers_market.Server.Repositories
 
         public async Task<Chat?> DeleteChat(int id)
         {
+            Console.WriteLine("Finding chat");
             var chat = await _context.Chats.FirstOrDefaultAsync(c => c.Id == id);
             if (chat == null)
             {
                 return null;
             }
+            Console.WriteLine("Chat found... Finding Messages");
             var messages = await _messageRepository.GetChatMessages(id);
             if (messages != null)
             {
-                messages.Select(message => _context.Messages.Remove(message));
+                foreach (var message in messages)
+                {
+                    _context.Messages.Remove(message);
+                }
                 await _context.SaveChangesAsync();
+                Console.WriteLine("Messages deleted");
             }
+            
+            Console.WriteLine("Deleting chat");
             _context.Chats.Remove(chat);
             await _context.SaveChangesAsync();
+            Console.WriteLine("Chat deleted");
             return chat;
         }
 
