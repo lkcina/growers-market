@@ -7,7 +7,7 @@ import PopupSpeciesCard from "../PopupSpeciesCard/PopupSpeciesCard";
 interface Props {
     searchResult: SpeciesInfo[];
     onSelect: (e: SyntheticEvent) => void;
-    onScroll: () => void;
+    onScroll: (e: SyntheticEvent) => void;
 }
 
 const PopupSpeciesList: React.FC<Props> = ({ searchResult, onSelect, onScroll }: Props): JSX.Element => {

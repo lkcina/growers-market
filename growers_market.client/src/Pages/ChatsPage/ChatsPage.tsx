@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { getUserChats } from '../../api';
+import { deleteChat, getUserChats } from '../../api';
 import { Chat, Listing } from '../../types';
 import ChatList from '../../Components/ChatList/ChatList';
 import ListingList from '../../Components/ListingList/ListingList';
@@ -20,10 +20,15 @@ const ChatsPage: React.FC<Props> = () => {
                 return;
             } else if (Array.isArray(result)) {
                 setUserChats(result);
-                setListings(result.map(chat => chat.listing));
             }
         })
     }, [])
+
+    useEffect(() => {
+        if (userChats.length > 0) {
+            setListings(userChats.map(chat => chat.listing));
+        }
+    }, [userChats])
 
     const showDetails = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

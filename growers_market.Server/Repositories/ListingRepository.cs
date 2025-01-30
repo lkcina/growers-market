@@ -51,8 +51,10 @@ namespace growers_market.Server.Repositories
             var chats = await _chatRepository.GetListingChats(id);
             if (chats != null)
             {
-                chats.Select(chat => _context.Chats.Remove(chat));
-                await _context.SaveChangesAsync();
+                foreach (var chat in chats)
+                {
+                    await _chatRepository.DeleteChat(chat.Id);
+                }
             }
 
             foreach (var image in listing.Images)

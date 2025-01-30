@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react';
 import { Chat } from '../../types';
 import ListingChat from '../ListingChat/ListingChat';
-import { getListingChats, getUserChats, sendMessage } from '../../api';
+import { deleteChat, getListingChats, sendMessage } from '../../api';
 
 interface Props {
     chat: Chat;
@@ -50,10 +50,30 @@ const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element =
         }
     }
 
+    const removeChat = async () => {
+        if (window.confirm("Are you sure you want to delete this chat?")) {
+            const result = await deleteChat(chat.id);
+            if (typeof result === "string") {
+                setServerError(result);
+                return
+            } else {
+                const newChats = await getListingChats(chat.listing.id);
+                if (typeof newChats === "string") {
+                    setServerError(newChats);
+                    return
+                } else if (Array.isArray(newChats)) {
+                    setUserChats(newChats);
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
     return (
         <div id={chat.id.toString()} className="chat-card">
             <h3>{chat.appUsername}</h3>
-            <ListingChat chat={chat} newMessage={newMessage} handleMessageInputChange={handleMessageInputChange} onNewMessageSubmit={onNewMessageSubmit} />
+            <ListingChat chat={chat} newMessage={newMessage} handleMessageInputChange={handleMessageInputChange} onNewMessageSubmit={onNewMessageSubmit} removeChat={removeChat} />
         </div>
     )
 }
