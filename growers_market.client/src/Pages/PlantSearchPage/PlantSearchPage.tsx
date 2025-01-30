@@ -40,6 +40,20 @@ const PlantSearchPage: React.FC<Props> = () => {
                 console.log(result.data);
             }
         });
+
+        searchSpecies(Math.floor(Math.random() * 100), "", null, null, null, null, null, null, null).then((result) => {
+            if (typeof result === "string") {
+                setServerError(result);
+            } else if (Array.isArray(result.data.data)) {
+                setSpeciesSearchResult(result.data.data);
+                setSpeciesSearchCurrentPage(result.data.currentPage);
+                setSpeciesSearchLastPage(result.data.lastPage);
+                setSpeciesSearchFrom(result.data.from);
+                setSpeciesSearchTo(result.data.to);
+                setSpeciesSearchTotal(result.data.total);
+            }
+            console.log(speciesSearchResult, serverError);
+        });
     }, [])
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {

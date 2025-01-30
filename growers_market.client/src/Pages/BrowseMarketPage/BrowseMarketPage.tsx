@@ -38,6 +38,23 @@ const BrowseMarketPage: React.FC<Props> = () => {
                 setSpeciesSelectOptions(result);
             }
         })
+
+        searchListings(1, "", null, 9999.99, null, null, null).then((result) => {
+            if (typeof result === "string") {
+                setServerError(result);
+            } else if (Array.isArray(result.data.data)) {
+                console.log(result.data);
+                setListingSearchResult(result.data.data);
+                setListingSearchCurrentPage(result.data.currentPage);
+                setListingSearchLastPage(result.data.lastPage);
+                setListingSearchFrom(result.data.from);
+                setListingSearchTo(result.data.to);
+                setListingSearchTotal(result.data.total);
+            }
+            console.log(listingSearchResult, serverError);
+        });
+
+
     }, [])
 
     useEffect(() => {
