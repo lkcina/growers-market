@@ -33,10 +33,10 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
         },
         images: [],
         description: "",
-        appUsername: "",
+        appUserName: "",
         id: Number(listingId)
     });
-    const [chats, setChats] = useState<Chat[]>([]);
+    const [userChats, setUserChats] = useState<Chat[]>([]);
     const [imageIndex, setImageIndex] = useState<number>(0);
     const [serverError, setServerError] = useState<string | null>(null);
 
@@ -52,8 +52,9 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
                 getListingChats(Number(listingId)).then((chatResult) => {
                     if (typeof chatResult === "string") {
                         setServerError(chatResult);
-                    } else if (Array.isArray(chatResult.data)) {
-                        setChats(chatResult.data);
+                    } else if (Array.isArray(chatResult)) {
+                        console.log(chatResult);
+                        setUserChats(chatResult);
                     }
                 })
             }
@@ -98,7 +99,10 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
                 </div>
                 <button id="edit-listing-btn" onClick={() => navigate(`/market/my-listings/listing/${listing?.id}/edit`)}>Edit</button>
             </div>
-            <ChatList chats={chats} isSeller={true} />
+            <div>
+                <h2>Chats</h2>
+                <ChatList chats={userChats} setUserChats={setUserChats} listingId={Number(listingId)} />
+            </div>
         </div>
     );
 }

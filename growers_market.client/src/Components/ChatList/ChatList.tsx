@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Chat } from '../../types';
 import ChatCard from '../ChatCard/ChatCard';
 
 interface Props {
     chats: Chat[];
-    isSeller: boolean;
+    setUserChats: Dispatch<SetStateAction<Chat[]>>;
 }
 
-const ChatList: React.FC<Props> = ({ chats, isSeller }: Props): JSX.Element => {
+const ChatList: React.FC<Props> = ({ chats, setUserChats }: Props): JSX.Element => {
     return (
         <div className="chat-list">
             {chats.length > 0 ? (
                 chats.map((chat) => {
                     return (
-                        <ChatCard key={chat.id} chat={chat} isSeller={isSeller} />
+                        <ChatCard key={chat.id} chat={chat} setUserChats={setUserChats} />
                     )
                 })
             ) : (

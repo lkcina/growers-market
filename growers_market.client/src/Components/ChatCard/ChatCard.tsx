@@ -1,20 +1,59 @@
-import React from 'react';
+import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react';
 import { Chat } from '../../types';
+import ListingChat from '../ListingChat/ListingChat';
+import { getListingChats, getUserChats, sendMessage } from '../../api';
 
 interface Props {
     chat: Chat;
-    isSeller: boolean;
+    setUserChats: Dispatch<SetStateAction<Chat[]>>;
 }
 
-const ChatCard: React.FC<Props> = ({ chat, isSeller }: Props): JSX.Element => {
+const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element => {
+    const [newMessage, setNewMessage] = React.useState<string>('');
+    const [serverError, setServerError] = React.useState<string | null>(null);
+
+    const handleMessageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewMessage(e.target.value);
+    }
+
+    const onNewMessageSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const target = e.target as HTMLFormElement;
+        const newMessageInput = target.elements.namedItem("newMessage") as HTMLInputElement;
+        const message = newMessageInput.value;
+        if (message === '') {
+            return;
+        }
+
+        const chatIdInput = target.elements.namedItem("chatId") as HTMLInputElement;
+        const chatId = chatIdInput.value === "null" ? null : Number(chatIdInput.value);
+
+        if (chatId !== null) {
+            const result = await sendMessage(chatId, message);
+            if (typeof result === "string") {
+                setServerError(result);
+                return
+            } else {
+                getListingChats(chat.listing.id).then((chatResult) => {
+                    if (typeof chatResult === "string") {
+                        setServerError(chatResult);
+                    } else if (Array.isArray(chatResult)) {
+                        console.log(chatResult);
+                        setUserChats(chatResult);
+                        setNewMessage('');
+                    }
+                })
+            }
+
+        } else {
+            return
+        }
+    }
 
     return (
         <div id={chat.id.toString()} className="chat-card">
-            <h2>{chat.listing.title}</h2>
-            <h3>{isSeller ? chat.appUsername : chat.listing.appUsername}</h3>
-            <div className="message-box">
-                MESSAGES!
-            </div>
+            <h3>{chat.appUsername}</h3>
+            <ListingChat chat={chat} newMessage={newMessage} handleMessageInputChange={handleMessageInputChange} onNewMessageSubmit={onNewMessageSubmit} />
         </div>
     )
 }

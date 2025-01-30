@@ -85,10 +85,6 @@ namespace growers_market.Server.Controllers
         [Authorize]
         public async Task<IActionResult> CreateListing([FromForm] ListingFormDto formListingDto)
         {
-            foreach (var image in formListingDto.UploadedImages)
-            {
-                Console.WriteLine(image.FileName);
-            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

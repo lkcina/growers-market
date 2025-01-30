@@ -108,7 +108,11 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         } else if (listingImageValues.length > 5) {
             toast.warning("Exceeded maximum of 5 images");
             return;
+        } else if (listingImageValues.filter(image => typeof image !== "string").some(file => file.size > 1 * 1024 * 1024)) {
+            toast.warning("Image size must be less than 1MB");
+            return;
         }
+
         const form = e.target as HTMLFormElement;
         const data = new FormData(form);
         data.set('IsForTrade', listingIsForTrade.toString());
