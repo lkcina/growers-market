@@ -106,7 +106,7 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
                     {listing?.isForTrade ? <p>Tradable</p> : null}
                     <p>Price: ${(Math.round(listing?.price * 100) / 100).toFixed(2)}</p>
                     <p>Quantity: {listing?.quantity}</p>
-                    <p>Species: {listing?.species.commonName} ({listing?.species.scientificName[0]})</p>
+                    <p>Species: {listing.species ? `${listing?.species.commonName} (${listing?.species.scientificName[0]})` : "Not Specified"}</p>
                 </div>
                 <div className="description">
                     <p>{listing?.description}</p>

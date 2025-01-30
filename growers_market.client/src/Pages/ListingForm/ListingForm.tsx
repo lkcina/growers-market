@@ -102,13 +102,15 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
 
     const onListingFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const imagePaths = listingImageValues.filter(image => typeof image === "string")
+        const imageUploads = listingImageValues.filter(image => typeof image !== "string");
         if (listingTitle === "") {
             toast.warning("Title is required");
             return;
         } else if (listingImageValues.length > 5) {
             toast.warning("Exceeded maximum of 5 images");
             return;
-        } else if (listingImageValues.filter(image => typeof image !== "string").some(file => file.size > 1 * 1024 * 1024)) {
+        } else if (imageUploads.some(file => file.size > 1 * 1024 * 1024)) {
             toast.warning("Image size must be less than 1MB");
             return;
         }
@@ -116,7 +118,8 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         const form = e.target as HTMLFormElement;
         const data = new FormData(form);
         data.set('IsForTrade', listingIsForTrade.toString());
-        if (listingInputImages.length > 0) {
+
+        if (imageUploads.length > 0) {
             const uploadedImages = Array.from(listingInputImages || []).filter(image => listingImageValues.includes(image));
             console.log(uploadedImages);
             data.set('UploadedImages', uploadedImages[0]);
@@ -126,6 +129,14 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
             }
         } else {
             data.delete('UploadedImages');
+        }
+
+        if (imagePaths.length === 0) {
+            data.set('ImagePaths', JSON.stringify([]));
+        }
+
+        if (listingSpecies == null) {
+            data.delete('SpeciesId');
         }
 
         console.log(Object.fromEntries(data.entries()));
