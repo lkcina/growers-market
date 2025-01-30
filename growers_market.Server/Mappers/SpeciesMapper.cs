@@ -34,7 +34,7 @@ namespace growers_market.Server.Mappers
                 ScientificName = speciesData.scientific_name,
                 Cycle = speciesData.cycle,
                 Watering = speciesData.watering,
-                Sunlight = speciesData.sunlight == null ? new List<string>() : speciesData.sunlight,
+                Sunlight = speciesData.sunlight,
                 Indoor = speciesData.indoor,
                 HardinessMin = int.TryParse(speciesData.hardiness.min, out int minResult) ? minResult : 0,
                 HardinessMax = int.TryParse(speciesData.hardiness.max, out int maxResult) ? maxResult : 0,

@@ -29,7 +29,9 @@ namespace growers_market.Server.Controllers
             {
                 return BadRequest(ModelState);
             }
+            Console.WriteLine("Getting species by id");
             var perenual = await _perenualService.GetPlantByIdAsync(id);
+            Console.WriteLine(perenual.CommonName);
             if (perenual == null)
             {
                 return StatusCode(500, "Species is unavailable");

@@ -101,12 +101,15 @@ namespace growers_market.Server.Services
             }
             try
             {
-                var url = $"https://perenual.com/api/species/details/{id}?key={_config["PerenualKey"]}";
+                var url = $"https://perenual.com/api/species-details/{id}?key={_config["PerenualKey"]}";
+                Console.WriteLine(url);
                 var result = await _httpClient.GetAsync(url);
+                Console.WriteLine(result);
                 if (result.IsSuccessStatusCode)
                 {
                     var content = await result.Content.ReadAsStringAsync();
                     
+
                     if (string.IsNullOrWhiteSpace(content))
                     {
                         return null;

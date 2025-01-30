@@ -11,6 +11,7 @@ namespace growers_market.Server.Dtos.Species
         public List<string>? scientific_name { get; set; } = new List<string>();
         public string? cycle { get; set; } = string.Empty;
         public string? watering { get; set; } = string.Empty;
+        [JsonConverter(typeof(SunlightConverter))]
         public List<string>? sunlight { get; set; } = new List<string>();
         public bool? indoor { get; set; }
         public HardinessRange? hardiness { get; set; } = new HardinessRange();

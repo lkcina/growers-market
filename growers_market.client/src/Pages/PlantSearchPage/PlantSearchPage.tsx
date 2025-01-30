@@ -41,7 +41,7 @@ const PlantSearchPage: React.FC<Props> = () => {
             }
         });
 
-        searchSpecies(Math.floor(Math.random() * 100), "", null, null, null, null, null, null, null).then((result) => {
+        searchSpecies(Math.floor(Math.random() * 337), "", null, null, null, null, null, null, null).then((result) => {
             if (typeof result === "string") {
                 setServerError(result);
             } else if (Array.isArray(result.data.data)) {
