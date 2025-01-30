@@ -2,7 +2,7 @@ import React, { ChangeEvent, Dispatch, FormEvent, MouseEvent, SetStateAction, us
 import { Chat, Listing } from '../../types';
 import ListingImages from '../ListingImages/ListingImages';
 import ListingDetails from '../ListingDetails/ListingDetails';
-import { createChat, getUserChats, sendMessage } from '../../api';
+import { createChat, deleteChat, getUserChats, sendMessage } from '../../api';
 
 interface Props {
     listing: Listing;
@@ -98,6 +98,26 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, chat,
         }
     }
 
+    const removeChat = async () => {
+        if (window.confirm("Are you sure you want to delete this chat?")) {
+            const result = await deleteChat(chat.id);
+            if (typeof result === "string") {
+                setServerError(result);
+                return
+            } else {
+                const newChats = await getUserChats();
+                if (typeof newChats === "string") {
+                    setServerError(newChats);
+                    return
+                } else if (Array.isArray(newChats)) {
+                    setUserChats(newChats);
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
     return (
         <div id={listing.id.toString()} className="listing-card">
             <ListingImages listingTitle={listing.title} images={listing.images} imageIndex={imageIndex} onNextImage={onNextImage} onPreviousImage={onPreviousImage} />
@@ -115,7 +135,7 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, chat,
                 <button type="submit">View Listing</button>
             </form>
             {listingDetails === listing.id ? (
-                <ListingDetails listing={listing} chat={chat} newMessage={newMessage} onNewMessageSubmit={onNewMessageSubmit} handleMessageInputChange={handleMessageInputChange} />
+                <ListingDetails listing={listing} chat={chat} newMessage={newMessage} onNewMessageSubmit={onNewMessageSubmit} handleMessageInputChange={handleMessageInputChange} removeChat={removeChat} />
             ) : null}
         </div>
     );

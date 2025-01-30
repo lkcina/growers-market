@@ -195,6 +195,23 @@ export const updateListing = async (id: number, form: FormData) => {
     }
 }
 
+export const deleteListing = async (id: number) => {
+    try {
+        const data = await axios.delete(`https://localhost:7234/api/listing/${id}`);
+        return data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error);
+            return "An unexpected error has occurred";
+        }
+    }
+}
+
+
 export const getListingChats = async (listingId: number) => {
     try {
         const data = await axios.get<ChatResponse[]>(`https://localhost:7234/api/chat/listing/${listingId}`);
@@ -313,6 +330,22 @@ export const getUserChats = async () => {
 export const createChat = async (listingId: number) => {
     try {
         const data = await axios.post<Chat>(`https://localhost:7234/api/chat/new/${listingId}`);
+        return data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
+export const deleteChat = async (chatId: number) => {
+    try {
+        const data = await axios.delete(`https://localhost:7234/api/chat/${chatId}`);
         return data;
     }
     catch (error) {

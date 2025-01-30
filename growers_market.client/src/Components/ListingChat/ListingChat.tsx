@@ -10,9 +10,10 @@ interface Props {
     newMessage: string;
     onNewMessageSubmit: (e: FormEvent<HTMLFormElement>) => void;
     handleMessageInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    removeChat: () => void;
 }
 
-const ListingChat: React.FC<Props> = ({ chat, newMessage, onNewMessageSubmit, handleMessageInputChange }: Props): JSX.Element => {
+const ListingChat: React.FC<Props> = ({ chat, newMessage, onNewMessageSubmit, handleMessageInputChange, removeChat }: Props): JSX.Element => {
     
 
     const { user } = useAuth();
@@ -24,6 +25,7 @@ const ListingChat: React.FC<Props> = ({ chat, newMessage, onNewMessageSubmit, ha
 
     return (
         <div className="listing-chat">
+            {chat ? <button onClick={removeChat}>Delete Chat</button> : null}
             <MessageList messages={chat ? chat.messages : []} userName={userName} />
             <NewMessageForm chat={chat} onSubmit={onNewMessageSubmit} message={newMessage} handleMessageInputChange={handleMessageInputChange} />
         </div>
