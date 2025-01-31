@@ -1,0 +1,84 @@
+@import '../../index.css';
+
+.login-page {
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .login-page form {
+        height: 300px;
+        width: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 20px;
+        padding: 15px;
+        background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    }
+
+        .login-page h1 {
+            font-size: 4rem;
+            font-family: 'Namd', serif;
+            color: var(--color-primary-dark);
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .login-page form div {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+            .login-page form div label {
+                font-size: 1.5rem;
+                color: var(--color-text-dark);
+                margin-left: 20px;
+                align-self: flex-start;
+            }
+
+            .login-page form div input {
+                width: 220px;
+                font-size: 2rem;
+                padding: 5px;
+                background-color: var(--color-secondary-light);
+                border: 1px solid var(--color-primary-light);
+                align-self: center;
+            }
+
+                .login-page form div input:focus {
+                    border-radius: none;
+                    outline: 2px solid var(--color-primary-dark);
+                }
+
+                .login-page form div input::placeholder {
+                    color: var(--color-primary-light);
+                }
+
+            .login-page form div .error {
+                font-size: 1.2rem;
+                color: var(--color-error);
+                margin-left: 20px;
+            }
+
+        .login-page form button {
+            font-size: 2rem;
+            color: var(--color-text-light);
+            background: linear-gradient(165deg, var(--color-primary-light), var(--color-primary-dark));
+            border-radius: 3px;
+            border: 1px solid var(--color-primary-light);
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+            .login-page form button:hover {
+                border: 1px solid var(--color-primary-dark);
+                box-shadow: 0 0 5px var(--color-primary-dark);
+            }
+
+        

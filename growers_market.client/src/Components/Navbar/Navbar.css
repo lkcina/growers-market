@@ -7,8 +7,9 @@ nav {
     gap: 30px;
     align-items: center;
     padding: 15px;
+    margin-bottom: 15px;
     background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
 }
     nav a {
         text-decoration: none;
@@ -35,7 +36,7 @@ nav {
         nav #login-container .login-btn {
             display: block;
             font-size: 2rem;
-            color: var(--color-secondary-light);
+            color: var(--color-text-light);
             background: linear-gradient(165deg, var(--color-primary-light), var(--color-primary-dark));
             border-radius: 3px;
             border: 1px solid var(--color-primary-light);
@@ -63,6 +64,7 @@ nav {
             cursor: pointer;
             text-decoration: underline;
             align-self: center;
+            white-space: nowrap;
         }
 
             nav #login-container .logout-btn:hover {
@@ -103,4 +105,8 @@ nav {
 
                 nav ul li a:hover {
                     text-shadow: 0 0 10px var(--color-primary-light);
+                }
+
+                nav ul li a.active {
+                    border-bottom: 3px solid var(--color-primary-light);
                 }
