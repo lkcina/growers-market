@@ -3,10 +3,8 @@ import { useAuth } from "../../Context/UseAuth";
 import "./Navbar.css";
 
 
-interface Props {
-}
 
-const Navbar: React.FC<Props> = ({ }: Props): JSX.Element => {
+const Navbar: React.FC = (): JSX.Element => {
     const { isLoggedIn, user, logoutUser } = useAuth();
 
 
