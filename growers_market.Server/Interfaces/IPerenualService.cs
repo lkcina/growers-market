@@ -6,7 +6,7 @@ namespace growers_market.Server.Interfaces
 {
     public interface IPerenualService
     {
-        Task<AllListingsDto> PlantSearchAsync(PerenualPlantQueryObject queryObject);
+        Task<AllSpeciesDto> PlantSearchAsync(PerenualPlantQueryObject queryObject);
         Task<Species> GetPlantByIdAsync(int? id);
     }
 }

@@ -89,7 +89,6 @@ namespace growers_market.Server.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             var listingDto = formListingDto.ToCreateListingRequestDtoFromListingFormDto();
 
             if (listingDto.UploadedImages.Count + listingDto.ImagePaths.Count > 5)
@@ -114,20 +113,24 @@ namespace growers_market.Server.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var listing = listingDto.ToListingFromCreateDto();
-            var species = await _speciesRepository.GetByIdAsync(listing.SpeciesId);
-            if (species == null)
+            if (listing.SpeciesId != null)
             {
-                
-                species = await _perenualService.GetPlantByIdAsync(listing.SpeciesId);
+                var species = await _speciesRepository.GetByIdAsync(listing.SpeciesId);
                 if (species == null)
                 {
-                    return BadRequest("Species does not exist");
-                }
-                else
-                {
-                    await _speciesRepository.CreateAsync(species);
+
+                    species = await _perenualService.GetPlantByIdAsync(listing.SpeciesId);
+                    if (species == null)
+                    {
+                        return BadRequest("Species does not exist");
+                    }
+                    else
+                    {
+                        await _speciesRepository.CreateAsync(species);
+                    }
                 }
             }
+            
             listing.AppUserId = appUser.Id;
             listing.AppUserName = appUser.UserName;
             listing.Images = listingDto.ImagePaths.Concat(newImagePaths).ToList();
@@ -169,20 +172,23 @@ namespace growers_market.Server.Controllers
                 }
                 newImagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
             }
-
-            var species = await _speciesRepository.GetByIdAsync(listingDto.SpeciesId);
-            if (species == null)
+            if (listingDto.SpeciesId != null)
             {
-                species = await _perenualService.GetPlantByIdAsync(listingDto.SpeciesId);
+                var species = await _speciesRepository.GetByIdAsync(listingDto.SpeciesId);
                 if (species == null)
                 {
-                    return BadRequest("Species does not exist");
-                }
-                else
-                {
-                    await _speciesRepository.CreateAsync(species);
+                    species = await _perenualService.GetPlantByIdAsync(listingDto.SpeciesId);
+                    if (species == null)
+                    {
+                        return BadRequest("Species does not exist");
+                    }
+                    else
+                    {
+                        await _speciesRepository.CreateAsync(species);
+                    }
                 }
             }
+            
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var currentListing = await _listingRepository.GetByIdAsync(id);
@@ -191,7 +197,8 @@ namespace growers_market.Server.Controllers
                 return Unauthorized();
             }
             var listing = listingDto.ToListingFromUpdateDto();
-            listing.Images = listingDto.ImagePaths.Concat(newImagePaths).ToList();
+
+            listing.Images = listingDto.ImagePaths.Count > 0 ? listingDto.ImagePaths.Concat(newImagePaths).ToList() : newImagePaths.ToList();
             await _listingRepository.UpdateAsync(id, listing);
             if (listing == null)
             {

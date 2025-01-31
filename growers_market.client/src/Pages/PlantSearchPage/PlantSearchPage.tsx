@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
-import { getSpeciesDetails, getWishlist, postWishlist, searchSpecies, deleteWishlist } from '../../api';
+import { getSpeciesDetails, getWishlist, postWishlist, searchSpecies, deleteWishlist, getUsedSpecies, getRandomSpecies } from '../../api';
 import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 import SpeciesSearchBar from '../../Components/SpeciesSearch/SpeciesSearchBar/SpeciesSearchBar';
 import { SpeciesInfo } from '../../types';
@@ -41,7 +41,7 @@ const PlantSearchPage: React.FC<Props> = () => {
             }
         });
 
-        searchSpecies(Math.floor(Math.random() * 337), "", null, null, null, null, null, null, null).then((result) => {
+        getRandomSpecies().then((result) => {
             if (typeof result === "string") {
                 setServerError(result);
             } else if (Array.isArray(result.data.data)) {
@@ -53,7 +53,7 @@ const PlantSearchPage: React.FC<Props> = () => {
                 setSpeciesSearchTotal(result.data.total);
             }
             console.log(speciesSearchResult, serverError);
-        });
+        })
     }, [])
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {

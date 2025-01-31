@@ -63,9 +63,9 @@ namespace growers_market.Server.Mappers
             };
         }
 
-        public static AllListingsDto ToAllSpeciesDtoFromPerenual(this AllPerenualSpecies speciesData)
+        public static AllSpeciesDto ToAllSpeciesDtoFromPerenual(this AllPerenualSpecies speciesData)
         {
-            return new AllListingsDto
+            return new AllSpeciesDto
             {
                 Data = speciesData.data.Select(species => species.ToSpeciesFromAllPerenual().ToSpeciesDto()).ToList(),
                 To = speciesData.to,
@@ -74,6 +74,20 @@ namespace growers_market.Server.Mappers
                 From = speciesData.from,
                 LastPage = speciesData.last_page,
                 Total = speciesData.total
+            };
+        }
+
+        public static AllSpeciesDto ToAllSpeciesDtoFromSpeciesDtoList(this List<SpeciesDto> speciesData)
+        {
+            return new AllSpeciesDto
+            {
+                Data = speciesData,
+                To = speciesData.Count,
+                PerPage = 30,
+                CurrentPage = 1,
+                From = 1,
+                LastPage = 1,
+                Total = speciesData.Count
             };
         }
     }

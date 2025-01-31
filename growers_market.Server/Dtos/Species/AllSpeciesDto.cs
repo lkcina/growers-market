@@ -1,6 +1,6 @@
 ﻿namespace growers_market.Server.Dtos.Species
 {
-    public class AllListingsDto
+    public class AllSpeciesDto
     {
         public List<SpeciesDto> Data { get; set; }
         public int To { get; set; }

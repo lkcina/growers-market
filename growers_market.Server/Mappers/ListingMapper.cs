@@ -54,18 +54,17 @@ namespace growers_market.Server.Mappers
 
         public static CreateListingRequestDto ToCreateListingRequestDtoFromListingFormDto(this ListingFormDto formDto)
         {
-            var uploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>();
 
             return new CreateListingRequestDto
             {
                 Title = formDto.Title,
-                IsForTrade = formDto.IsForTrade == "true",
-                Price = decimal.Parse(formDto.Price),
-                Quantity = int.Parse(formDto.Quantity),
-                Description = formDto.Description,
-                SpeciesId = int.Parse(formDto.SpeciesId),
+                IsForTrade = formDto.IsForTrade,
+                Price = formDto.Price,
+                Quantity = formDto.Quantity,
+                Description = formDto.Description != null ? formDto.Description : "",
+                SpeciesId = formDto.SpeciesId,
                 ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
-                UploadedImages = uploadedImages
+                UploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>()
             };
         }
 
@@ -76,13 +75,13 @@ namespace growers_market.Server.Mappers
             return new UpdateListingRequestDto
             {
                 Title = formDto.Title,
-                IsForTrade = formDto.IsForTrade == "true",
-                Price = decimal.Parse(formDto.Price),
-                Quantity = int.Parse(formDto.Quantity),
-                Description = formDto.Description,
-                SpeciesId = int.Parse(formDto.SpeciesId),
+                IsForTrade = formDto.IsForTrade,
+                Price = formDto.Price,
+                Quantity = formDto.Quantity,
+                Description = formDto.Description != null ? formDto.Description : "",
+                SpeciesId = formDto.SpeciesId,
                 ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
-                UploadedImages = uploadedImages
+                UploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>()
             };
         }
     }
