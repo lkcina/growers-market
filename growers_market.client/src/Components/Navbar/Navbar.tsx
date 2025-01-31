@@ -26,7 +26,7 @@ const Navbar: React.FC = (): JSX.Element => {
             ) : (
                 <div id="login-container">
                     <Link className="login-btn" to="/login">Login</Link>
-                    <Link className="logout-btn" to="/register">Signup</Link>
+                    <Link className="logout-btn" to="/register">Sign Up</Link>
                 </div>
             )}
         </nav>

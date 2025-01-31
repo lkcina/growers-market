@@ -31,7 +31,7 @@ const RegisterPage: React.FC<Props> = () => {
     return (
         <div className="register-page">
             <form onSubmit={handleSubmit(handleLogin)}>
-                <h1>Register</h1>
+                <h1>Sign Up</h1>
                 <div>
                     <label htmlFor="email">Email</label>
                     <input id="email" type="email" placeholder="Email" {...register("email")} />
