@@ -3,6 +3,7 @@ import { useAuth } from '../../Context/UseAuth';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import './LoginPage.css';
 
 type LoginFormsInputs = {
     userName: string;

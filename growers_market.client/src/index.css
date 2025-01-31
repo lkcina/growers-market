@@ -31,4 +31,5 @@
 body {
     background-image: url(./assets/Images/Growers_Market_Background.jpg);
     background-size: cover;
+    background-attachment: fixed;
 }

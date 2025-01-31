@@ -104,3 +104,7 @@ nav {
                 nav ul li a:hover {
                     text-shadow: 0 0 10px var(--color-primary-light);
                 }
+
+                nav ul li a.active {
+                    border-bottom: 3px solid var(--color-primary-light);
+                }

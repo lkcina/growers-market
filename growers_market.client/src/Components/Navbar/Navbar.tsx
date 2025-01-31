@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { useAuth } from "../../Context/UseAuth";
 import "./Navbar.css";
 
@@ -14,9 +14,9 @@ const Navbar: React.FC = (): JSX.Element => {
             <Link to="/"><h1>Growers Market</h1></Link>
             
             <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/market/browse">Market</Link></li>
-                <li><Link to="/plant-search">Search Plants</Link></li>
+                <li><NavLink to="/" className={({ isActive }) => isActive ? "active" : "" }>Home</NavLink></li>
+                <li><NavLink to="/market/browse" className={({ isActive }) => isActive ? "active" : ""}>Market</NavLink></li>
+                <li><NavLink to="/plant-search" className={({ isActive }) => isActive ? "active" : ""}>Search Plants</NavLink></li>
             </ul>
             {isLoggedIn() ? (
                 <div id="login-container">
