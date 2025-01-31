@@ -3,6 +3,7 @@ import { useAuth } from '../../Context/UseAuth';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import "./RegisterPage.css";
 
 interface Props {
 }
@@ -29,8 +30,8 @@ const RegisterPage: React.FC<Props> = () => {
 
     return (
         <div className="register-page">
-            <h2>Register</h2>
             <form onSubmit={handleSubmit(handleLogin)}>
+                <h1>Register</h1>
                 <div>
                     <label htmlFor="email">Email</label>
                     <input id="email" type="email" placeholder="Email" {...register("email")} />
