@@ -1,1 +1,34 @@
+@font-face {
+    font-family: 'Comm';
+    src: url('./assets/Fonts/Commissioner-VariableFont_FLAR,VOLM,slnt,wght.ttf') format('truetype');
+}
 
+@font-face {
+    font-family: 'Namd';
+    src: url('./assets/Fonts/Namdhinggo-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Namd-Bold';
+    src: url('./assets/Fonts/Namdhinggo-Bold.ttf') format('truetype');
+}
+
+* {
+    --color-primary-light: rgb(131, 209, 133);
+    --color-primary-dark: rgb(74, 125, 75);
+    --color-secondary-light: rgb(255, 250, 232);
+    --color-secondary-dark: rgb(245, 235, 200);
+    --color-text-light: rgb(255, 250, 232);
+    --color-text-dark: rgb(20, 20, 20);
+    font-size: 10px;
+    color: var(--color-text-dark);
+    margin: 0;
+    padding: 0;
+    font-family: 'Comm', sans-serif;
+    border: none;
+}
+
+body {
+    background-image: url(./assets/Images/Growers_Market_Background.jpg);
+    background-size: cover;
+}

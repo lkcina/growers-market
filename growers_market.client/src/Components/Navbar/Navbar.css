@@ -1,0 +1,106 @@
+@import '../../index.css';
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: center;
+    padding: 15px;
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.7);
+}
+    nav a {
+        text-decoration: none;
+    }
+
+        nav a h1 {
+            display: block;
+            width: fit-content;
+            white-space: nowrap;
+            font-size: 5rem;
+            font-weight: 400;
+            font-family: 'Namd-Bold', serif;
+            color: var(--color-primary-dark);
+            text-shadow: -2px -1px 0 var(--color-primary-light);
+            text-decoration: none;
+        }
+
+    nav #login-container {
+        display: flex;
+        align-content: center;
+        gap: 15px;
+    }
+
+        nav #login-container .login-btn {
+            display: block;
+            font-size: 2rem;
+            color: var(--color-secondary-light);
+            background: linear-gradient(165deg, var(--color-primary-light), var(--color-primary-dark));
+            border-radius: 3px;
+            border: 1px solid var(--color-primary-light);
+            padding: 5px 10px;
+            cursor: pointer;
+            text-decoration: none;
+            vertical-align: middle;
+            text-align: center;
+            padding: 5px 10px;
+        }
+
+            nav #login-container .login-btn:hover {
+                border: 1px solid var(--color-primary-dark);
+                box-shadow: 0 0 5px var(--color-primary-dark);
+            }
+
+        nav #login-container .logout-btn {
+            display: inline-block;
+            height: auto;
+            font-size: 1.5rem;
+            line-height: 2rem;
+            vertical-align: middle;
+            text-align: center;
+            color: var(--color-primary-dark);
+            cursor: pointer;
+            text-decoration: underline;
+            align-self: center;
+        }
+
+            nav #login-container .logout-btn:hover {
+                text-shadow: 0 0 10px var(--color-primary-light);
+            }
+
+        nav #login-container .welcome-user {
+            font-size: 2rem;
+            color: var(--color-primary-dark);
+            font-weight: bold;
+        }
+
+            nav #login-container .welcome-user span {
+                font-size: 1.8rem;
+                font-weight: normal;
+                color: inherit;
+            }
+    nav ul {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 20px;
+    }
+
+        nav ul li {
+            display: inline-block;
+        }
+
+            nav ul li a {
+                color: var(--color-primary-dark);
+                font-weight: bold;
+                font-size: 2rem;
+                display: block;
+                padding: 10px;
+                color: var(--color-primary-dark);
+                text-decoration: none;
+            }
+
+                nav ul li a:hover {
+                    text-shadow: 0 0 10px var(--color-primary-light);
+                }
