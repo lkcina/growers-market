@@ -48,4 +48,8 @@ body {
     flex-direction: column;
 }
 
+button:focus, input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--color-primary-dark);
+}
+
 

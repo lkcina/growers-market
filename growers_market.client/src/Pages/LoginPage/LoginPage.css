@@ -51,11 +51,6 @@
                 align-self: center;
             }
 
-                .login-page form div input:focus {
-                    border-radius: none;
-                    outline: 2px solid var(--color-primary-dark);
-                }
-
                 .login-page form div input::placeholder {
                     color: var(--color-primary-light);
                 }

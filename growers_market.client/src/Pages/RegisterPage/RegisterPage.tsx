@@ -35,17 +35,17 @@ const RegisterPage: React.FC<Props> = () => {
                 <div>
                     <label htmlFor="email">Email</label>
                     <input id="email" type="email" placeholder="Email" {...register("email")} />
-                    {errors.email ? (<p>{errors.email.message}</p>) : ""}
+                    {errors.email ? (<p className="error">* {errors.email.message}</p>) : ""}
                 </div>
                 <div>
                     <label htmlFor="username">Username</label>
                     <input id="username" type="text" placeholder="Username" {...register("userName")} />
-                    {errors.userName ? (<p>{errors.userName.message}</p>) : ""}
+                    {errors.userName ? (<p className="error">* {errors.userName.message}</p>) : ""}
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>
                     <input id="password" type="password" placeholder="Password" {...register("password")} />
-                    {errors.password ? (<p>{errors.password.message}</p>) : ""}
+                    {errors.password ? (<p className="error">* {errors.password.message}</p>) : ""}
                 </div>
                 <button type="submit">Login</button>
             </form>
