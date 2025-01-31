@@ -57,5 +57,12 @@ export default defineConfig({
             key: fs.readFileSync(keyFilePath),
             cert: fs.readFileSync(certFilePath),
         }
+    },
+    css: {
+        preprocessOptions: {
+            scss: {
+                additionalData: '@import "@./src/index.css";'
+            }
+        }
     }
 })

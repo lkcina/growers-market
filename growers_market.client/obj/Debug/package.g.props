@@ -20,6 +20,7 @@
     <PackageJsonDependenciesReactRouter Condition="$(PackageJsonDependenciesReactRouter) == ''">^7.1.3</PackageJsonDependenciesReactRouter>
     <PackageJsonDependenciesReactRouterDom Condition="$(PackageJsonDependenciesReactRouterDom) == ''">^7.1.3</PackageJsonDependenciesReactRouterDom>
     <PackageJsonDependenciesReactToastify Condition="$(PackageJsonDependenciesReactToastify) == ''">^11.0.3</PackageJsonDependenciesReactToastify>
+    <PackageJsonDependenciesSass Condition="$(PackageJsonDependenciesSass) == ''">^1.83.4</PackageJsonDependenciesSass>
     <PackageJsonDependenciesUuid Condition="$(PackageJsonDependenciesUuid) == ''">^11.0.5</PackageJsonDependenciesUuid>
     <PackageJsonDependenciesYup Condition="$(PackageJsonDependenciesYup) == ''">^1.6.1</PackageJsonDependenciesYup>
     <PackageJsonDevdependenciesEslintJs Condition="$(PackageJsonDevdependenciesEslintJs) == ''">^9.17.0</PackageJsonDevdependenciesEslintJs>
