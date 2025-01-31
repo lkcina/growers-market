@@ -11,7 +11,7 @@ const SpeciesDetailsButton: React.FC<Props> = ({ speciesId, showDetails }: Props
     return (
         <form className="species-details-form" onSubmit={showDetails}>
             <input type="hidden" name="speciesId" value={speciesId} />
-            <button type="submit">i</button>
+            <button type="submit" disabled={speciesId > 3000}>i</button>
         </form>
     );
 }

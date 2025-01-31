@@ -72,6 +72,23 @@ export const getUsedSpecies = async () => {
     }
 }
 
+export const getRandomSpecies = async () => {
+    try {
+        const data = await axios.get<SpeciesSearchResponse>(`https://localhost:7234/api/species/random`);
+        return data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error)) {
+
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error)
+            return "An unexpected error has occurred"
+        }
+    }
+}
+
 interface GetWishlistResponse {
     data: SpeciesInfo[];
 }
