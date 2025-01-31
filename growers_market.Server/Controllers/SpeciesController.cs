@@ -1,4 +1,5 @@
 ﻿using growers_market.Server.Data;
+using growers_market.Server.Dtos.Species;
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Mappers;
@@ -82,6 +83,33 @@ namespace growers_market.Server.Controllers
             }
             var speciesDto = species.ToSpeciesDto();
             return Ok(speciesDto);
+        }
+
+        [HttpGet("random")]
+        public async Task<IActionResult> GetRandomSpecies()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var species = await _speciesRepository.GetAllAsync();
+            var speciesDto = species.Select(species => species.ToSpeciesDto()).ToList();
+            var random = new Random();
+            var pageSize = speciesDto.Count < 30 ? speciesDto.Count : 30;
+            var randomSpecies = new List<SpeciesDto>();
+            while (randomSpecies.Count < pageSize)
+            {
+                var index = random.Next(speciesDto.Count);
+                if (randomSpecies.Contains(speciesDto[index]))
+                {
+                    continue;
+                }
+                randomSpecies.Add(speciesDto[index]);
+            }
+            var AllSpeciesDto = randomSpecies.ToAllSpeciesDtoFromSpeciesDtoList();
+
+            return Ok(AllSpeciesDto);
         }
 
         [HttpPost("{id}")]

@@ -18,7 +18,7 @@ namespace growers_market.Server.Services
             _config = config;
         }
 
-        public async Task<AllListingsDto> PlantSearchAsync(PerenualPlantQueryObject query)
+        public async Task<AllSpeciesDto> PlantSearchAsync(PerenualPlantQueryObject query)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace growers_market.Server.Services
             }
             try
             {
-                var url = $"https://perenual.com/api/species-details/{id}?key={_config["PerenualKey"]}";
+                var url = $"https://perenual.com/api/species/details/{id}?key={_config["PerenualKey"]}";
                 Console.WriteLine(url);
                 var result = await _httpClient.GetAsync(url);
                 Console.WriteLine(result);
