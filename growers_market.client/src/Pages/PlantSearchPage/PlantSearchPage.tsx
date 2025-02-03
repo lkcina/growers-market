@@ -4,11 +4,10 @@ import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 import SpeciesSearchBar from '../../Components/SpeciesSearch/SpeciesSearchBar/SpeciesSearchBar';
 import { SpeciesInfo } from '../../types';
 import SearchInfo from '../../Components/SearchInfo/SearchInfo';
+import "./PlantSearchPage.css";
 
-interface Props {
-}
 
-const PlantSearchPage: React.FC<Props> = () => {
+const PlantSearchPage: React.FC = () => {
     const [speciesSearchQuery, setSpeciesSearchQuery] = useState<string>("");
     const [speciesSearchCycle, setSpeciesSearchCycle] = useState<string | null>(null);
     const [speciesSearchSunlight, setSpeciesSearchSunlight] = useState<string | null>(null);
@@ -79,17 +78,17 @@ const PlantSearchPage: React.FC<Props> = () => {
         setSpeciesSearchHardiness(value);
     }
 
-    const handleIndoorChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleIndoorChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
         setSpeciesSearchIndoor(value);
     }
 
-    const handleEdibleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleEdibleChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
         setSpeciesSearchEdible(value);
     }
 
-    const handlePoisonousChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handlePoisonousChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
         setSpeciesSearchPoisonous(value);
     }
@@ -209,9 +208,8 @@ const PlantSearchPage: React.FC<Props> = () => {
     }
 
     return (
-        <div className="plant-search-page">
-            {serverError ?? <h2>{serverError}</h2>}
-            <h1>Plant Finder</h1>
+        <div id="plant-search-page">
+            <h1>Plant Search</h1>
             <SpeciesSearchBar onSearchSubmit={onSearchSubmit} query={speciesSearchQuery} handleQueryChange={handleQueryChange} cycle={speciesSearchCycle} handleCycleChange={handleCycleChange} sunlight={speciesSearchSunlight} handleSunlightChange={handleSunlightChange} watering={speciesSearchWatering} handleWateringChange={handleWateringChange} hardiness={speciesSearchHardiness} handleHardinessChange={handleHardinessChange} indoor={speciesSearchIndoor} handleIndoorChange={handleIndoorChange} edible={speciesSearchEdible} handleEdibleChange={handleEdibleChange} poisonous={speciesSearchPoisonous} handlePoisonousChange={handlePoisonousChange} />
             <SearchInfo currentPage={speciesSearchCurrentPage} lastPage={speciesSearchLastPage} from={speciesSearchFrom} to={speciesSearchTo} total={speciesSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
             <SpeciesList searchResult={speciesSearchResult} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} speciesDetails={speciesDetails} showDetails={showDetails} />
