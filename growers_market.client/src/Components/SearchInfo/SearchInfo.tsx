@@ -1,4 +1,5 @@
 import React, { SyntheticEvent } from "react";
+import "./SearchInfo.css";
 
 interface Props {
     currentPage: number;
@@ -12,20 +13,21 @@ interface Props {
 
 const SearchInfo: React.FC<Props> = ({ currentPage, lastPage, from, to, total, onNextPage, onPreviousPage }: Props): JSX.Element => {
     return (
-        <>
+        <div className="search-info">
             {total > 0 ? (
                 <div>
-                    <div>
-                        <button disabled={currentPage === 1} onClick={onPreviousPage}>Previous</button>
-                        <span>{currentPage} of {lastPage}</span>
-                        <button disabled={currentPage === lastPage} onClick={onNextPage}>Next</button>
+                    <div></div>
+                    <div className="page-nav">
+                        {currentPage === 1 ? null : <button onClick={onPreviousPage}>{"<"}</button>}
+                        <div><span>{currentPage}</span> of {lastPage}</div>
+                        {currentPage === lastPage ? null : <button onClick={onNextPage}>{">"}</button>}
                     </div>
-                    <div>Showing {from} - {to} of {total}</div>
+                    <div className="results-showing">Showing {from} - {to} of {total}</div>
                 </div>
             ) : (
                 <div></div>
             )}
-        </>
+        </div>
     )
 }
 

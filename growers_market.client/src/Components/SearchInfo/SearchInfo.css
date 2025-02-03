@@ -1,0 +1,67 @@
+@import '../../index.css';
+
+.search-info {
+    height: auto;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 15px;
+}
+
+    .search-info > div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .search-info > div > div {
+            width: 33%;
+        }
+
+        .search-info > div .page-nav {
+            text-align: center;
+            vertical-align: middle;
+            line-height: 2rem;
+        }
+
+            .search-info > div .page-nav button {
+                font-size: 2rem;
+                background: none;
+                color: var(--color-secondary-dark);
+                cursor: pointer;
+                text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+                padding: 5px;
+            }
+
+                .search-info > div .page-nav button:hover {
+                    font-weight: bold;
+                }
+
+                .search-info > div .page-nav button:focus {
+                    outline: none;
+                    font-weight: bold;
+                }
+
+            .search-info > div .page-nav div {
+                display: inline-block;
+                font-size: 2rem;
+                color: var(--color-secondary-dark);
+                text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+                padding: 5px;
+            }
+
+                .search-info > div .page-nav div span {
+                    font-size: inherit;
+                    color: var(--color-secondary-light);
+                    text-shadow: inherit;
+                    font-weight: bold;
+                }
+
+        .search-info > div .results-showing {
+            text-align: right;
+            vertical-align: middle;
+            line-height: 2rem;
+            font-size: 2rem;
+            color: var(--color-secondary-dark);
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+            word-spacing: 5px;
+            padding: 5px;
+        }
