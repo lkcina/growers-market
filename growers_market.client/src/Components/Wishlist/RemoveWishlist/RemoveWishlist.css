@@ -1,0 +1,36 @@
+@import '../../../index.css';
+
+.wishlist-form {
+    min-height: 28px;
+}
+
+.rem-wishlist-btn {
+    width: 200px;
+    font-size: 1.5rem;
+    color: var(--color-primary-dark);
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    border-radius: 3px;
+    border: 1px solid var(--color-primary-dark);
+    padding: 5px 10px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+    .rem-wishlist-btn:hover {
+        border: 1px solid var(--color-error);
+        box-shadow: 0 0 5px var(--color-error);
+    }
+
+    .rem-wishlist-btn:disabled {
+        background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+        color: var(--color-error);
+        border: 1px solid var(--color-error);
+        cursor: not-allowed;
+    }
+
+        .rem-wishlist-btn:disabled:hover {
+            box-shadow: none;
+            border: 1px solid var(--color-error);
+        }

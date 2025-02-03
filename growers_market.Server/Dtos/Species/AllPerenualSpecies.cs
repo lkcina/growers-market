@@ -63,10 +63,10 @@ namespace growers_market.Server.Dtos.Species
     public class AllPerenualSpecies
     {
         public List<AllSpeciesData> data { get; set; }
-        public int to { get; set; }
+        public int? to { get; set; }
         public int per_page { get; set; }
         public int current_page { get; set; }
-        public int from { get; set; }
+        public int? from { get; set; }
         public int last_page { get; set; }
         public int total { get; set; }
     }

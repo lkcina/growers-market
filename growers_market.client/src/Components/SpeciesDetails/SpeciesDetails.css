@@ -1,0 +1,29 @@
+@import '../../index.css';
+
+.species-details {
+    height: auto;
+    width: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+    .species-details .species-details-properties {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+        .species-details .species-details-properties p {
+            width: 200px;
+            font-size: 1.5rem;
+            color: var(--color-text-dark);
+            margin: 5px 0;
+        }
+
+    .species-details .species-details-description {
+        font-size: 1.5rem;
+        color: var(--color-text-dark);
+        text-align: justify;
+    }

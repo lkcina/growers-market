@@ -46,6 +46,7 @@
                 color: var(--color-secondary-dark);
                 text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
                 padding: 5px;
+                word-spacing: 5px;
             }
 
                 .search-info > div .page-nav div span {
