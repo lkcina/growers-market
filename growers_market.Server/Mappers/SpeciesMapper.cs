@@ -68,10 +68,10 @@ namespace growers_market.Server.Mappers
             return new AllSpeciesDto
             {
                 Data = speciesData.data.Select(species => species.ToSpeciesFromAllPerenual().ToSpeciesDto()).ToList(),
-                To = speciesData.to,
+                To = speciesData.to ?? 0,
                 PerPage = speciesData.per_page,
                 CurrentPage = speciesData.current_page,
-                From = speciesData.from,
+                From = speciesData.from ?? 0,
                 LastPage = speciesData.last_page,
                 Total = speciesData.total
             };

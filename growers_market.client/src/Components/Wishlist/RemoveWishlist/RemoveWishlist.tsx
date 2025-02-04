@@ -1,4 +1,5 @@
 import React, { SyntheticEvent } from "react";
+import "./RemoveWishlist.css";
 
 
 interface Props {

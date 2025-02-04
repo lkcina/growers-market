@@ -1,0 +1,17 @@
+@import '../../index.css';
+
+#plant-search-page {
+    height: 100%;
+    width: auto;
+    padding: 0 40px;
+}
+
+    #plant-search-page h1 {
+        font-family: 'Namd', serif;
+        font-size: 5rem;
+        color: var(--color-secondary-dark);
+        margin-bottom: 15px;
+        text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    }
+
+

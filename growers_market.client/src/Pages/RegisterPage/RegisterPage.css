@@ -1,5 +1,5 @@
 .register-page {
-    height: 100%;
+    height: calc(100vh - 100px);
     width: auto;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@
 }
 
     .register-page form {
-        height: 350px;
+        height: 400px;
         width: 250px;
         display: flex;
         flex-direction: column;
@@ -46,22 +46,18 @@
             padding: 5px;
             background-color: var(--color-secondary-light);
             border: 1px solid var(--color-primary-light);
+            color: var(--color-text-dark);
             align-self: center;
         }
-
-            .register-page form div input:focus {
-                font-size: 1.2rem;
-                color: var(--color-error);
-                margin-left: 20px;
-            }
 
             .register-page form div input::placeholder {
                 color: var(--color-primary-light);
             }
 
         .register-page form div .error {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: var(--color-error);
+            margin-left: 20px;
         }
 
     .register-page form button {

@@ -1,5 +1,6 @@
 import React, { SyntheticEvent } from "react";
 import { useAuth } from "../../../Context/UseAuth";
+import "./AddWishlist.css";
 
 interface Props {
     onWishlistCreate: (e: SyntheticEvent) => void;
@@ -10,9 +11,9 @@ const AddWishlist: React.FC<Props> = ({ onWishlistCreate, speciesId }: Props): J
     const { isLoggedIn } = useAuth();
 
     return (
-        <form onSubmit={onWishlistCreate}>
+        <form className="wishlist-form" onSubmit={onWishlistCreate}>
             <input className="add-wishlist-input" type="hidden" name="speciesId" value={speciesId} />
-            <button className="add-wishlist-btn" type="submit" disabled={!isLoggedIn()}>{isLoggedIn() ? "Add to Wishlist" : "Login to Edit Wishlist"}</button>
+            <button className="add-wishlist-btn" type="submit" disabled={!isLoggedIn()}>Add to Wishlist</button>
         </form>
     );
 }
