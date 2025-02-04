@@ -1,1 +1,26 @@
-@import 
+@import '../../index.css';
+
+#form-species-select {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+    #form-species-select label {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+    #form-species-select div {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+        #form-species-select div select {
+            width: 600px;
+        }
+
+            #form-species-select div select:has(option[value=""]:checked) {
+                color: var(--color-primary-light);
+            }

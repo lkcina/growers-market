@@ -23,7 +23,7 @@ interface Props {
 const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange, isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions }: Props): JSX.Element => {
     return (
         <form id="listing-search-bar" onSubmit={onSearchSubmit}>
-            <input type="text" value={query} onChange={handleQueryChange} />
+            <input type="text" value={query} onChange={handleQueryChange} placeholder="Search for a listing" />
             
             <button type="submit">Search</button>
             <details >
