@@ -1,0 +1,39 @@
+@import '../../index.css';
+
+.species-card {
+    height: calc(auto + 50px);
+    width: 200px;
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    position: relative;
+    display: flex;
+    gap: 10px;
+}
+
+    .species-card img {
+        display: block;
+        height: 200px;
+        width: 200px;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 10px;
+    }
+
+        .species-card img.image-error {
+            font-size: 2rem;
+            color: var(--color-text-light);
+            background: linear-gradient(165deg, var(--color-primary-light), var(--color-primary-dark));
+        }
+
+    .species-card p {
+        font-size: 1.5rem;
+        color: var(--color-text-dark);
+        margin-bottom: 10px;
+    }
+
+    .species-card.show-details {
+        width: 670px;
+    }
+
+        

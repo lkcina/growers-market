@@ -1,0 +1,16 @@
+@import '../../index.css';
+
+.species-details-form button {
+    font-size: 2rem;
+    width: 200px;
+    color: var(--color-primary-dark);
+    font-weight: bold;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+    .species-details-form button:hover {
+        text-shadow: 0 0 10px var(--color-primary-light);
+    }

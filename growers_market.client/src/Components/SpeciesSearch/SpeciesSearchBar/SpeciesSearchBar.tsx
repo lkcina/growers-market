@@ -1,5 +1,6 @@
 import React, { ChangeEvent, SyntheticEvent } from "react";
 import SpeciesAdvancedSearch from "../SpeciesAdvancedSearch/SpeciesAdvancedSearch";
+import "./SpeciesSearchBar.css";
 
 interface Props {
     query: string | undefined;
@@ -13,18 +14,18 @@ interface Props {
     hardiness: number | null;
     handleHardinessChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     indoor: boolean | null;
-    handleIndoorChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleIndoorChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     edible: boolean | null;
-    handleEdibleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleEdibleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     poisonous: boolean | null;
-    handlePoisonousChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handlePoisonousChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     onSearchSubmit: (e: SyntheticEvent) => void;
 };
 
 const SpeciesSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange, cycle, handleCycleChange, sunlight, handleSunlightChange, watering, handleWateringChange, hardiness, handleHardinessChange, indoor, handleIndoorChange, edible, handleEdibleChange, poisonous, handlePoisonousChange }: Props): JSX.Element => {
     return (
-        <form onSubmit={onSearchSubmit}>
-            <input type="text" value={query} onChange={(e) => handleQueryChange(e)} />
+        <form id="species-search-bar" onSubmit={onSearchSubmit}>
+            <input type="text" value={query} onChange={handleQueryChange} placeholder="Search for a plant" />
             
             <button onClick={(e) => onSearchSubmit(e)}>Search</button>
             <details >

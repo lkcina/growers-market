@@ -10,6 +10,9 @@ nav {
     margin-bottom: 15px;
     background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
     nav a {
         text-decoration: none;

@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react";
+import "./SpeciesAdvancedSearch.css";
 
 interface Props {
     cycle: string | null;
@@ -10,18 +11,18 @@ interface Props {
     hardiness: number | null;
     handleHardinessChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     indoor: boolean | null;
-    handleIndoorChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleIndoorChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     edible: boolean | null;
-    handleEdibleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleEdibleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     poisonous: boolean | null;
-    handlePoisonousChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handlePoisonousChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const SpeciesAdvancedSearch: React.FC<Props> = ({ cycle, handleCycleChange, sunlight, handleSunlightChange, watering, handleWateringChange, hardiness, handleHardinessChange, indoor, handleIndoorChange, edible, handleEdibleChange, poisonous, handlePoisonousChange }: Props): JSX.Element => {
     return (
         <div id="species-advanced-search">
             <fieldset>
-                <label htmlFor="cycle">Cycle</label>"
+                <label htmlFor="cycle">Cycle</label>
                 <select id="cycle" value={cycle ? cycle : "null"} onChange={handleCycleChange}>
                     <option value="null">Select</option>
                     <option value="annual">Annual</option>
@@ -68,31 +69,28 @@ const SpeciesAdvancedSearch: React.FC<Props> = ({ cycle, handleCycleChange, sunl
                 </select>
             </fieldset>
             <fieldset>
-                <label>Indoor or Outdoor</label>
-                <input id="indoor" type="radio" name="indoor" value="true" checked={indoor === true} onChange={handleIndoorChange} />
-                <label htmlFor="indoor">Indoor</label>
-                <input id="outdoor" type="radio" name="indoor" value="false" checked={indoor === false} onChange={handleIndoorChange} />
-                <label htmlFor="outdoor">Outdoor</label>
-                <input id="indoor-outdoor" type="radio" name="indoor" value="null" checked={indoor === null} onChange={handleIndoorChange} />
-                <label htmlFor="indoor-outdoor">All</label>
+                <label htmlFor="indoor">Indoor/Outdoor</label>
+                <select id="indoor" value={indoor !== null ? indoor.toString() : "null"} onChange={handleIndoorChange}>
+                    <option value="null">Select</option>
+                    <option value="true">Indoor</option>
+                    <option value="false">Outdoor</option>
+                </select>
             </fieldset>
             <fieldset>
-                <label>Edibility</label>
-                <input id="edible" type="radio" name="edible" value="true" checked={edible === true} onChange={handleEdibleChange} />
-                <label htmlFor="edible">Edible</label>
-                <input id="inedible" type="radio" name="edible" value="false" checked={edible === false} onChange={handleEdibleChange} />
-                <label htmlFor="inedible">Inedible</label>
-                <input id="edible-inedible" type="radio" name="edible" value="null" checked={edible === null} onChange={handleEdibleChange} />
-                <label htmlFor="edible-inedible">All</label>
+                <label htmlFor="edible">Edibility</label>
+                <select id="edible" value={edible !== null ? edible.toString() : "null"} onChange={handleEdibleChange}>
+                    <option value="null">Select</option>
+                    <option value="true">Edible</option>
+                    <option value="false">Inedible</option>
+                </select>
             </fieldset>
             <fieldset>
-                <label>Poisonous</label>
-                <input id="poisonous" type="radio" name="poisonous" value="true" checked={poisonous === true} onChange={handlePoisonousChange} />
                 <label htmlFor="poisonous">Poisonous</label>
-                <input id="not-poisonous" type="radio" name="poisonous" value="false" checked={poisonous === false} onChange={handlePoisonousChange} />
-                <label htmlFor="not-poisonous">Not Poisonous</label>
-                <input id="poisonous-not-poisonous" type="radio" name="poisonous" value="null" checked={poisonous === null} onChange={handlePoisonousChange} />
-                <label htmlFor="poisonous-not-poisonous">All</label>
+                <select id="poisonous" value={poisonous !== null ? poisonous.toString() : "null"} onChange={handlePoisonousChange}>
+                    <option value="null">Select</option>
+                    <option value="true">Poisonous</option>
+                    <option value="false">Not Poisonous</option>
+                </select>
             </fieldset>
         </div>
     );
