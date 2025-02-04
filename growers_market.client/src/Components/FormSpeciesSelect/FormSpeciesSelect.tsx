@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { SpeciesInfo } from '../../types';
 import { v4 as uuidv4 } from 'uuid';
+import './FormSpeciesSelect.css';
 
 interface Props {
     speciesValue: SpeciesInfo | null;
