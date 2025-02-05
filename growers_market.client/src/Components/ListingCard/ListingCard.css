@@ -1,0 +1,74 @@
+@import '../../index.css';
+
+.listing-card {
+    height: calc(auto + 50px);
+    width: 200px;
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    position: relative;
+    display: flex;
+    gap: 10px;
+}
+
+    .listing-card.show-details {
+        width: 670px;
+    }
+
+    .listing-card h3 {
+        font-size: 2rem;
+        width: 200px;
+        color: var(--color-primary-dark);
+        font-weight: bold;
+        background: none;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .listing-card .listing-asking {
+        width: 200px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+        .listing-card .listing-asking p {
+            font-size: 1.8rem;
+            color: var(--color-text-dark);
+        }
+
+            .listing-card .listing-asking p:last-of-type {
+                font-weight: bold;
+            }
+
+    .listing-card .listing-species {
+        width: 200px;
+        margin-bottom: 10px;
+    }
+        .listing-card .listing-species p {
+            font-size: 1.5rem;
+            color: var(--color-primary-dark);
+        }
+
+    .listing-card .view-listing-form {
+        min-height: 28px;
+    }
+
+        .listing-card .view-listing-form button {
+            width: 200px;
+            font-size: 1.5rem;
+            color: var(--color-text-light);
+            background: linear-gradient(165deg, var(--color-primary-light), var(--color-primary-dark));
+            border-radius: 3px;
+            border: 1px solid var(--color-primary-light);
+            padding: 5px 10px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+
+            .listing-card .view-listing-form button:hover {
+                border: 1px solid var(--color-primary-dark);
+                box-shadow: 0 0 5px var(--color-primary-dark);
+            }

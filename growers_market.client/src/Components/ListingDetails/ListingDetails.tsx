@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
 import "./ListingDetails.css";
 import { Chat, Listing } from "../../types";
 import ListingChat from "../ListingChat/ListingChat";
@@ -9,7 +9,7 @@ interface Props {
     chat: Chat | undefined | null;
     newMessage: string;
     onNewMessageSubmit: (e: FormEvent<HTMLFormElement>) => void;
-    handleMessageInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleMessageInputChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     removeChat: () => void;
 }
 
@@ -18,12 +18,14 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, newMessage, onNewMessa
 
     return (
         <div className="listing-details">
-            <div className="species-details-properties">
+            <div className="listing-details-properties">
                 <p>Seller: {listing.appUserName}</p>
+                <p>Species: {listing.species !== null ? listing.species.scientificName : "Species not specified"}</p>
                 <p>Quantity: {listing.quantity}</p>
-            </div>
-            <div className="listing-details-description">
-                {listing.description}
+            
+                <div className="listing-details-description">
+                    {listing.description}
+                </div>
             </div>
             {isLoggedIn() && chat !== null ? <ListingChat chat={chat} newMessage={newMessage} onNewMessageSubmit={onNewMessageSubmit} handleMessageInputChange={handleMessageInputChange} removeChat={removeChat} /> : null}
         </div>

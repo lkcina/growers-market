@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Message } from '../../types';
 import MessageBlock from '../MessageBlock/MessageBlock';
+import './MessageList.css';
 
 interface Props {
     messages: Message[];
@@ -8,9 +9,16 @@ interface Props {
 }
 
 const MessageList: React.FC<Props> = ({ messages, userName }: Props): JSX.Element => {
+    const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            (messagesEndRef.current as HTMLDivElement).scrollIntoView({ block: 'nearest', inline: 'start' });
+        }
+    }, [messages]);
 
     return (
-        <div id="message-list">
+        <div className="message-list">
             {messages.length > 0 ? (
                 messages.map((message, index) => {
 
@@ -20,8 +28,9 @@ const MessageList: React.FC<Props> = ({ messages, userName }: Props): JSX.Elemen
                     );
                 })
             ) : (
-                <h4>No messages</h4>
+                <h3>No messages</h3>
             )}
+            <div className="message-list-end" ref={messagesEndRef}></div>
         </div>
     );
 }

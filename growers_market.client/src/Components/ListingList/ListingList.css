@@ -1,0 +1,21 @@
+@import '../../index.css';
+
+.listing-list {
+    height: auto;
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto 15px;
+    padding: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+    .listing-list h2 {
+        font-size: 3rem;
+        color: var(--color-secondary-dark);
+        margin: 0 auto;
+        text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+        text-align: center;
+    }

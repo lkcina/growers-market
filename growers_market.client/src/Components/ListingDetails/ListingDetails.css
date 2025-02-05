@@ -1,0 +1,29 @@
+@import '../../index.css';
+
+.listing-details {
+    height: auto;
+    width: 460px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+    .listing-details .listing-details-properties {
+        height: auto;
+        width: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 15px;
+    }
+
+        .listing-details .listing-details-properties p {
+            font-size: 1.8rem;
+            color: var(--color-text-dark);
+        }
+
+        .listing-details .listing-details-properties .listing-details-description {
+            font-size: 1.5rem;
+            color: var(--color-text-dark);
+            text-align: justify;
+        }
