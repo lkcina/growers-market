@@ -3,6 +3,7 @@ import { postWishlist, getSpeciesDetails, deleteWishlist, getWishlist } from '..
 import ListWishlist from '../../Components/Wishlist/ListWishlist/ListWishlist';
 import { SpeciesInfo } from '../../types';
 import SearchBar from '../../Components/SearchBar/SearchBar';
+import './WishlistPage.css';
 
 interface Props {
 }
@@ -101,8 +102,7 @@ const WishlistPage: React.FC<Props> = () => {
     }
 
     return (
-        <div>
-            <h1>Wishlist Page</h1>
+        <div id="wishlist-page">
             <SearchBar handleQueryChange={handleQueryChange} onSearchSubmit={onSearchSubmit} query={wishlistSearchQuery} />
             <ListWishlist wishlistValues={wishlistValues} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistSearchResult={wishlistSearchResult} showDetails={showDetails} speciesDetails={speciesDetails} />
         </div>

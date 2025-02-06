@@ -1,7 +1,6 @@
 @import '../../index.css';
 
 .species-card {
-    height: calc(auto + 50px);
     width: 200px;
     background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);

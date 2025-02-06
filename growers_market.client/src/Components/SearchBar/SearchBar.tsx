@@ -1,4 +1,5 @@
 import React, { ChangeEvent, SyntheticEvent } from "react";
+import './SearchBar.css';
 
 interface Props {
     query: string | undefined;
@@ -8,7 +9,7 @@ interface Props {
 
 const SpeciesSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange }: Props): JSX.Element => {
     return (
-        <form onSubmit={onSearchSubmit}>
+        <form className="search-bar" onSubmit={onSearchSubmit}>
             <input type="text" value={query} onChange={(e) => handleQueryChange(e)} />
             
             <button type="submit">Search</button>
