@@ -1,0 +1,55 @@
+@import '../../index.css';
+
+.message-block {
+    height: auto;
+    width: calc(100% - 10px);
+}
+
+    .message-block h4 {
+        font-size: 1.2rem;
+        text-align: center;
+        color: var(--color-primary-dark);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        font-weight: normal;
+        margin-bottom: 10px;
+    }
+
+    .message-block .message-content {
+        width: 75%;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        border-radius: 5px;
+        padding: 5px;
+    }
+        .message-block .message-content p {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .message-block .message-content span {
+            font-size: 1.2rem;
+        }
+
+    .message-block.sent .message-content {
+        float: right;
+        background: linear-gradient(165deg, var(--color-primary-light), var(--color-primary-dark));
+    }
+
+        .message-block.sent .message-content p {
+            color: var(--color-text-light);
+        }
+
+        .message-block.sent .message-content span {
+            color: var(--color-text-light);
+            display: flex;
+            justify-content: end;
+        }
+
+        .message-block.received .message-content {
+            float: left;
+            background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+        }
+
+        .message-block.received .message-content p,
+        .message-block.received .message-content span {
+            color: var(--color-text-dark);
+        }

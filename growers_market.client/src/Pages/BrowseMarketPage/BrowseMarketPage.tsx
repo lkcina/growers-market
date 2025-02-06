@@ -4,11 +4,11 @@ import { Chat, Listing, SpeciesInfo } from '../../types';
 import { getUsedSpecies, getUserChats, searchListings } from '../../api';
 import SearchInfo from '../../Components/SearchInfo/SearchInfo';
 import ListingList from '../../Components/ListingList/ListingList';
+import './BrowseMarketPage.css';
 
-interface Props {
-}
 
-const BrowseMarketPage: React.FC<Props> = () => {
+
+const BrowseMarketPage: React.FC = (): JSX.Element => {
     const [listingSearchQuery, setListingSearchQuery] = useState<string>("");
     const [listingIsForTrade, setListingIsForTrade] = useState<boolean | null>(null);
     const [listingPriceMax, setListingPriceMax] = useState<number>(9999.99);
@@ -39,7 +39,7 @@ const BrowseMarketPage: React.FC<Props> = () => {
             }
         })
 
-        searchListings(1, "", null, 9999.99, null, null, null).then((result) => {
+        searchListings(1, "", null, 10000, null, null, null).then((result) => {
             if (typeof result === "string") {
                 setServerError(result);
             } else if (Array.isArray(result.data.data)) {
@@ -72,12 +72,12 @@ const BrowseMarketPage: React.FC<Props> = () => {
         setListingSearchQuery(e.target.value);
     };
 
-    const handleIsForTradeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleIsForTradeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value === "null" ? null : e.target.value === "true" ? true : false;
         setListingIsForTrade(value);
     };
 
-    const handlePriceMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handlePriceMaxChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setListingPriceMax(parseFloat(e.target.value));
     }
 

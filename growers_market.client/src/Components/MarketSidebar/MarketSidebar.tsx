@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import "./MarketSidebar.css";
 
 interface Props {
 
@@ -8,18 +9,15 @@ interface Props {
 const MarketSidebar: React.FC<Props> = ({ }: Props): JSX.Element => {
     return (
         <div id="market-sidebar">
-            <div>
-                <Link to="/market/browse">Search</Link>
-            </div>
-            <div>
-                <Link to="/market/chats">Chats</Link>
-            </div>
-            <div>
-                <Link to="/market/my-listings/all">My Listings</Link>
-            </div>
-            <div>
-                <Link to="/market/my-wishlist">My Wishlist</Link>
-            </div>
+            
+            <NavLink to="/market/browse" className={({ isActive }) => isActive ? "active" : ""}>Browse</NavLink>
+            
+            <NavLink to="/market/chats" className={({ isActive }) => isActive ? "active" : ""}>My Chats</NavLink>
+            
+            <NavLink to="/market/my-listings/all" className={({ isActive }) => isActive ? "active" : ""}>My Listings</NavLink>
+            
+            <NavLink to="/market/my-wishlist" className={({ isActive }) => isActive ? "active" : ""}>My Wishlist</NavLink>
+            
         </div>
     )
 }

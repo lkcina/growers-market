@@ -1,5 +1,6 @@
 import React from 'react';
 import { Message } from '../../types';
+import './MessageBlock.css';
 
 interface Props {
     message: Message;

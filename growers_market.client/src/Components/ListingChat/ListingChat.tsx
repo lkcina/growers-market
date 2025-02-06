@@ -4,12 +4,13 @@ import NewMessageForm from '../NewMessageForm/NewMessageForm';
 import { createChat, getUserChats, sendMessage } from '../../api';
 import { useAuth } from '../../Context/UseAuth';
 import MessageList from '../MessageList/MessageList';
+import './ListingChat.css';
 
 interface Props {
     chat: Chat | undefined;
     newMessage: string;
     onNewMessageSubmit: (e: FormEvent<HTMLFormElement>) => void;
-    handleMessageInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleMessageInputChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     removeChat: () => void;
 }
 
@@ -25,7 +26,7 @@ const ListingChat: React.FC<Props> = ({ chat, newMessage, onNewMessageSubmit, ha
 
     return (
         <div className="listing-chat">
-            {chat ? <button onClick={removeChat}>Delete Chat</button> : null}
+            {chat ? <button className="del-chat-btn" onClick={removeChat}>Delete Chat</button> : null}
             <MessageList messages={chat ? chat.messages : []} userName={userName} />
             <NewMessageForm chat={chat} onSubmit={onNewMessageSubmit} message={newMessage} handleMessageInputChange={handleMessageInputChange} />
         </div>

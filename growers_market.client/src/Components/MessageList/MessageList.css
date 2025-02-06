@@ -1,0 +1,33 @@
+@import '../../index.css';
+
+.message-list {
+    height: auto;
+    width: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px 5px 0 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+    .message-list h3 {
+        font-size: 2rem;
+        color: var(--color-primary-dark);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        margin: 0 auto;
+        width: auto;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .message-list .message-list-end {
+        min-height: 30px;
+        width: 100%;
+    }

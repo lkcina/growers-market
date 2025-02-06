@@ -1,0 +1,58 @@
+@import '../../index.css';
+
+.listing-images {
+    display: block;
+    position: relative;
+    height: 200px;
+    width: 200px;
+}
+
+    .listing-images img,
+    .listing-images div {
+        display: block;
+        height: 200px;
+        width: 200px;
+        object-fit: contain;
+        border-radius: 3px;
+        margin-bottom: 10px;
+    }
+
+        .listing-images img.image-error,
+        .listing-images div {
+            font-size: 2rem;
+            color: var(--color-text-light);
+            background: linear-gradient(165deg, var(--color-primary-light), var(--color-primary-dark));
+        }
+
+
+    .listing-images button {
+        height: 100%;
+        width: 50px;
+        font-size: 3rem;
+        color: var(--color-text-light);
+        padding: 10px;
+        cursor: pointer;
+    }
+
+        .listing-images button:first-of-type {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+        }
+
+        .listing-images button:last-of-type {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 100;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+        }
+
+            .listing-images:hover button:first-of-type,
+            .listing-images:hover button:last-of-type {
+                display: block;
+            }

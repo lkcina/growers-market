@@ -1,0 +1,52 @@
+@import '../../../index.css';
+
+#listing-advanced-search {
+    height: auto;
+    width: auto;
+    max-width: 800px;
+    margin: 0 auto;
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 15px;
+}
+
+    #listing-advanced-search fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+        #listing-advanced-search fieldset label {
+            font-size: 1.5rem;
+            color: var(--color-primary-dark);
+            border-bottom: 2px solid var(--color-primary-light);
+        }
+
+        #listing-advanced-search fieldset select {
+            font-size: 1.5rem;
+            padding: 2px;
+            background-color: var(--color-secondary-light);
+            border: 1px solid var(--color-primary-light);
+            color: var(--color-text-dark);
+        }
+
+            #listing-advanced-search fieldset select option {
+                font-size: 1.5rem;
+                padding: 2px;
+                background-color: var(--color-secondary-light);
+                border: 1px solid var(--color-primary-light);
+                color: var(--color-text-dark);
+            }
+
+        #listing-advanced-search fieldset #tradable:has(option[value="null"]:checked),
+        #listing-advanced-search fieldset select:has(option[value="10000"]:checked) {
+            color: var(--color-primary-light);
+        }
+
+        #listing-advanced-search fieldset input {
+            width: 100px;
+        }
