@@ -44,10 +44,11 @@
             justify-content: end;
         }
 
-        .message-block.received .message-content {
-            float: left;
-            background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
-        }
+    .message-block.received .message-content {
+        float: left;
+        margin-left: 10px;
+        background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    }
 
         .message-block.received .message-content p,
         .message-block.received .message-content span {
