@@ -2,6 +2,7 @@ import { SpeciesInfo } from "../../../types";
 import { v4 as uuidv4 } from 'uuid';
 import { FormEvent, SyntheticEvent } from "react";
 import SpeciesCard from "../../SpeciesCard/SpeciesCard";
+import './ListWishlist.css';
 
 
 interface Props {
@@ -15,7 +16,7 @@ interface Props {
 
 const ListWishlist: React.FC<Props> = ({ wishlistValues, onWishlistRemove, onWishlistCreate, wishlistSearchResult, showDetails, speciesDetails }: Props): JSX.Element => {
     return (
-        <div>
+        <div className="wishlist-list">
             {wishlistValues.length > 0 ? (
                 wishlistSearchResult.length > 0 ? (wishlistSearchResult.map(s => {
                     return <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistRemove={onWishlistRemove} onWishlistCreate={onWishlistCreate} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} />

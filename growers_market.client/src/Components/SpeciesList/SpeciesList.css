@@ -2,14 +2,13 @@
 
 .species-list {
     height: auto;
-    width: 100%;
+    width: fit-content;
     max-width: 1160px;
     margin: 0 auto 15px;
-    padding: 15px 0;
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .species-list h2 {

@@ -2,14 +2,13 @@
 
 .listing-list {
     height: auto;
-    width: auto;
+    width: fit-content;
     max-width: 1160px;
     margin: 0 auto 15px;
-    padding: 0 0;
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
     .listing-list h2 {
