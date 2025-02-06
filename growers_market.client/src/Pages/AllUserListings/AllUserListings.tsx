@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { getUserListings } from '../../api';
 import ListingList from '../../Components/ListingList/ListingList';
 import { useNavigate } from 'react-router-dom';
+import './AllUserLisitngs.css';
 
 interface Props {
 }
@@ -34,10 +35,9 @@ const AllUserListings: React.FC<Props> = (): JSX.Element => {
 
 
     return (
-        <div>
-            <h1>All User Listings Page</h1>
-            <button onClick={() => navigate("/market/my-listings/new")}>Create New Listing</button>
-            <ListingList listings={userListings} onSelect={onListingSelect} listingDetails={null} userChats={null}  />
+        <div id="all-user-listings-page">
+            <button className="new-listing-btn" onClick={() => navigate("/market/my-listings/new")}>Create New Listing</button>
+            <ListingList listings={userListings} onSelect={onListingSelect} listingDetails={null} userChats={null} setUserChats={null} />
         </div>
     );
 }

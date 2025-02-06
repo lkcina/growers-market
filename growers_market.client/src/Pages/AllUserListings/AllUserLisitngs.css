@@ -1,0 +1,25 @@
+@import '../../index.css';
+
+#all-user-listings-page {
+    height: 100%;
+    min-height: calc(100vh - 165px);
+    width: calc(100vw - 270px);
+}
+
+    #all-user-listings-page .new-listing-btn {
+        display: block;
+        margin: 0 0 20px auto;
+        text-align: center;
+        font-size: 2rem;
+        color: var(--color-primary-dark);
+        background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+        border-radius: 3px;
+        border: 1px solid var(--color-primary-dark);
+        padding: 5px 10px;
+        cursor: pointer;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    }
+
+        #all-user-listings-page .new-listing-btn:hover {
+            font-weight: bold;
+        }
