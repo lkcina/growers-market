@@ -1,0 +1,22 @@
+@import '../../index.css';
+
+#market {
+    height: 100%;
+    width: auto;
+    padding: 0 40px;
+}
+
+    #market h1 {
+        font-family: 'Namd', serif;
+        font-size: 5rem;
+        color: var(--color-secondary-dark);
+        margin-bottom: 15px;
+        text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+        width: 100%;
+    }
+
+    #market #market-container {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+    }

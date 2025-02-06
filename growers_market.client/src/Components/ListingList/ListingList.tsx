@@ -1,6 +1,7 @@
 import React, { Dispatch, FormEvent, MouseEvent, SetStateAction } from 'react';
 import { Chat, Listing } from '../../types';
 import ListingCard from '../ListingCard/ListingCard';
+import './ListingList.css';
 
 interface Props {
     listings: Listing[];
@@ -13,7 +14,7 @@ interface Props {
 const ListingList: React.FC<Props> = ({ listings, onSelect, listingDetails, userChats, setUserChats }): JSX.Element => {
 
     return (
-        <div id="user-listings">
+        <div className="listing-list">
             {listings.length > 0 ? (
                 listings.map((listing) => {
                     return <ListingCard key={listing.id} listing={listing} onSelect={onSelect} listingDetails={listingDetails} chat={userChats ? userChats.find((chat) => chat.listing.id === listing.id) : null} setUserChats={setUserChats} />

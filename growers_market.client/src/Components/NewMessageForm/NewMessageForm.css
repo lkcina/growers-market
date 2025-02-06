@@ -1,0 +1,47 @@
+@import '../../index.css';
+
+.new-message-form {
+    height: 30px;
+    width: 210px;
+    display: block;
+    position: absolute;
+    left: 10px;
+    bottom: 5px;
+    right: 5px;
+    z-index: 2;
+}
+
+    .new-message-form textarea {
+        width: calc(100% - 50px);
+        min-height: 1.5rem;
+        height: max-content;
+        font-size: 1.5rem;
+        overflow: hidden;
+        border: 2px solid var(--color-primary-light);
+        padding: 3px;
+        border-radius: 3px;
+        resize: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+    }
+
+    .new-message-form button {
+        height: 30px;
+        width: 30px;
+        font-size: 1.5rem;
+        color: var(--color-text-light);
+        background: linear-gradient(165deg, var(--color-primary-light), var(--color-primary-dark));
+        border-radius: 50%;
+        border: 1px solid var(--color-primary-light);
+        cursor: pointer;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+        .new-message-form button:hover {
+            border: 1px solid var(--color-primary-dark);
+            box-shadow: 0 0 5px var(--color-primary-dark);
+        }

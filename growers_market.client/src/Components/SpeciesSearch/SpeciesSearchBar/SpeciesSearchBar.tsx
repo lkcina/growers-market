@@ -27,7 +27,7 @@ const SpeciesSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryC
         <form id="species-search-bar" onSubmit={onSearchSubmit}>
             <input type="text" value={query} onChange={handleQueryChange} placeholder="Search for a plant" />
             
-            <button onClick={(e) => onSearchSubmit(e)}>Search</button>
+            <button type="submit">Search</button>
             <details >
                 <summary>Advanced Search</summary>
                 <SpeciesAdvancedSearch cycle={cycle} handleCycleChange={handleCycleChange} sunlight={sunlight} handleSunlightChange={handleSunlightChange} watering={watering} handleWateringChange={handleWateringChange} hardiness={hardiness} handleHardinessChange={handleHardinessChange} indoor={indoor} handleIndoorChange={handleIndoorChange} edible={edible} handleEdibleChange={handleEdibleChange} poisonous={poisonous} handlePoisonousChange={handlePoisonousChange} />

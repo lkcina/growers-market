@@ -1,12 +1,13 @@
 import React, { ChangeEvent } from "react";
 import { SpeciesInfo } from "../../../types";
 import FormSpeciesSelect from "../../FormSpeciesSelect/FormSpeciesSelect";
+import './ListingAdvancedSearch.css';
 
 interface Props {
     isForTrade: boolean | null;
-    handleIsForTradeChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleIsForTradeChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     priceMax: number;
-    handlePriceMaxChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handlePriceMaxChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     species: SpeciesInfo | null;
     handleSpeciesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     sort: string | null;
@@ -18,20 +19,28 @@ interface Props {
 const ListingAdvancedSearch: React.FC<Props> = ({ isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions }: Props): JSX.Element => {
     return (
         <div id="listing-advanced-search">
+            <FormSpeciesSelect speciesValue={species} handleSpeciesChange={handleSpeciesChange} speciesSelectOptions={speciesSelectOptions} isSpeciesSearch={false} openSpeciesSearch={null} />
             <fieldset>
-                <label>Tradability</label>
-                <input id="tradable" type="radio" name="tradable" value="true" checked={isForTrade === true} onChange={handleIsForTradeChange} />
-                <label htmlFor="tradable">Tradable</label>
-                <input id="tradable" type="radio" name="tradable" value="false" checked={isForTrade === false} onChange={handleIsForTradeChange} />
-                <label htmlFor="not-tradable">Purchase Only</label>
-                <input id="tradable-not-tradable" type="radio" name="tradable" value="null" checked={isForTrade === null} onChange={handleIsForTradeChange} />
-                <label htmlFor="tradable-not-tradable">All</label>
+                <label htmlFor="tradable">Tradability</label>
+                <select id="tradable" value={isForTrade !== null ? isForTrade.toString() : "null"} onChange={handleIsForTradeChange}>
+                    <option value="null">Select</option>
+                    <option value="true">Tradable</option>
+                    <option value="false">Purchase Only</option>
+                </select>
             </fieldset>
             <fieldset>
                 <label htmlFor="price-max">Maximum Price</label>
-                <input id="price-max" type="number" min="0" max="9999.99" step="0.01" value={priceMax} onChange={handlePriceMaxChange} />
+                <select id="price-max" value={priceMax} onChange={handlePriceMaxChange}>
+                    <option value="10000">Select</option>
+                    <option value="5">$5</option>
+                    <option value="10">$10</option>
+                    <option value="20">$20</option>
+                    <option value="50">$50</option>
+                    <option value="100">$100</option>
+                    <option value="250">$250</option>
+                    <option value="500">$500</option>
+                </select>
             </fieldset>
-            <FormSpeciesSelect speciesValue={species} handleSpeciesChange={handleSpeciesChange} speciesSelectOptions={speciesSelectOptions} isSpeciesSearch={false} openSpeciesSearch={null} />
             <fieldset>
                 <label htmlFor="sort">SortBy</label>
                 <select id="sort" value={sort ? sort : "null"} onChange={handleSortChange}>
