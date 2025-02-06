@@ -2,6 +2,7 @@ import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react';
 import { Chat } from '../../types';
 import ListingChat from '../ListingChat/ListingChat';
 import { deleteChat, getListingChats, sendMessage } from '../../api';
+import './ChatCard.css';
 
 interface Props {
     chat: Chat;
@@ -12,14 +13,25 @@ const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element =
     const [newMessage, setNewMessage] = React.useState<string>('');
     const [serverError, setServerError] = React.useState<string | null>(null);
 
-    const handleMessageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleMessageInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        e.target.rows = 1;
+        const { scrollHeight, clientHeight } = e.target;
+        console.log(scrollHeight, clientHeight);
+        if (scrollHeight > clientHeight) {
+            e.target.rows += Math.floor((scrollHeight - clientHeight) / 16);
+            e.target.style.overflowY = "hidden";
+            if (e.target.rows > 8) {
+                e.target.rows = 8;
+                e.target.style.overflowY = "auto";
+            }
+        }
         setNewMessage(e.target.value);
     }
 
     const onNewMessageSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as HTMLFormElement;
-        const newMessageInput = target.elements.namedItem("newMessage") as HTMLInputElement;
+        const newMessageInput = target.elements.namedItem("newMessage") as HTMLTextAreaElement;
         const message = newMessageInput.value;
         if (message === '') {
             return;
@@ -41,6 +53,7 @@ const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element =
                         console.log(chatResult);
                         setUserChats(chatResult);
                         setNewMessage('');
+                        newMessageInput.rows = 1;
                     }
                 })
             }
@@ -73,7 +86,9 @@ const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element =
     return (
         <div id={chat.id.toString()} className="chat-card">
             <h3>{chat.appUsername}</h3>
-            <ListingChat chat={chat} newMessage={newMessage} handleMessageInputChange={handleMessageInputChange} onNewMessageSubmit={onNewMessageSubmit} removeChat={removeChat} />
+            <div className="chat-container">
+                <ListingChat chat={chat} newMessage={newMessage} handleMessageInputChange={handleMessageInputChange} onNewMessageSubmit={onNewMessageSubmit} removeChat={removeChat} />
+            </div>
         </div>
     )
 }

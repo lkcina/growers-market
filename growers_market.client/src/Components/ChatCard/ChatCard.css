@@ -1,0 +1,19 @@
+@import '../../index.css';
+
+.chat-card {
+    width: 225px;
+    height: 300px;
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    padding: 10px;
+}
+
+    .chat-card h3 {
+        font-size: 2rem;
+        color: var(--color-primary-dark);
+        margin-bottom: 10px;
+    }
+
+    .chat-card .listing-chat {
+        height: 260px;
+    }
