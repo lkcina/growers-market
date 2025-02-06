@@ -3,6 +3,7 @@ import { deleteChat, getUserChats } from '../../api';
 import { Chat, Listing } from '../../types';
 import ChatList from '../../Components/ChatList/ChatList';
 import ListingList from '../../Components/ListingList/ListingList';
+import './ChatsPage.css';
 
 interface Props {
 }
@@ -43,11 +44,8 @@ const ChatsPage: React.FC<Props> = () => {
     }
 
     return (
-        <div>
-            <h1>Chats Page</h1>
-            <div>
-                <ListingList listings={listings} listingDetails={listingDetails} userChats={userChats} onSelect={showDetails} setUserChats={setUserChats} />
-            </div>
+        <div id="chats-page">
+            <ListingList listings={listings} listingDetails={listingDetails} userChats={userChats} onSelect={showDetails} setUserChats={setUserChats} />
         </div>
     );
 };
