@@ -1,20 +1,19 @@
 import React, { ChangeEvent } from 'react';
 import { SpeciesInfo } from '../../types';
 import { v4 as uuidv4 } from 'uuid';
-import './FormSpeciesSelect.css';
+import './SearchSpeciesSelect.css';
 
 interface Props {
     speciesValue: SpeciesInfo | null;
     handleSpeciesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     speciesSelectOptions: SpeciesInfo[];
-    openSpeciesSearch: (() => void);
 }
 
-const FormSpeciesSelect: React.FC<Props> = ({ speciesValue, handleSpeciesChange, speciesSelectOptions, openSpeciesSearch }: Props): JSX.Element => {
+const SearchSpeciesSelect: React.FC<Props> = ({ speciesValue, handleSpeciesChange, speciesSelectOptions }: Props): JSX.Element => {
     return (
-        <fieldset id="form-species-select">
+        <fieldset id="search-species-select">
+            <label htmlFor="listing-species">Species</label>
             <div>
-                <label htmlFor="listing-species">Species: </label>
                 <select id="listing-species" name="SpeciesId" value={speciesValue ? speciesValue.id : "0"} onChange={handleSpeciesChange} >
                     <option value="">Select a species</option>
                     {
@@ -24,9 +23,8 @@ const FormSpeciesSelect: React.FC<Props> = ({ speciesValue, handleSpeciesChange,
                     }
                 </select>
             </div>
-            <button type="button" onClick={openSpeciesSearch}>Search for a Species</button>
         </fieldset>
     );
 };
 
-export default FormSpeciesSelect;
+export default SearchSpeciesSelect;

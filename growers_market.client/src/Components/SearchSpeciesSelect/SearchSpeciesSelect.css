@@ -1,0 +1,26 @@
+@import '../../index.css';
+
+#search-species-select {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+    #search-species-select label {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+    #search-species-select div {
+        width: 600px;
+        margin: 0 auto;
+    }
+
+        #search-species-select div select {
+            width: 600px;
+        }
+
+            #search-species-select div select:has(option[value=""]:checked) {
+                color: var(--color-primary-light);
+            }

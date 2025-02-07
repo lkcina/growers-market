@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react";
 import { SpeciesInfo } from "../../../types";
-import FormSpeciesSelect from "../../FormSpeciesSelect/FormSpeciesSelect";
 import './ListingAdvancedSearch.css';
+import SearchSpeciesSelect from "../../SearchSpeciesSelect/SearchSpeciesSelect";
 
 interface Props {
     isForTrade: boolean | null;
@@ -19,7 +19,7 @@ interface Props {
 const ListingAdvancedSearch: React.FC<Props> = ({ isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions }: Props): JSX.Element => {
     return (
         <div id="listing-advanced-search">
-            <FormSpeciesSelect speciesValue={species} handleSpeciesChange={handleSpeciesChange} speciesSelectOptions={speciesSelectOptions} isSpeciesSearch={false} openSpeciesSearch={null} />
+            <SearchSpeciesSelect speciesValue={species} handleSpeciesChange={handleSpeciesChange} speciesSelectOptions={speciesSelectOptions} />
             <fieldset>
                 <label htmlFor="tradable">Tradability</label>
                 <select id="tradable" value={isForTrade !== null ? isForTrade.toString() : "null"} onChange={handleIsForTradeChange}>
