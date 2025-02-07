@@ -5,6 +5,7 @@ import { deleteListing, getListing, getListingChats } from "../../api";
 import ChatList from "../../Components/ChatList/ChatList";
 import ListingImages from "../../Components/ListingImages/ListingImages";
 import { SpeciesInfo } from "../../types";
+import './UserListingInfo.css';
 
 interface Props {
 
@@ -100,21 +101,29 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
     return (
         <div id="user-listing-info">
             <div className="info-card">
-                <h1>{listing?.title}</h1>
-                <ListingImages listingTitle={listing.title} images={listing?.images} imageIndex={imageIndex} onNextImage={onNextImage} onPreviousImage={onPreviousImage} />
-                <div className="listing-info">
-                    {listing?.isForTrade ? <p>Tradable</p> : null}
-                    <p>Price: ${(Math.round(listing?.price * 100) / 100).toFixed(2)}</p>
-                    <p>Quantity: {listing?.quantity}</p>
-                    <p>Species: {listing.species ? `${listing?.species.commonName} (${listing?.species.scientificName[0]})` : "Not Specified"}</p>
+                <div className="info-card-header">
+                    <h2>{listing?.title}</h2>
+                    <div className="info-card-btns">
+                        <button id="edit-listing-btn" onClick={() => navigate(`/market/my-listings/listing/${listing?.id}/edit`)}>Edit</button>
+                        <button id="delete-listing-btn" onClick={removeListing}>Delete</button>
+                    </div>
                 </div>
-                <div className="description">
-                    <p>{listing?.description}</p>
+                <div className="info-card-container">
+                    <ListingImages listingTitle={listing.title} images={listing?.images} imageIndex={imageIndex} onNextImage={onNextImage} onPreviousImage={onPreviousImage} />
+                    <div className="listing-info">
+                        {listing?.isForTrade ? <p>Tradable</p> : null}
+                        <p>Price: ${(Math.round(listing?.price * 100) / 100).toFixed(2)}</p>
+                        <p>Quantity: {listing?.quantity}</p>
+                        <p>Species: {listing.species ? `${listing?.species.commonName} (${listing?.species.scientificName[0]})` : "Not Specified"}</p>
+                    </div>
+                    <div className="description">
+                        <h4>Description</h4>
+                        <p>{listing?.description}</p>
+                    </div>
                 </div>
-                <button id="edit-listing-btn" onClick={() => navigate(`/market/my-listings/listing/${listing?.id}/edit`)}>Edit</button>
-                <button id="delete-listing-btn" onClick={removeListing}>Delete</button>
+                
             </div>
-            <div>
+            <div className="chats-container">
                 <h2>Chats</h2>
                 <ChatList chats={userChats} setUserChats={setUserChats} />
             </div>

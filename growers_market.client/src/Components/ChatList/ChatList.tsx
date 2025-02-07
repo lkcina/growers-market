@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Chat } from '../../types';
 import ChatCard from '../ChatCard/ChatCard';
+import './ChatList.css';
 
 interface Props {
     chats: Chat[];

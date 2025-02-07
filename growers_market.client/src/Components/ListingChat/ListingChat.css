@@ -2,7 +2,7 @@
 
 .listing-chat {
     width: 220px;
-    max-height:;
+    height: auto;
     border: 2px solid var(--color-primary-dark);
     border-right: 2px solid var(--color-primary-light);
     border-bottom: 2px solid var(--color-primary-light);
