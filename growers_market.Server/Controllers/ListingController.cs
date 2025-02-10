@@ -102,7 +102,8 @@ namespace growers_market.Server.Controllers
                 {
                     return BadRequest("File size cannot exceed 1 MB");
                 }
-                var extension = Path.GetExtension(image.FileName);
+                var extension = Path.GetExtension(image.FileName).ToLower();
+                Console.WriteLine(extension);
                 if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
                 {
                     return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
@@ -165,7 +166,8 @@ namespace growers_market.Server.Controllers
                 {
                     return BadRequest("File size cannot exceed 1 MB");
                 }
-                var extension = Path.GetExtension(image.FileName);
+                var extension = Path.GetExtension(image.FileName).ToLower();
+                Console.WriteLine(extension);
                 if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
                 {
                     return BadRequest("Only .jpg, .jpeg, and .png file types are supported");

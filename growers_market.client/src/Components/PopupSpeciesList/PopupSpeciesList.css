@@ -1,4 +1,20 @@
+@import '../../index.css';
+
 #popup-species-list {
-    max-height: 300px;
-    overflow-y: auto;
+    height: auto;
+    width: fit-content;
+    max-width: 1160px;
+    margin: 0 auto 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
 }
+
+    #popup-species-list h2 {
+        font-size: 3rem;
+        color: var(--color-secondary-dark);
+        margin: 0 auto;
+        text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+        text-align: center;
+    }

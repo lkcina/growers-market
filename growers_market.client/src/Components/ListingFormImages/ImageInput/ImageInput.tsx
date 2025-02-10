@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import './ImageInput.css';
 
 interface Props {
     handleImagesChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -5,6 +5,8 @@
     width: 100%;
     max-width: 800px;
     margin: 0 auto 15px;
+    display: flex;
+    flex-wrap: nowrap;
 }
 
     .search-bar input {
@@ -31,6 +33,7 @@
         padding: 5px 10px;
         cursor: pointer;
         box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+        flex: 0 0 auto;
     }
 
         .search-bar button:hover {
