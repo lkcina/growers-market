@@ -135,16 +135,12 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         const data = new FormData(form);
         data.set('IsForTrade', listingIsForTrade.toString());
 
-        if (imageUploads.length > 0) {
-            const uploadedImages = Array.from(listingInputImages || []).filter(image => listingImageValues.includes(image));
-            console.log(uploadedImages);
-            data.set('UploadedImages', uploadedImages[0]);
+        const uploadedImages = Array.from(listingInputImages || []).filter(image => listingImageValues.includes(image));
+        console.log(uploadedImages);
+        data.delete('UploadedImages');
 
-            for (let i = 1; i < uploadedImages.length; i++) {
-                data.append('UploadedImages', uploadedImages[i]);
-            }
-        } else {
-            data.delete('UploadedImages');
+        for (let i = 0; i < uploadedImages.length; i++) {
+            data.append('UploadedImages', uploadedImages[i]);
         }
 
         if (imagePaths.length === 0) {
