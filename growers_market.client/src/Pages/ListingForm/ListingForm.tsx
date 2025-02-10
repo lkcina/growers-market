@@ -4,10 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import ListingFormImages from "../../Components/ListingFormImages/ListingFormImages";
 import { toast } from "react-toastify";
 import { getUsedSpecies, createListing, updateListing, getListing, searchSpecies } from "../../api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useBlocker, useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import PopupSpeciesList from "../../Components/PopupSpeciesList/PopupSpeciesList";
 import FormSpeciesSelect from "../../Components/FormSpeciesSelect/FormSpeciesSelect";
+import './ListingForm.css';
 
 interface Props {
 }
@@ -63,8 +64,23 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                     }
                 })
             }
-            })
+        })
+
     }, [listingId])
+
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            e.preventDefault();
+            e.returnValue = '';
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
+    
 
     const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setListingTitle(e.target.value);
@@ -119,16 +135,12 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         const data = new FormData(form);
         data.set('IsForTrade', listingIsForTrade.toString());
 
-        if (imageUploads.length > 0) {
-            const uploadedImages = Array.from(listingInputImages || []).filter(image => listingImageValues.includes(image));
-            console.log(uploadedImages);
-            data.set('UploadedImages', uploadedImages[0]);
+        const uploadedImages = Array.from(listingInputImages || []).filter(image => listingImageValues.includes(image));
+        console.log(uploadedImages);
+        data.delete('UploadedImages');
 
-            for (let i = 1; i < uploadedImages.length; i++) {
-                data.append('UploadedImages', uploadedImages[i]);
-            }
-        } else {
-            data.delete('UploadedImages');
+        for (let i = 0; i < uploadedImages.length; i++) {
+            data.append('UploadedImages', uploadedImages[i]);
         }
 
         if (imagePaths.length === 0) {
@@ -248,40 +260,47 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     }
 
     return (
-        <div id="listing-form">
-            <form onSubmit={onListingFormSubmit}>
-                <fieldset>
-                    <label htmlFor="listing-title">Title</label>
-                    <input type="text" id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="listing-is-for-trade">For Trade</label>
-                    <input type="checkbox" id="listing-is-for-trade" name="IsForTrade" checked={listingIsForTrade} onChange={handleIsForTradeChange} />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="listing-price">Price</label>
-                    <input type="number" id="listing-price" name="Price" min="0.00" max="9999.99" value={listingPrice} step="0.01" onChange={handlePriceChange} />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="listing-quantity">Quantity</label>
-                    <input type="number" id="listing-quantity" name="Quantity" min="0" max="999" value={listingQuantity} onChange={handleQuantityChange} />
-                </fieldset>
-                <FormSpeciesSelect speciesValue={listingSpecies} handleSpeciesChange={handleSpeciesChange} speciesSelectOptions={speciesSelectOptions} isSpeciesSearch={true} openSpeciesSearch={openSpeciesSearch} />
-                <fieldset>
-                    <label htmlFor="listing-description">Description</label>
-                    <textarea id="listing-description" name="Description" value={listingDescription} onChange={handleDescriptionChange} />
+        <div id="listing-form-page">
+            <form className="listing-form" onSubmit={onListingFormSubmit}>
+                <fieldset className="form-header">
+                    <input type="text" id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} placeholder="Enter Title" />
                 </fieldset>
                 <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} />
-                <fieldset>
-                    <button type="submit">Submit</button>
-                    <button type="button" onClick={onCancel} >Cancel</button>
+                <div className="form-container">
+                    <div className="form-details">
+                        <fieldset>
+                            <label htmlFor="listing-is-for-trade">For Trade: </label>
+                            <input type="checkbox" id="listing-is-for-trade" name="IsForTrade" checked={listingIsForTrade} onChange={handleIsForTradeChange} />
+                        </fieldset>
+                        <fieldset>
+                            <label htmlFor="listing-price">Price: $</label>
+                            <input type="number" id="listing-price" name="Price" min="0.00" max="9999.99" value={listingPrice} step="0.01" onChange={handlePriceChange} />
+                        </fieldset>
+                        <fieldset>
+                            <label htmlFor="listing-quantity">Quantity: </label>
+                            <input type="number" id="listing-quantity" name="Quantity" min="0" max="999" value={listingQuantity} onChange={handleQuantityChange} />
+                        </fieldset>
+                        <FormSpeciesSelect speciesValue={listingSpecies} handleSpeciesChange={handleSpeciesChange} speciesSelectOptions={speciesSelectOptions} openSpeciesSearch={openSpeciesSearch} />
+                    </div>
+                    <fieldset className="description">
+                        <label htmlFor="listing-description">Description</label>
+                        <textarea id="listing-description" name="Description" value={listingDescription} onChange={handleDescriptionChange} />
+                    </fieldset>
+                </div>
+                
+                <fieldset className="submit-cancel">
+                    <button className="submit-btn" type="submit">Submit</button>
+                    <button className="cancel-btn" type="button" onClick={onCancel} >Cancel</button>
                 </fieldset>
             </form>
             {isSpeciesSearchOpen ? (
-                <div id="species-search">
-                    <SearchBar query={speciesSearchQuery} handleQueryChange={handleSpeciesSearchQueryChange} onSearchSubmit={onSpeciesSearchSubmit} />
-                    <button onClick={closeSpeciesSearch}>X</button>
-                    <PopupSpeciesList searchResult={speciesSearchResult} onSelect={onSpeciesSearchSelect} onScroll={onSpeciesSearchScroll} />
+                <div className="species-search">
+                    <button className="popup-close-btn" onClick={closeSpeciesSearch}>Close</button>
+                    <div className="species-search-container">
+                        <SearchBar query={speciesSearchQuery} handleQueryChange={handleSpeciesSearchQueryChange} onSearchSubmit={onSpeciesSearchSubmit} />
+                        <PopupSpeciesList searchResult={speciesSearchResult} onSelect={onSpeciesSearchSelect} onScroll={onSpeciesSearchScroll} />
+                        
+                    </div>
                 </div>
             ) : (null)}
         </div>

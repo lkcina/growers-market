@@ -11,7 +11,20 @@ interface Props {
 }
 
 const PopupSpeciesList: React.FC<Props> = ({ searchResult, onSelect, onScroll }: Props): JSX.Element => {
-    return(
+    useEffect(() => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollLeft = document.documentElement.scrollLeft;
+
+        window.onscroll = () => {
+            window.scrollTo(scrollLeft, scrollTop);
+        }
+
+        return () => {
+            window.onscroll = () => { };
+        };
+    }, [])
+
+    return (
         <div id="popup-species-list" onScroll={onScroll} >
             {searchResult.length > 0 ? (
                 searchResult.map((s) => {

@@ -1,26 +1,45 @@
 @import '../../index.css';
 
-#form-species-select {
-    width: 100%;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-}
 
-    #form-species-select label {
-        width: 600px;
-        margin: 0 auto;
-    }
+
+
 
     #form-species-select div {
-        width: 600px;
-        margin: 0 auto;
+        display: flex;
+        gap: 5px;
     }
 
+        #form-species-select div label {
+            font-size: 1.5rem;
+            color: var(--color-text-dark);
+            margin-right: 5px;
+        }
+
         #form-species-select div select {
-            width: 600px;
+            width: 255px;
+            font-size: 1.5rem;
+            background-color: var(--color-secondary-light);
+            border: 1px solid var(--color-primary-light);
         }
 
             #form-species-select div select:has(option[value=""]:checked) {
                 color: var(--color-primary-light);
             }
+
+            #form-species-select div select option {
+                font-size: 1.5rem;
+            }
+
+#form-species-select button {
+    font-size: 1.5rem;
+    color: var(--color-primary-dark);
+    padding: 5px 0;
+    cursor: pointer;
+    float: right;
+    background: none;
+}
+
+    #form-species-select button:hover {
+        font-weight: bold;
+    }
+
