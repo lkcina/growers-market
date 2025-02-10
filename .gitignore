@@ -6,3 +6,6 @@
 /.growers_market.Server/bin
 /.growers_market.Server/obj
 /growers_market.Server/obj
+
+
+/growers_market.Server/appsettings.json
