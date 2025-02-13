@@ -1,5 +1,7 @@
 ﻿using growers_market.Server.Dtos.Account;
+using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
+using growers_market.Server.Mappers;
 using growers_market.Server.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -15,12 +17,14 @@ namespace growers_market.Server.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IGoogleGeocodingService _googleGeocodingService;
 
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IGoogleGeocodingService googleGeocodingService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signInManager = signInManager;
+            _googleGeocodingService = googleGeocodingService;
         }
 
         [HttpPost("register")]
@@ -33,10 +37,25 @@ namespace growers_market.Server.Controllers
                     return BadRequest(ModelState);
                 }
 
+                var address = new AddressQueryObject
+                {
+                    StreetAddressLine1 = registerDto.StreetAddressLine1,
+                    StreetAddressLine2 = registerDto.StreetAddressLine2,
+                    City = registerDto.City,
+                    State = registerDto.State,
+                    PostalCode = registerDto.PostalCode
+                };
+
+                var userAddress = await _googleGeocodingService.GetUserAddressLocation(address);
+                if (userAddress == null || userAddress.PostalCode != registerDto.PostalCode) {
+                    return BadRequest("Invalid Address");
+                }
+
                 var appUser = new AppUser
                 {
                     UserName = registerDto.Username,
                     Email = registerDto.Email,
+                    Address = userAddress
                 };
 
                 var createUser = await _userManager.CreateAsync(appUser, registerDto.Password);
@@ -51,6 +70,7 @@ namespace growers_market.Server.Controllers
                             {
                                 UserName = appUser.UserName,
                                 Email = appUser.Email,
+                                Address = appUser.Address,
                                 Token = _tokenService.CreateToken(appUser)
                             }
                         );
