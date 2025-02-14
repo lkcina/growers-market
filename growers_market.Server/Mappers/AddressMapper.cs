@@ -17,6 +17,10 @@ namespace growers_market.Server.Mappers
 
         public static Address ToAddressFromGoogleAddressDto(this GoogleAddressDto addressDto)
         {
+            Console.WriteLine("ToAddressFromGoogleAddressDto");
+            Console.WriteLine(addressDto.results[0].geometry.location.lat);
+            Console.WriteLine(addressDto.results[0].geometry.location.lng);
+            Console.WriteLine("Done");
             var addressComponents = addressDto.results[0].address_components;
             var streetAddress = $"{addressComponents.Find((comp) => comp.types.Contains("street_number"))?.short_name}" + " " + $"{addressComponents.Find((comp) => comp.types.Contains("route"))?.short_name}";
 

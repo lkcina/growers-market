@@ -13,5 +13,6 @@ namespace growers_market.Server.Helpers
         public decimal? PriceMax { get; set; }
         public string? AppUserName { get; set; }
         public int? SpeciesId { get; set; }
+        public int? Distance { get; set; }
     }
 }

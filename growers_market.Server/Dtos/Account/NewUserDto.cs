@@ -7,7 +7,7 @@ namespace growers_market.Server.Dtos.Account
     {
         public string UserName { get; set; }
         public string Email { get; set; }
-        public Models.Address Address { get; set; }
+        public AddressDto Address { get; set; }
         public string Token { get; set; }
     }
 }

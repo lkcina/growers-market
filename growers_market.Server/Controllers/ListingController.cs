@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace growers_market.Server.Controllers
 {
@@ -43,7 +44,10 @@ namespace growers_market.Server.Controllers
                 return Ok(allListings);
             }
             var username = User.GetUsername();
-            var appUser = await _userManager.FindByNameAsync(username);
+            var appUsers = _userManager.Users.Include(u => u.Address).Where(u => u.UserName == username);
+            var appUser = await appUsers.FirstOrDefaultAsync(u => u.UserName == username);
+            Console.WriteLine(appUser.UserName);
+            Console.WriteLine(appUser.Address.StreetAddressLine1);
 
             var listings = await _listingRepository.GetAllListingsAsync(appUser, queryObject);
             return Ok(listings);

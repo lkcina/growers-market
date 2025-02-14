@@ -49,7 +49,6 @@ namespace growers_market.Server.Services
                 var url = urlBuilder.ToString();
                 Console.WriteLine(url);
                 var result = await _httpClient.GetAsync(url);
-
                 if (result.IsSuccessStatusCode)
                 {
                     var content = await result.Content.ReadAsStringAsync();
@@ -58,10 +57,13 @@ namespace growers_market.Server.Services
                         return null;
                     }
                     var tasks = JsonSerializer.Deserialize<GoogleAddressDto>(content);
-                    if (tasks != null && tasks.results.Count != 1)
+                    Console.WriteLine(tasks.results[0].formatted_address);
+                    if (tasks != null && tasks.results.Count == 1)
                     {
                         var address = tasks.ToAddressFromGoogleAddressDto();
-
+                        Console.WriteLine("New Address Coordinates");
+                        Console.WriteLine(address.Latitude);
+                        Console.WriteLine(address.Longitude);
                         return address;
                     }
                     return null;

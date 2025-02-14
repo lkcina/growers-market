@@ -38,4 +38,4 @@ GET https://perenual.com/api/species-list?key=sk-uDos677eca3f7332f8182&page=1&q=
 POST {{growers_market.Server_HostAddress}}/api/wishlist/
 
 ### Get Direct from Google Geocoding
-GET https://maps.googleapis.com/maps/api/geocode/json?address=467+S+Summit+St,+Apt+59,+Bowling+Green,+OH&key=AIzaSyBTWcs6D2vf9LvkxQTVLYQf0hmq2MPh9vw
+GET https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBTWcs6D2vf9LvkxQTVLYQf0hmq2MPh9vw&address=137+S+9th+St,+Zionsville,+IN

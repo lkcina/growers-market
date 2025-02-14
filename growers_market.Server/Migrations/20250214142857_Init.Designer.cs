@@ -12,8 +12,8 @@ using growers_market.Server.Data;
 namespace growers_market.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250124212911_AddImages")]
-    partial class AddImages
+    [Migration("20250214142857_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace growers_market.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a6c9060c-3417-4706-b999-badad21d69a9",
+                            Id = "5c3dfc99-2244-499a-8518-ed88a1155fd4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "64942da6-12e2-4c90-91cd-7fde0257eb57",
+                            Id = "2888876a-8883-4279-a3bf-9618ec746f9e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -170,6 +170,51 @@ namespace growers_market.Server.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("growers_market.Server.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddressLine1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddressLine2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("growers_market.Server.Models.AppUser", b =>
@@ -465,6 +510,17 @@ namespace growers_market.Server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("growers_market.Server.Models.Address", b =>
+                {
+                    b.HasOne("growers_market.Server.Models.AppUser", "AppUser")
+                        .WithOne("Address")
+                        .HasForeignKey("growers_market.Server.Models.Address", "AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("growers_market.Server.Models.Chat", b =>
                 {
                     b.HasOne("growers_market.Server.Models.AppUser", "AppUser")
@@ -541,6 +597,8 @@ namespace growers_market.Server.Migrations
 
             modelBuilder.Entity("growers_market.Server.Models.AppUser", b =>
                 {
+                    b.Navigation("Address");
+
                     b.Navigation("Chats");
 
                     b.Navigation("Listings");
