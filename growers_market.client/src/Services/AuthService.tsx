@@ -15,9 +15,11 @@ export const loginApi = async (username: string, password: string) => {
     }
 }
 
-export const registerApi = async (username: string, email: string, password: string) => {
+export const registerApi = async (email: string, username: string, password: string, streetAddressLine1: string, streetAddressLine2: string, city: string, state: string, postalCode: string) => {
+    console.log("registerApi");
+    console.log(email, username, password, streetAddressLine1, streetAddressLine2, city, state, postalCode);
     try {
-        const data = await axios.post<UserProfileToken>(`${api}account/register`, { username: username, email: email, password: password });
+        const data = await axios.post<UserProfileToken>(`${api}account/register`, { username: username, email: email, password: password, streetAddressLine1: streetAddressLine1, streetAddressLine2: streetAddressLine2, city: city, state: state, postalCode: postalCode });
         return data;
     } catch (error) {
         handleError(error);

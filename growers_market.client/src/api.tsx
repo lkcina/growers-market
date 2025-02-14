@@ -265,7 +265,7 @@ interface ListingSearchResponse {
 
 export const searchListings = async (page: number, query: string, isForTrade: boolean | null, priceMax: number, speciesId: number | null, username: string | null, sort: string | null) => {
     try {
-        let url = `https://localhost:7234/api/listing?Page=${page}&Q=${query}&PriceMax=${priceMax}&Distance=25`;
+        let url = `https://localhost:7234/api/listing?Page=${page}&Q=${query}&PriceMax=${priceMax}`;
         if (isForTrade) url += `&IsForTrade=${isForTrade}`;
         if (speciesId) url += `&SpeciesId=${speciesId}`;
         if (username) url += `&AppUserName=${username}`;

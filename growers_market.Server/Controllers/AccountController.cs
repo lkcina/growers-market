@@ -33,6 +33,7 @@ namespace growers_market.Server.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
+            Console.WriteLine("RegisterDto:", registerDto);
             try
             {
                 if (!ModelState.IsValid)
