@@ -17,15 +17,17 @@ namespace growers_market.Server.Repositories
         private readonly IChatRepository _chatRepository;
         private readonly IFileService _fileService;
         private readonly UserManager<AppUser> _userManager;
-        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService, UserManager<AppUser> userManager)
+        private readonly IGoogleGeocodingService _googleGeocodingService;
+        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService, UserManager<AppUser> userManager, IGoogleGeocodingService googleGeocodingService)
         {
             _context = context;
             _chatRepository = chatRepository;
             _fileService = fileService;
             _userManager = userManager;
+            _googleGeocodingService = googleGeocodingService;
         }
 
-        private static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+        private static double CalculateDistance(string unit, double lat1, double lon1, double lat2, double lon2)
         {
             Console.WriteLine(lat1);
             Console.WriteLine(lon1);
@@ -38,9 +40,15 @@ namespace growers_market.Server.Repositories
                     Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
                     Math.Sin(lon / 2) * Math.Sin(lon / 2);
             var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            if (unit == "km")
+            {
+                var distanceInKm = R * c;
+                Console.WriteLine(distanceInKm);
+                return distanceInKm; // Distance in kilometers
+            }
             var distanceInMiles = (R * c) * 0.62137119223734;
             Console.WriteLine(distanceInMiles);
-            return distanceInMiles; // Distance in kilometers
+            return distanceInMiles; // Distance in Miles
         }
 
         public async Task<Listing> CreateAsync(Listing listing)
@@ -143,28 +151,35 @@ namespace growers_market.Server.Repositories
 
             var listingsList = listings.ToList();
 
-            if (query.Distance.HasValue)
+            if (query.Location == "Home Address")
             {
-                Console.WriteLine("Listings");
-                Console.WriteLine(listings.ToList()[0].AppUser.UserName);
-                Console.WriteLine(listings.ToList()[0].AppUser.Address.StreetAddressLine1);
-                Console.WriteLine(listings.ToList()[0].AppUser.Address?.StreetAddressLine2);
-                Console.WriteLine(listings.ToList()[0].AppUser.Address.City);
-                Console.WriteLine(listings.ToList()[0].AppUser.Address.State);
-                Console.WriteLine(listings.ToList()[0].AppUser.Address.PostalCode);
-                Console.WriteLine("End");
-                Console.WriteLine("User");
-                Console.WriteLine(appUser.Address.StreetAddressLine1);
-                Console.WriteLine(appUser.Address?.StreetAddressLine2);
-                Console.WriteLine(appUser.Address.City);
-                Console.WriteLine(appUser.Address.State);
-                Console.WriteLine(appUser.Address.PostalCode);
-                Console.WriteLine("End");
-                listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(appUser.Address.Latitude, appUser.Address.Longitude, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Distance).ToList();
-                Console.WriteLine("Listings");
-                Console.WriteLine(listings.ToList().Count);
-                Console.WriteLine("End");
+                Console.WriteLine("Searching From: Home Address");
+                Console.WriteLine($"{appUser.Address.StreetAddressLine1}, {appUser.Address.City}, {appUser.Address.State}, {appUser.Address.PostalCode}");
+                Console.WriteLine(appUser.Address.Latitude);
+                Console.WriteLine(appUser.Address.Longitude);
+                listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, appUser.Address.Latitude, appUser.Address.Longitude, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
+            } else if (query.Location == "Current Location")
+            {
+                Console.WriteLine("Searching From: Current Location");
+                Console.WriteLine(query.Latitude);
+                Console.WriteLine(query.Longitude);
+                listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, query.Latitude.Value, query.Longitude.Value, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
+            } else
+            {
+                var address = await _googleGeocodingService.GetCustomAddressLocation(query.Location);
+                if (address != null)
+                {
+                    Console.WriteLine($"Searching From: {query.Location}");
+                    Console.WriteLine($"{address.StreetAddressLine1}, {address.City}, {address.State}, {address.PostalCode}");
+                    Console.WriteLine(address.Latitude);
+                    Console.WriteLine(address.Longitude);
+                    listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, address.Latitude, address.Longitude, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
+                } else
+                {
+                    return null;
+                }
             }
+
             var totalListings = listingsList.Count;
             var listingsListDto = listingsList.Select(l => l.ToListingDto()).Skip(skipNumber).Take(query.PageSize).ToList();
             var listingsDto = new AllListingsDto

@@ -7,5 +7,7 @@ namespace growers_market.Server.Interfaces
     public interface IGoogleGeocodingService
     {
         Task<Address> GetUserAddressLocation(AddressQueryObject queryObject);
+
+        Task<Address> GetCustomAddressLocation(string customAddress);
     }
 }

@@ -5,6 +5,7 @@ import { getUsedSpecies, getUserChats, searchListings } from '../../api';
 import SearchInfo from '../../Components/SearchInfo/SearchInfo';
 import ListingList from '../../Components/ListingList/ListingList';
 import './BrowseMarketPage.css';
+import { toast } from 'react-toastify';
 
 
 
@@ -23,6 +24,13 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
     const [listingSearchTo, setListingSearchTo] = useState<number>(1);
     const [listingSearchTotal, setListingSearchTotal] = useState<number>(0);
 
+    const [listingSearchRadius, setListingSearchRadius] = useState<number>(20);
+    const [listingSearchUnit, setListingSearchUnit] = useState<string>("mi");
+    const [listingSearchLocation, setListingSearchLocation] = useState<string>("Home Address");
+
+    const [currentLocationLat, setCurrentLocationLat] = useState<number | null>(null);
+    const [currentLocationLng, setCurrentLocationLng] = useState<number | null>(null);
+
     const [userChats, setUserChats] = useState<Chat[]>([]);
     const [listingDetails, setListingDetails] = useState<number | null>(null);
 
@@ -39,7 +47,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             }
         })
 
-        searchListings(1, "", null, 10000, null, null, null).then((result) => {
+        searchListings(1, "", null, 10000, null, null, null, listingSearchRadius, listingSearchUnit, listingSearchLocation, currentLocationLat, currentLocationLng).then((result) => {
             if (typeof result === "string") {
                 setServerError(result);
             } else if (Array.isArray(result.data.data)) {
@@ -92,9 +100,35 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         setListingSort(value);
     }
 
+    const handleSearchRadiusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setListingSearchRadius(Number(e.target.value));
+    }
+
+    const handleSearchUnitChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        setListingSearchUnit(e.target.value);
+    }
+
+    const handleSearchLocationChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value === "Current Location") {
+            if (!navigator.geolocation) {
+                setServerError("Geolocation is not supported by your browser");
+                toast.error("Geolocation is not supported by your browser");
+                return;
+            }
+            navigator.geolocation.getCurrentPosition((position) => {
+                setCurrentLocationLat(position.coords.latitude);
+                setCurrentLocationLng(position.coords.longitude);
+            }, () => {
+                setServerError("Unable to retrieve your location");
+                toast.error("Unable to retrieve your location");
+            });
+        }
+        setListingSearchLocation(e.target.value);
+    }
+
     const onSearchSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
-        const result = await searchListings(1, listingSearchQuery, listingIsForTrade, listingPriceMax, listingSpecies ? listingSpecies.id : null, null, listingSort);
+        const result = await searchListings(1, listingSearchQuery, listingIsForTrade, listingPriceMax, listingSpecies ? listingSpecies.id : null, null, listingSort, listingSearchRadius, listingSearchUnit, listingSearchLocation, currentLocationLat, currentLocationLng);
         if (typeof result === "string") {
             setServerError(result);
         } else if (Array.isArray(result.data.data)) {
@@ -107,11 +141,12 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             setListingSearchTotal(result.data.total);
         }
         console.log(listingSearchResult, serverError);
+        
     }
 
     const onSearchNextPage = async (e: SyntheticEvent) => {
         e.preventDefault();
-        const result = await searchListings(listingSearchCurrentPage + 1, listingSearchQuery, listingIsForTrade, listingPriceMax, listingSpecies ? listingSpecies.id : null, null, listingSort);
+        const result = await searchListings(listingSearchCurrentPage + 1, listingSearchQuery, listingIsForTrade, listingPriceMax, listingSpecies ? listingSpecies.id : null, null, listingSort, listingSearchRadius, listingSearchUnit, listingSearchLocation, currentLocationLat, currentLocationLng);
         if (typeof result === "string") {
             setServerError(result);
         } else if (Array.isArray(result.data.data)) {
@@ -127,7 +162,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
 
     const onSearchPreviousPage = async (e: SyntheticEvent) => {
         e.preventDefault();
-        const result = await searchListings(listingSearchCurrentPage - 1, listingSearchQuery, listingIsForTrade, listingPriceMax, listingSpecies ? listingSpecies.id : null, null, listingSort);
+        const result = await searchListings(listingSearchCurrentPage - 1, listingSearchQuery, listingIsForTrade, listingPriceMax, listingSpecies ? listingSpecies.id : null, null, listingSort, listingSearchRadius, listingSearchUnit, listingSearchLocation, currentLocationLat, currentLocationLng);
         if (typeof result === "string") {
             setServerError(result);
         } else if (Array.isArray(result.data.data)) {
@@ -155,7 +190,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
 
     return (
         <div id="browse-market-page">
-            <ListingSearchBar query={listingSearchQuery} handleQueryChange={handleQueryChange} isForTrade={listingIsForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={listingPriceMax} handlePriceMaxChange={handlePriceMaxChange} species={listingSpecies} handleSpeciesChange={handleSpeciesChange} sort={listingSort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} onSearchSubmit={onSearchSubmit} />
+            <ListingSearchBar query={listingSearchQuery} handleQueryChange={handleQueryChange} isForTrade={listingIsForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={listingPriceMax} handlePriceMaxChange={handlePriceMaxChange} species={listingSpecies} handleSpeciesChange={handleSpeciesChange} sort={listingSort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} onSearchSubmit={onSearchSubmit} searchRadius={listingSearchRadius} handleSearchRadiusChange={handleSearchRadiusChange} searchUnit={listingSearchUnit} handleSearchUnitChange={handleSearchUnitChange} searchLocation={listingSearchLocation} handleSearchLocationChange={handleSearchLocationChange} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
             <ListingList listings={listingSearchResult} onSelect={showDetails} listingDetails={listingDetails} userChats={userChats} setUserChats={setUserChats} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />

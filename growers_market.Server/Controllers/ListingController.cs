@@ -41,6 +41,10 @@ namespace growers_market.Server.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 var allListings = await _listingRepository.GetAllListingsAsync(null, queryObject);
+                if (allListings == null)
+                {
+                    return BadRequest("Invalid Address");
+                }
                 return Ok(allListings);
             }
             var username = User.GetUsername();
@@ -50,6 +54,10 @@ namespace growers_market.Server.Controllers
             Console.WriteLine(appUser.Address.StreetAddressLine1);
 
             var listings = await _listingRepository.GetAllListingsAsync(appUser, queryObject);
+            if (listings == null)
+            {
+                return BadRequest("Invalid Address");
+            }
             return Ok(listings);
         }
 
