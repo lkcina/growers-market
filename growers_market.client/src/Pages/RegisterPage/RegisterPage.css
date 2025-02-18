@@ -1,5 +1,8 @@
+@import '../../index.css';
+
 .register-page {
-    height: calc(100vh - 100px);
+    height: max-content;
+    margin-bottom: 20px;
     width: auto;
     display: flex;
     flex-direction: column;
@@ -8,7 +11,7 @@
 }
 
     .register-page form {
-        height: 400px;
+        height: fit-content;
         width: 250px;
         display: flex;
         flex-direction: column;
@@ -40,7 +43,8 @@
             align-self: flex-start;
         }
 
-        .register-page form div input {
+        .register-page form div input,
+        .register-page form div select {
             width: 220px;
             font-size: 2rem;
             padding: 5px;
@@ -54,11 +58,19 @@
                 color: var(--color-primary-light);
             }
 
-        .register-page form div .error {
-            font-size: 1.2rem;
-            color: var(--color-error);
-            margin-left: 20px;
-        }
+            .register-page form div select option {
+                font-size: 1.5rem;
+            }
+
+            .register-page form div select:has(option[value=""]:checked) {
+                color: var(--color-primary-light);
+            }
+
+            .register-page form div .error {
+                font-size: 1.2rem;
+                color: var(--color-error);
+                margin-left: 20px;
+            }
 
     .register-page form button {
         font-size: 2rem;
@@ -74,3 +86,10 @@
             border: 1px solid var(--color-primary-dark);
             box-shadow: 0 0 5px var(--color-primary-dark);
         }
+
+    .register-page form .address-form-inputs p {
+        font-size: 2rem;
+        text-align: center;
+        color: var(--color-primary-dark);
+        border-bottom: 2px solid var(--color-primary-light);
+    }

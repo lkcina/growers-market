@@ -166,6 +166,7 @@ const RegisterPage: React.FC<Props> = () => {
                     {errors.password ? (<p className="error">* {errors.password.message}</p>) : ""}
                 </div>
                 <div className="address-form-inputs">
+                    <p>Address</p>
                     <div>
                         <label htmlFor="street-address-line-1">Street Address</label>
                         <input id="street-address-line-1" type="text" placeholder="Street Address" {...register("streetAddressLine1")} />
@@ -190,7 +191,7 @@ const RegisterPage: React.FC<Props> = () => {
                         <input id="postal-code" type="text" inputMode="numeric" placeholder="12345" {...register("postalCode")} />
                     </div>
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Sign Up</button>
             </form>
         </div>
     );
