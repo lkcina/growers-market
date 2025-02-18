@@ -109,6 +109,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
     }
 
     const handleSearchLocationChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log("handleSearchLocationChange", e.target.value);
         if (e.target.value === "Current Location") {
             if (!navigator.geolocation) {
                 setServerError("Geolocation is not supported by your browser");
@@ -124,6 +125,19 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             });
         }
         setListingSearchLocation(e.target.value);
+    }
+
+    const handleLocationOptionSelect = (e: SyntheticEvent) => {
+        const target = e.target as HTMLButtonElement;
+        const input = target.parentElement?.parentElement?.children.namedItem("searchLocation") as HTMLInputElement;
+        input.value = target.value;
+        console.log(input);
+        const event = new InputEvent('change', { bubbles: true }) as ChangeEvent<HTMLInputElement>;
+        Object.defineProperty(event, 'target', { writable: false, value: input });
+
+        setListingSearchLocation(target.value);
+        handleSearchLocationChange(event);
+
     }
 
     const onSearchSubmit = async (e: SyntheticEvent) => {
@@ -190,7 +204,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
 
     return (
         <div id="browse-market-page">
-            <ListingSearchBar query={listingSearchQuery} handleQueryChange={handleQueryChange} isForTrade={listingIsForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={listingPriceMax} handlePriceMaxChange={handlePriceMaxChange} species={listingSpecies} handleSpeciesChange={handleSpeciesChange} sort={listingSort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} onSearchSubmit={onSearchSubmit} searchRadius={listingSearchRadius} handleSearchRadiusChange={handleSearchRadiusChange} searchUnit={listingSearchUnit} handleSearchUnitChange={handleSearchUnitChange} searchLocation={listingSearchLocation} handleSearchLocationChange={handleSearchLocationChange} />
+            <ListingSearchBar query={listingSearchQuery} handleQueryChange={handleQueryChange} isForTrade={listingIsForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={listingPriceMax} handlePriceMaxChange={handlePriceMaxChange} species={listingSpecies} handleSpeciesChange={handleSpeciesChange} sort={listingSort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} onSearchSubmit={onSearchSubmit} searchRadius={listingSearchRadius} handleSearchRadiusChange={handleSearchRadiusChange} searchUnit={listingSearchUnit} handleSearchUnitChange={handleSearchUnitChange} searchLocation={listingSearchLocation} handleSearchLocationChange={handleSearchLocationChange} handleLocationOptionSelect={handleLocationOptionSelect} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
             <ListingList listings={listingSearchResult} onSelect={showDetails} listingDetails={listingDetails} userChats={userChats} setUserChats={setUserChats} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
