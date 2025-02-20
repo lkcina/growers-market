@@ -31,11 +31,11 @@ GET {{growers_market.Server_HostAddress}}/api/species/perenual?Page=2&Q=rose
 Accept: application/json
 
 ### Get Direct from Perenual
-GET https://perenual.com/api/species-list?key=sk-uDos677eca3f7332f8182&page=1&q=aloe&edible=1&poisonous=1
+GET https://perenual.com/api/species-list?key=sk-[InsertKey]&page=1&q=aloe&edible=1&poisonous=1
 
 
 ### Create Wishlist
 POST {{growers_market.Server_HostAddress}}/api/wishlist/
 
 ### Get Direct from Google Geocoding
-GET https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBTWcs6D2vf9LvkxQTVLYQf0hmq2MPh9vw&address=137+S+9th+St,+Zionsville,+IN
+GET https://maps.googleapis.com/maps/api/geocode/json?key=[InsertKey]&address=137+S+9th+St,+Zionsville,+IN
