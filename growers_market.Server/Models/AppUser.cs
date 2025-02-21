@@ -8,5 +8,6 @@ namespace growers_market.Server.Models
         public List<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
         public List<Chat> Chats { get; set; } = new List<Chat>();
         public List<Message> Messages { get; set; } = new List<Message>();
+        public Address? Address { get; set; }
     }
 }

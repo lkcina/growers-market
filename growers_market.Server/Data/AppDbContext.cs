@@ -17,9 +17,15 @@ namespace growers_market.Server.Data
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Address>()
+                .HasOne(address => address.AppUser)
+                .WithOne(user => user.Address)
+                .HasForeignKey<Address>(address => address.AppUserId);
 
             builder.Entity<Wishlist>(item => item.HasKey(key => new { key.AppUserId, key.SpeciesId }));
             builder.Entity<Wishlist>()

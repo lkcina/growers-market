@@ -10,7 +10,7 @@ import { SpeciesInfo } from "../types";
 type UserContextType = {
     user: UserProfile | null;
     token: string | null;
-    registerUser: (email: string, username: string, password: string) => void;
+    registerUser: (email: string, username: string, password: string, streetAddressLine1: string, streetAddressLine2: string, city: string, state: string, postalCode: string) => void;
     loginUser: (username: string, password: string) => void;
     logoutUser: () => void;
     isLoggedIn: () => boolean;
@@ -42,8 +42,8 @@ export const UserProvider = ({ children }: Props) => {
         setIsReady(true);
     }, [])
 
-    const registerUser = async (email: string, username: string, password: string) => {
-        await registerApi(username, email, password).then((response) => {
+    const registerUser = async (email: string, username: string, password: string, streetAddressLine1: string, streetAddressLine2: string, city: string, state: string, postalCode: string) => {
+        await registerApi(email, username, password, streetAddressLine1, streetAddressLine2, city, state, postalCode).then((response) => {
             if (response) {
                 sessionStorage.setItem("token", response?.data.token);
                 const userObj = { userName: response?.data.userName, email: response?.data.email };

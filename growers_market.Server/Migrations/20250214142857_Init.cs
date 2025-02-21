@@ -59,9 +59,16 @@ namespace growers_market.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CommonName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GenusName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SpeciesName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ScientificName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cycle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Watering = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sunlight = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HardinessMin = table.Column<int>(type: "int", nullable: true),
+                    HardinessMax = table.Column<int>(type: "int", nullable: true),
+                    Indoor = table.Column<bool>(type: "bit", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Thumbnail = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,6 +92,32 @@ namespace growers_market.Server.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StreetAddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StreetAddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -183,9 +216,13 @@ namespace growers_market.Server.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsForTrade = table.Column<bool>(type: "bit", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SpeciesId = table.Column<int>(type: "int", nullable: true)
+                    AppUserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SpeciesId = table.Column<int>(type: "int", nullable: true),
+                    Images = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -227,14 +264,76 @@ namespace growers_market.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Chats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ListingId = table.Column<int>(type: "int", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AppUserName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Chats_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Chats_Listings_ListingId",
+                        column: x => x.ListingId,
+                        principalTable: "Listings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ChatId = table.Column<int>(type: "int", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AppUserName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Messages_Chats_ChatId",
+                        column: x => x.ChatId,
+                        principalTable: "Chats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "4419cd74-ea6b-4ffc-b1e8-23a63b42dd43", null, "Admin", "ADMIN" },
-                    { "c7e16d30-a8b1-4037-927d-a8c50cde3355", null, "User", "USER" }
+                    { "2888876a-8883-4279-a3bf-9618ec746f9e", null, "User", "USER" },
+                    { "5c3dfc99-2244-499a-8518-ed88a1155fd4", null, "Admin", "ADMIN" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_AppUserId",
+                table: "Addresses",
+                column: "AppUserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -276,6 +375,16 @@ namespace growers_market.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Chats_AppUserId",
+                table: "Chats",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chats_ListingId",
+                table: "Chats",
+                column: "ListingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Listings_AppUserId",
                 table: "Listings",
                 column: "AppUserId");
@@ -286,6 +395,16 @@ namespace growers_market.Server.Migrations
                 column: "SpeciesId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_AppUserId",
+                table: "Messages",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_ChatId",
+                table: "Messages",
+                column: "ChatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Wishlists_SpeciesId",
                 table: "Wishlists",
                 column: "SpeciesId");
@@ -294,6 +413,9 @@ namespace growers_market.Server.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -310,13 +432,19 @@ namespace growers_market.Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Listings");
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Wishlists");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Chats");
+
+            migrationBuilder.DropTable(
+                name: "Listings");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

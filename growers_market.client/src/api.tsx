@@ -263,9 +263,13 @@ interface ListingSearchResponse {
     perPage: number;
 }
 
-export const searchListings = async (page: number, query: string, isForTrade: boolean | null, priceMax: number, speciesId: number | null, username: string | null, sort: string | null) => {
+export const searchListings = async (page: number, query: string, isForTrade: boolean | null, priceMax: number, speciesId: number | null, username: string | null, sort: string | null, radius: number, unit: string, location: string, lat: number | null, lng: number | null) => {
     try {
-        let url = `https://localhost:7234/api/listing?Page=${page}&Q=${query}&PriceMax=${priceMax}`;
+        console.log(location);
+        console.log(lat);
+        console.log(lng);
+        let url = `https://localhost:7234/api/listing?Radius=${radius}&Unit=${unit}&Location=${location}&Page=${page}&Q=${query}&PriceMax=${priceMax}`;
+        if (location === "Current Location") url += `&Latitude=${lat}&Longitude=${lng}`;
         if (isForTrade) url += `&IsForTrade=${isForTrade}`;
         if (speciesId) url += `&SpeciesId=${speciesId}`;
         if (username) url += `&AppUserName=${username}`;

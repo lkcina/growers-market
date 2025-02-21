@@ -6,6 +6,7 @@ using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Mappers;
 using growers_market.Server.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace growers_market.Server.Repositories
@@ -15,11 +16,39 @@ namespace growers_market.Server.Repositories
         private readonly AppDbContext _context;
         private readonly IChatRepository _chatRepository;
         private readonly IFileService _fileService;
-        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IGoogleGeocodingService _googleGeocodingService;
+        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService, UserManager<AppUser> userManager, IGoogleGeocodingService googleGeocodingService)
         {
             _context = context;
             _chatRepository = chatRepository;
             _fileService = fileService;
+            _userManager = userManager;
+            _googleGeocodingService = googleGeocodingService;
+        }
+
+        private static double CalculateDistance(string unit, double lat1, double lon1, double lat2, double lon2)
+        {
+            Console.WriteLine(lat1);
+            Console.WriteLine(lon1);
+            Console.WriteLine(lat2);
+            Console.WriteLine(lon2);
+            const double R = 6371; // Radius of the Earth in kilometers
+            var lat = (lat2 - lat1) * Math.PI / 180;
+            var lon = (lon2 - lon1) * Math.PI / 180;
+            var a = Math.Sin(lat / 2) * Math.Sin(lat / 2) +
+                    Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
+                    Math.Sin(lon / 2) * Math.Sin(lon / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            if (unit == "km")
+            {
+                var distanceInKm = R * c;
+                Console.WriteLine(distanceInKm);
+                return distanceInKm; // Distance in kilometers
+            }
+            var distanceInMiles = (R * c) * 0.62137119223734;
+            Console.WriteLine(distanceInMiles);
+            return distanceInMiles; // Distance in Miles
         }
 
         public async Task<Listing> CreateAsync(Listing listing)
@@ -69,8 +98,8 @@ namespace growers_market.Server.Repositories
 
         public async Task<AllListingsDto> GetAllListingsAsync(AppUser appUser, ListingQueryObject query)
         {
-            var listings = _context.Listings.Include(l => l.AppUser).Include(l => l.Species).AsQueryable();
-
+            var listings = _context.Listings.Include(l => l.AppUser).ThenInclude(u => u.Address).Include(l => l.Species).AsQueryable();
+            
             if (!string.IsNullOrWhiteSpace(query.Q))
             {
                 listings = listings.Where(l => l.Title.Contains(query.Q) || l.Description.Contains(query.Q) || l.Species.CommonName.Contains(query.Q) || l.Species.ScientificName.Any(n => n.Contains(query.Q)) || l.Species.Description.Contains(query.Q));
@@ -92,6 +121,7 @@ namespace growers_market.Server.Repositories
             {
                 listings = listings.Where(l => l.SpeciesId == query.SpeciesId);
             }
+            
             switch (query.SortBy)
             {
                 case "price":
@@ -109,7 +139,9 @@ namespace growers_market.Server.Repositories
                     listings = listings.OrderByDescending(l => l.CreatedAt);
                     break;
             }
+
             
+
             var skipNumber = (query.Page - 1) * query.PageSize;
 
             if (appUser != null)
@@ -118,6 +150,36 @@ namespace growers_market.Server.Repositories
             }
 
             var listingsList = listings.ToList();
+
+            if (query.Location == "Home Address")
+            {
+                Console.WriteLine("Searching From: Home Address");
+                Console.WriteLine($"{appUser.Address.StreetAddressLine1}, {appUser.Address.City}, {appUser.Address.State}, {appUser.Address.PostalCode}");
+                Console.WriteLine(appUser.Address.Latitude);
+                Console.WriteLine(appUser.Address.Longitude);
+                listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, appUser.Address.Latitude, appUser.Address.Longitude, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
+            } else if (query.Location == "Current Location")
+            {
+                Console.WriteLine("Searching From: Current Location");
+                Console.WriteLine(query.Latitude);
+                Console.WriteLine(query.Longitude);
+                listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, query.Latitude.Value, query.Longitude.Value, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
+            } else
+            {
+                var address = await _googleGeocodingService.GetCustomAddressLocation(query.Location);
+                if (address != null)
+                {
+                    Console.WriteLine($"Searching From: {query.Location}");
+                    Console.WriteLine($"{address.StreetAddressLine1}, {address.City}, {address.State}, {address.PostalCode}");
+                    Console.WriteLine(address.Latitude);
+                    Console.WriteLine(address.Longitude);
+                    listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, address.Latitude, address.Longitude, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
+                } else
+                {
+                    return null;
+                }
+            }
+
             var totalListings = listingsList.Count;
             var listingsListDto = listingsList.Select(l => l.ToListingDto()).Skip(skipNumber).Take(query.PageSize).ToList();
             var listingsDto = new AllListingsDto

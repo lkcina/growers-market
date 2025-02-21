@@ -67,6 +67,9 @@ builder.Services.AddScoped<IListingRepository, ListingRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IGoogleGeocodingService, GoogleGeocodingService>();
+builder.Services.AddHttpClient<IGoogleGeocodingService, GoogleGeocodingService>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 
 var app = builder.Build();
 

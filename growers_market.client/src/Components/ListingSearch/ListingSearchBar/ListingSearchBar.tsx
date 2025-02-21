@@ -18,13 +18,58 @@ interface Props {
     speciesSelectOptions: SpeciesInfo[];
     
     onSearchSubmit: (e: SyntheticEvent) => void;
+
+    searchRadius: number;
+    handleSearchRadiusChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    searchUnit: string;
+    handleSearchUnitChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+    searchLocation: string;
+    handleSearchLocationChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleLocationOptionSelect: (e: SyntheticEvent) => void;
 };
 
-const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange, isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions }: Props): JSX.Element => {
+const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange, isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions, searchRadius, handleSearchRadiusChange, searchUnit, handleSearchUnitChange, searchLocation, handleSearchLocationChange, handleLocationOptionSelect }: Props): JSX.Element => {
+    const locationMouseOver = (e: SyntheticEvent) => {
+        const target = e.target as HTMLButtonElement;
+        target.focus();
+    }
+
+    const handleRadiusKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        switch (e.key) {
+            case "Tab":
+            case "ArrowUp":
+            case "ArrowDown":
+                break
+            default:
+                e.preventDefault();
+                break;
+        }
+    }
+
     return (
         <form id="listing-search-bar" onSubmit={onSearchSubmit}>
+            <div id="search-area">
+                <div className="radius">
+                    <label htmlFor="search-radius">Search Area</label>
+                    <div>
+                        <input id="search-radius" type="number" min="10" max="500" step="10" value={searchRadius} onChange={handleSearchRadiusChange} onKeyDown={handleRadiusKeyDown} />
+                        <select id="search-unit" value={searchUnit} onChange={handleSearchUnitChange}>
+                            <option value="mi">Miles</option>
+                            <option value="km">Kilometers</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                <div className="location">
+                    <label htmlFor="search-location">Search Location</label>
+                    <input id="search-location" name="searchLocation" type="text" value={searchLocation} onChange={handleSearchLocationChange} />
+                    <div id="location-options">
+                        <button type="button" onClick={handleLocationOptionSelect} value="Home Address" onMouseOver={locationMouseOver}>Home Address</button>
+                        <button type="button" onClick={handleLocationOptionSelect} value="Current Location" onMouseOver={locationMouseOver}>Current Location</button>
+                    </div>
+                </div>
+            </div>
             <input type="text" value={query} onChange={handleQueryChange} placeholder="Search for a listing" />
-            
             <button type="submit">Search</button>
             <details >
                 <summary>Advanced Search</summary>
