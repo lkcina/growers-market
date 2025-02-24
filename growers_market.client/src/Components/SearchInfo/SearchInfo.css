@@ -3,6 +3,7 @@
 .search-info {
     height: auto;
     width: 100%;
+    min-width: 440px;
     max-width: 1200px;
     margin: 0 auto 15px;
 }
@@ -65,4 +66,16 @@
             text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
             word-spacing: 5px;
             padding: 5px;
+            text-wrap: nowrap;
         }
+
+@media screen and (max-width: 784px) {
+    .search-info > div .page-nav {
+        text-align: left;
+        width: fit-content;
+    }
+
+    .search-info > div .results-showing {
+        width: fit-content;
+    }
+}

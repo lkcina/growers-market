@@ -2,8 +2,9 @@
 
 .listing-list {
     height: auto;
-    width: fit-content;
+    width: 100%;
     max-width: 1160px;
+    min-width: 440px;
     margin: 0 auto 15px;
     display: flex;
     flex-wrap: wrap;

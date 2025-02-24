@@ -6,6 +6,7 @@ import SearchInfo from '../../Components/SearchInfo/SearchInfo';
 import ListingList from '../../Components/ListingList/ListingList';
 import './BrowseMarketPage.css';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router';
 
 
 
@@ -140,7 +141,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
 
     }
 
-    const onSearchSubmit = async (e: SyntheticEvent) => {
+     const onSearchSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         const result = await searchListings(1, listingSearchQuery, listingIsForTrade, listingPriceMax, listingSpecies ? listingSpecies.id : null, null, listingSort, listingSearchRadius, listingSearchUnit, listingSearchLocation, currentLocationLat, currentLocationLng);
         if (typeof result === "string") {
@@ -204,6 +205,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
 
     return (
         <div id="browse-market-page">
+            <Link to="/market/saved">Saved Listings</Link>
             <ListingSearchBar query={listingSearchQuery} handleQueryChange={handleQueryChange} isForTrade={listingIsForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={listingPriceMax} handlePriceMaxChange={handlePriceMaxChange} species={listingSpecies} handleSpeciesChange={handleSpeciesChange} sort={listingSort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} onSearchSubmit={onSearchSubmit} searchRadius={listingSearchRadius} handleSearchRadiusChange={handleSearchRadiusChange} searchUnit={listingSearchUnit} handleSearchUnitChange={handleSearchUnitChange} searchLocation={listingSearchLocation} handleSearchLocationChange={handleSearchLocationChange} handleLocationOptionSelect={handleLocationOptionSelect} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
             <ListingList listings={listingSearchResult} onSelect={showDetails} listingDetails={listingDetails} userChats={userChats} setUserChats={setUserChats} />

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import "./SearchInfo.css";
 
 interface Props {
@@ -12,11 +12,26 @@ interface Props {
 }
 
 const SearchInfo: React.FC<Props> = ({ currentPage, lastPage, from, to, total, onNextPage, onPreviousPage }: Props): JSX.Element => {
+    const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            console.log(window.innerWidth);
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        }
+    }, []);
+
     return (
         <div className="search-info">
             {total > 0 ? (
                 <div>
-                    <div></div>
+                    {windowWidth > 784 ? <div></div> : null}
                     <div className="page-nav">
                         {currentPage === 1 ? null : <button onClick={onPreviousPage}>{"<"}</button>}
                         <div><span>{currentPage}</span> of {lastPage}</div>

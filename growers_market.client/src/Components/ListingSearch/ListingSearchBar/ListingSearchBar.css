@@ -1,7 +1,8 @@
 #listing-search-bar {
     height: auto;
-    width: 100%;
+    width: calc(100% - 350px);
     max-width: 800px;
+    min-width: 440px;
     margin: 0 auto 15px;
 }
 
