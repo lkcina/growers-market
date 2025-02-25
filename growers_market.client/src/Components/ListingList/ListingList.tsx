@@ -8,7 +8,7 @@ interface Props {
     onSelect: (e: FormEvent<HTMLFormElement>) => void;
     listingDetails: number | null;
     userChats: Chat[] | null;
-    setUserChats: Dispatch<SetStateAction<Chat[]>>;
+    setUserChats: Dispatch<SetStateAction<Chat[]>> | null;
 }
 
 const ListingList: React.FC<Props> = ({ listings, onSelect, listingDetails, userChats, setUserChats }): JSX.Element => {

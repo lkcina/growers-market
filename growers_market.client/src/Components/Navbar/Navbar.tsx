@@ -1,11 +1,26 @@
 import { Link, NavLink } from "react-router";
 import { useAuth } from "../../Context/UseAuth";
 import "./Navbar.css";
+import { useEffect, useState } from "react";
 
 
 
 const Navbar: React.FC = (): JSX.Element => {
     const { isLoggedIn, user, logoutUser } = useAuth();
+    const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            console.log(window.innerWidth);
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        }
+    }, []);
 
 
 
@@ -17,15 +32,34 @@ const Navbar: React.FC = (): JSX.Element => {
                     <h1>Growers Market</h1>
                 </Link>
                 {isLoggedIn() ? (
-                    <div id="login-container">
-                        <div className="welcome-user"><span>Welcome, </span> {user?.userName}</div>
-                        <a className="logout-btn" onClick={logoutUser}>Logout</a>
-                    </div>
+                    windowWidth > 784 ? (
+                        <div id="login-container">
+                            <div className="welcome-user"><span>Welcome, </span> {user?.userName}</div>
+                            <a className="logout-btn" onClick={logoutUser}>Logout</a>
+                        </div>
+                    ) : (
+                        <div id="login-summary">
+                            <button>{user?.userName}</button>
+                            <div id="login-summary-dropdown">
+                                <Link to="/login" className="login-dropdown-option" onClick={logoutUser}>Logout</Link>
+                            </div>
+                        </div>
+                    )
                 ) : (
-                    <div id="login-container">
-                        <Link className="login-btn" to="/login">Login</Link>
-                        <Link className="logout-btn" to="/register">Sign Up</Link>
-                    </div>
+                    windowWidth > 784 ? (
+                        <div id="login-container">
+                            <Link className="login-btn" to="/login">Login</Link>
+                            <Link className="logout-btn" to="/register">Sign Up</Link>
+                        </div>
+                    ) : (
+                        <div id="login-summary">
+                            <button>Account</button>
+                            <div id="login-summary-dropdown">
+                                <Link to="/login" className="login-dropdown-option">Login</Link>
+                                <Link to="/register" className="login-dropdown-option">Sign Up</Link>
+                            </div>
+                        </div>
+                    )
                 )}
             </div>
             <ul>

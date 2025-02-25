@@ -10,7 +10,7 @@ interface Props {
     onSelect: (e: FormEvent<HTMLFormElement>) => void;
     listingDetails: number | null;
     chat: Chat | undefined | null;
-    setUserChats: Dispatch<SetStateAction<Chat[]>>;
+    setUserChats: Dispatch<SetStateAction<Chat[]>> | null;
 }
 
 const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, chat, setUserChats }: Props): JSX.Element => {
@@ -77,7 +77,7 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, chat,
                 if (typeof newChats === "string") {
                     setServerError(newChats);
                     return
-                } else if (Array.isArray(newChats)) {
+                } else if (Array.isArray(newChats) && setUserChats !== null) {
                     setUserChats(newChats);
                     setNewMessage('');
                     newMessageInput.rows = 1;
@@ -92,7 +92,7 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, chat,
                 return
             } else {
                 const result = await sendMessage(chatResult.data.id, message);
-                if (typeof result === "string") {
+                if (typeof result === "string" && setUserChats !== null) {
                     setServerError(result);
                     return
                 } else {
@@ -101,7 +101,7 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, chat,
                     if (typeof newChats === "string") {
                         setServerError(newChats);
                         return
-                    } else if (Array.isArray(newChats)) {
+                    } else if (Array.isArray(newChats) && setUserChats !== null) {
                         setUserChats(newChats);
                         setNewMessage('');
                         const messageList = target.parentElement?.querySelector(".message-list");
@@ -116,7 +116,7 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, chat,
     }
 
     const removeChat = async () => {
-        if (window.confirm("Are you sure you want to delete this chat?")) {
+        if (window.confirm("Are you sure you want to delete this chat?") && chat !== null) {
             const result = await deleteChat(chat.id);
             if (typeof result === "string") {
                 setServerError(result);

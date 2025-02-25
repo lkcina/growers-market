@@ -30,13 +30,14 @@ const AllUserListings: React.FC<Props> = (): JSX.Element => {
         const target = e.target as HTMLFormElement;
         const input = target.elements.namedItem("listingId") as HTMLInputElement;
         const listingId = Number(input.value);
-        navigate(`/market/my-listings/listing/${listingId}/info`);
+        navigate(`/my-listings/listing/${listingId}/info`);
     }
 
 
     return (
         <div id="all-user-listings-page">
-            <button className="new-listing-btn" onClick={() => navigate("/market/my-listings/new")}>Create New Listing</button>
+            <h1>My Listings</h1>
+            <button className="new-listing-btn" onClick={() => navigate("/my-listings/new")}>+ New Listing</button>
             <ListingList listings={userListings} onSelect={onListingSelect} listingDetails={null} userChats={null} setUserChats={null} />
         </div>
     );

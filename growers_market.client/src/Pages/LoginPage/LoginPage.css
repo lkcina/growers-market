@@ -19,6 +19,7 @@
         padding: 15px;
         background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
         box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+        margin-bottom: 20px;
     }
 
         .login-page h1 {
@@ -77,4 +78,18 @@
                 box-shadow: 0 0 5px var(--color-primary-dark);
             }
 
-        
+        .login-page form p {
+            font-size: 1.5rem;
+            color: var(--color-text-dark);
+            text-align: center;
+        }
+
+            .login-page form p a {
+                font-size: 1.5rem;
+                color: var(--color-primary-dark);
+                margin-left: 5px;
+            }
+
+                .login-page form p a:hover {
+                    font-weight: bold;
+                }

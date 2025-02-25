@@ -128,3 +128,77 @@ nav {
                 nav ul li a.active {
                     border-bottom: 3px solid var(--color-primary-light);
                 }
+
+@media screen and (max-width: 764px) {
+    nav div a h1 {
+        font-size: 4rem;
+    }
+
+    nav div a img {
+        height: 50px;
+    }
+
+    nav #login-summary {
+        position: relative;
+        width: max-content;
+    }
+
+        nav #login-summary button {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--color-primary-dark);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            nav #login-summary button:hover {
+                text-shadow: 0 0 10px var(--color-primary-light);
+            }
+
+        nav #login-summary #login-summary-dropdown {
+            display: none;
+        }
+
+            nav #login-summary:focus-within #login-summary-dropdown {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: calc(100% + 5px);
+                width: 100%;
+                background-color: var(--color-secondary-light);
+                box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+            }
+
+    nav #login-summary #login-summary-dropdown .login-dropdown-option {
+        width: calc(100% - 10px);
+        font-size: 1.5rem;
+        padding: 5px;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        color: var(--color-text-dark);
+        text-align: left;
+        cursor: pointer;
+        font-weight: normal;
+        margin: 0;
+    }
+
+                    nav #login-summary #login-summary-dropdown .login-dropdown-option:hover,
+                    nav #login-summary #login-summary-dropdown .login-dropdown-option:focus {
+                        background-color: var(--color-secondary-dark);
+                        outline: none;
+                    }
+
+    nav ul {
+        gap: 10px;
+    }
+
+    nav ul li a {
+        font-size: 1.5rem;
+    }
+
+}

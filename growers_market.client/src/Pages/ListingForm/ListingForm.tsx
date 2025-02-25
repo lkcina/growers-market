@@ -209,6 +209,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const onSpeciesSearchScroll = async (e: SyntheticEvent) => {
         e.preventDefault();
         const target = e.target as HTMLDivElement;
+        console.log(target.scrollHeight);
         if (target.scrollHeight - target.scrollTop >= target.clientHeight + 20) {
             return;
         }
@@ -296,9 +297,9 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
             {isSpeciesSearchOpen ? (
                 <div className="species-search">
                     <button className="popup-close-btn" onClick={closeSpeciesSearch}>Close</button>
-                    <div className="species-search-container">
+                    <div className="species-search-container" onScroll={onSpeciesSearchScroll}>
                         <SearchBar query={speciesSearchQuery} handleQueryChange={handleSpeciesSearchQueryChange} onSearchSubmit={onSpeciesSearchSubmit} />
-                        <PopupSpeciesList searchResult={speciesSearchResult} onSelect={onSpeciesSearchSelect} onScroll={onSpeciesSearchScroll} />
+                        <PopupSpeciesList searchResult={speciesSearchResult} onSelect={onSpeciesSearchSelect} />
                         
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import './LoginPage.css';
+import { Link } from 'react-router-dom';
 
 type LoginFormsInputs = {
     userName: string;
@@ -39,7 +40,9 @@ const LoginPage = () => {
                     {errors.password ? (<p className="error">* {errors.password.message}</p>) : ""}
                 </div>
                 <button type="submit">Login</button>
+                <p>Don't have an account? <Link to="/register">Sign up</Link></p>
             </form>
+
         </div>
     );
 }

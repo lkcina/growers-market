@@ -4,6 +4,7 @@ import { Chat, Listing } from '../../types';
 import ChatList from '../../Components/ChatList/ChatList';
 import ListingList from '../../Components/ListingList/ListingList';
 import './ChatsPage.css';
+import { Link } from 'react-router-dom';
 
 interface Props {
 }
@@ -45,6 +46,7 @@ const ChatsPage: React.FC<Props> = () => {
 
     return (
         <div id="chats-page">
+            <Link to="/market/browse">Browse</Link>
             <ListingList listings={listings} listingDetails={listingDetails} userChats={userChats} onSelect={showDetails} setUserChats={setUserChats} />
         </div>
     );

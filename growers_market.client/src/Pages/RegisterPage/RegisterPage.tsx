@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import "./RegisterPage.css";
+import { Link } from 'react-router-dom';
 
 interface Props {
 }
@@ -192,6 +193,7 @@ const RegisterPage: React.FC<Props> = () => {
                     </div>
                 </div>
                 <button type="submit">Sign Up</button>
+                <p>Already have an account? <Link to="/register">Login</Link></p>
             </form>
         </div>
     );
