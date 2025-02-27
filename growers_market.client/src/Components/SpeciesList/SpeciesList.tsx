@@ -1,8 +1,9 @@
-import React, { FormEvent, SyntheticEvent } from "react";
+import React, { FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./SpeciesList.css";
 import SpeciesCard from "../SpeciesCard/SpeciesCard";
 import { SpeciesInfo } from "../../types";
 import { v4 as uuidv4 } from 'uuid';
+import SpeciesDetails from "../SpeciesDetails/SpeciesDetails";
 
 interface Props {
     searchResult: SpeciesInfo[];
@@ -13,15 +14,73 @@ interface Props {
     showDetails: (e: FormEvent<HTMLFormElement>) => void;
 }
 
-const SpeciesList: React.FC<Props> = ({searchResult, onWishlistCreate, onWishlistRemove, wishlistValues, showDetails, speciesDetails }: Props): JSX.Element => {
+const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishlistRemove, wishlistValues, showDetails, speciesDetails }: Props): JSX.Element => {
+    const listRef = useRef<HTMLDivElement>(null);
+    const [listColumns, setListColumns] = useState<number>(0);
+    const [searchResultDetails, setSearchResultDetails] = useState<SpeciesInfo[]>([]);
+
+    
+
+    useEffect(() => {
+        const handleSpeciesList = () => {
+            if (listRef.current) {
+                if (speciesDetails !== null) {
+                    const columns = Math.floor((listRef.current.offsetWidth + 15) / 235);
+                    console.log(columns);
+                    setListColumns(columns);
+                    const detailsSpecies: SpeciesInfo = { ...searchResult.filter((s) => s.id === speciesDetails)[0] }
+                    console.log(detailsSpecies);
+                    console.log(detailsSpecies);
+                    const rowOfSpecies = Math.floor(searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)) / columns) + 1;
+
+                    detailsSpecies.id = 0;
+                    console.log(columns, rowOfSpecies);
+                    const detailsIndex = (rowOfSpecies * columns);
+                    console.log(detailsIndex);
+                    const newSearchResultDetails: SpeciesInfo[] = [...searchResult];
+                    newSearchResultDetails.splice(detailsIndex, 0, detailsSpecies);
+                    console.log(newSearchResultDetails);
+                    setSearchResultDetails(newSearchResultDetails);
+                }
+            }
+        }
+
+        handleSpeciesList();
+
+        if (speciesDetails !== null) {
+
+            window.addEventListener('resize', handleSpeciesList)
+        } else {
+            window.removeEventListener('resize', handleSpeciesList);
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleSpeciesList);
+        }
+
+    }, [speciesDetails, searchResult]);
+
+    
+
+    
+
     return(
-        <div className = "species-list" >
+        <div className="species-list" ref={listRef} >
             {searchResult.length > 0 ? (
-                searchResult.map((s) => {
-                    return (
-                        <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} />
-                    )
-                })
+                speciesDetails === null ? (
+                    searchResult.map((s) => {
+                        return (
+                            <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} />
+                        )
+                    })
+                ) : (
+                        searchResultDetails.map((s, index) => {
+                            return (
+                                s.id !== 0 ? <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} />
+                                    : <SpeciesDetails species={s} />
+                            )
+                        })
+                )
             ) : (
                 <h2>No results found</h2>
             )

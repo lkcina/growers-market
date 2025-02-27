@@ -11,7 +11,6 @@ const Navbar: React.FC = (): JSX.Element => {
 
     useEffect(() => {
         const handleResize = () => {
-            console.log(window.innerWidth);
             setWindowWidth(window.innerWidth);
         }
 

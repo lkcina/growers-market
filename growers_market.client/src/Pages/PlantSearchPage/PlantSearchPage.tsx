@@ -50,10 +50,11 @@ const PlantSearchPage: React.FC = () => {
                 setSpeciesSearchFrom(result.data.from);
                 setSpeciesSearchTo(result.data.to);
                 setSpeciesSearchTotal(result.data.total);
+                console.log(result.data.data);
             }
-            console.log(speciesSearchResult, serverError);
+            
         })
-    }, [])
+    }, []);
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSpeciesSearchQuery(e.target.value);

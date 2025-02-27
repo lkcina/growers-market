@@ -2,11 +2,14 @@
 
 .species-details {
     height: auto;
-    width: 460px;
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     justify-content: flex-start;
+    grid-column: 1 / -1;
 }
 
     .species-details .species-details-properties {

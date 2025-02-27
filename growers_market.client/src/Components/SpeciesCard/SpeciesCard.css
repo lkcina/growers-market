@@ -31,8 +31,17 @@
         margin-bottom: 10px;
     }
 
-    .species-card.show-details {
-        width: 670px;
+    .species-card.show-details .details-arrow {
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        bottom: -10px;
+        left: calc(50% - 10px);
+        font-size: 2rem;
+        color: var(--color-primary-dark);
+        background: linear-gradient(135deg, transparent 49%, var(--color-secondary-dark) 50%);
+        transform: rotate(45deg);
+        box-shadow: 6px 2px 5px rgba(0, 0, 0, 0.7);
     }
 
         

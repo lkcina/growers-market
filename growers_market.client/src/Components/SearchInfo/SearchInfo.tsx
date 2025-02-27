@@ -16,7 +16,6 @@ const SearchInfo: React.FC<Props> = ({ currentPage, lastPage, from, to, total, o
 
     useEffect(() => {
         const handleResize = () => {
-            console.log(window.innerWidth);
             setWindowWidth(window.innerWidth);
         }
 

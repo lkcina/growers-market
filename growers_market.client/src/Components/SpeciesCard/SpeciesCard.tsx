@@ -33,9 +33,7 @@ const SpeciesCard: React.FC<Props> = ({ id, species, onWishlistCreate, onWishlis
                 {wishlistValues.find(s => s.id === species.id) ? <RemoveWishlist onWishlistRemove={onWishlistRemove} speciesId={species.id} />
                     : <AddWishlist onWishlistCreate={onWishlistCreate} speciesId={species.id} />}
             </div>
-            {speciesDetails === species.id ? (
-                <SpeciesDetails species={species} />
-            ) : null}
+            {speciesDetails === species.id ? <div className="details-arrow" /> : null }
         </div>
     );
 }

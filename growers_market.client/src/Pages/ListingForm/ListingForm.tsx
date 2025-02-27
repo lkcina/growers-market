@@ -209,11 +209,9 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const onSpeciesSearchScroll = async (e: SyntheticEvent) => {
         e.preventDefault();
         const target = e.target as HTMLDivElement;
-        console.log(target.scrollHeight);
         if (target.scrollHeight - target.scrollTop >= target.clientHeight + 20) {
             return;
         }
-        console.log(speciesSearchPage, speciesSearchLastPage);
         if (speciesSearchPage >= speciesSearchLastPage) {
             return;
         }
