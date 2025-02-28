@@ -14,10 +14,10 @@ interface Props {
     wishlistValues: SpeciesInfo[];
     showDetails: (e: FormEvent<HTMLFormElement>) => void;
     speciesDetails: number | null;
-    
+    isAfterDetails: boolean;
 }
 
-const SpeciesCard: React.FC<Props> = ({ id, species, onWishlistCreate, onWishlistRemove, wishlistValues, showDetails, speciesDetails }: Props,): JSX.Element => {
+const SpeciesCard: React.FC<Props> = ({ id, species, onWishlistCreate, onWishlistRemove, wishlistValues, showDetails, speciesDetails, isAfterDetails }: Props,): JSX.Element => {
     const onImageError = (e: SyntheticEvent) => {
         e.preventDefault();
         const target = e.target as HTMLImageElement;
@@ -25,7 +25,7 @@ const SpeciesCard: React.FC<Props> = ({ id, species, onWishlistCreate, onWishlis
     }
 
     return (
-        <div id={id} className={speciesDetails === species.id ? "species-card show-details" : "species-card"}>
+        <div id={id} className={speciesDetails === species.id ? "species-card show-details" : "species-card"} style={{gridColumn: `${isAfterDetails ? "1 / 2" : "auto"}`} }>
             <div>
                 <img src={species.thumbnail} alt={species.commonName} onError={onImageError} />
                 <SpeciesDetailsButton showDetails={showDetails} speciesId={species.id} speciesCommonName={species.commonName} />

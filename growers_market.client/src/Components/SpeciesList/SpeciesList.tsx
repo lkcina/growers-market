@@ -17,6 +17,7 @@ interface Props {
 const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishlistRemove, wishlistValues, showDetails, speciesDetails }: Props): JSX.Element => {
     const listRef = useRef<HTMLDivElement>(null);
     const [listColumns, setListColumns] = useState<number>(0);
+    const [speciesColumn, setSpeciesColumn] = useState<number>(0);
     const [searchResultDetails, setSearchResultDetails] = useState<SpeciesInfo[]>([]);
 
     
@@ -32,9 +33,10 @@ const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishli
                     console.log(detailsSpecies);
                     console.log(detailsSpecies);
                     const rowOfSpecies = Math.floor(searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)) / columns) + 1;
-
+                    const columnOfSpecies = (searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)) % columns) + 1;
+                    setSpeciesColumn(columnOfSpecies);
                     detailsSpecies.id = 0;
-                    console.log(columns, rowOfSpecies);
+                    console.log(columns, columnOfSpecies, rowOfSpecies);
                     const detailsIndex = (rowOfSpecies * columns);
                     console.log(detailsIndex);
                     const newSearchResultDetails: SpeciesInfo[] = [...searchResult];
@@ -45,7 +47,7 @@ const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishli
             }
         }
 
-        handleSpeciesList();
+        handleSpeciesList()
 
         if (speciesDetails !== null) {
 
@@ -75,9 +77,11 @@ const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishli
                     })
                 ) : (
                         searchResultDetails.map((s, index) => {
+                            const detailsIndex = searchResultDetails.indexOf(searchResultDetails.find((s) => s.id === 0));
                             return (
-                                s.id !== 0 ? <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} />
-                                    : <SpeciesDetails species={s} />
+                                s.id !== 0 ? index !== detailsIndex + 1 ? <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} isAfterDetails={false} />
+                                    : <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} isAfterDetails={true} />
+                                    : <SpeciesDetails key={uuidv4()} species={s} columns={listColumns} speciesColumn={speciesColumn} />
                             )
                         })
                 )

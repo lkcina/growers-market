@@ -2,7 +2,6 @@
 
 #chats-page {
     height: 100%;
-    min-height: calc(100vh - 165px);
     width: 100%;
 }
 
