@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useLayoutEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, SyntheticEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { getSpeciesDetails, getWishlist, postWishlist, searchSpecies, deleteWishlist, getUsedSpecies, getRandomSpecies } from '../../api';
 import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 import SpeciesSearchBar from '../../Components/SpeciesSearch/SpeciesSearchBar/SpeciesSearchBar';
@@ -29,7 +29,6 @@ const PlantSearchPage: React.FC = () => {
     const [speciesDetails, setSpeciesDetails] = useState<number | null>(null);
 
     const [serverError, setServerError] = useState<string | null>(null);
-    const [isRendering, setIsRendering] = useState<boolean>(false);
 
     useEffect(() => {
         getWishlist().then((result) => {
@@ -62,6 +61,7 @@ const PlantSearchPage: React.FC = () => {
         setTimeout(() => {
             if (speciesDetails !== null) {
                 const detailsElement = document.getElementById(`species-${speciesDetails}`);
+                console.log(detailsElement);
                 if (detailsElement) {
                     detailsElement.scrollIntoView();
                 }
@@ -205,7 +205,7 @@ const PlantSearchPage: React.FC = () => {
         console.log(speciesSearchResult, serverError);
     }
 
-    const showDetails = async (e: FormEvent<HTMLFormElement>) => {
+    const showDetails = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as HTMLFormElement;
         const input = target.elements.namedItem("speciesId") as HTMLInputElement;
@@ -222,7 +222,7 @@ const PlantSearchPage: React.FC = () => {
         const updatedSpeciesSearchResult = speciesSearchResult.map(s => s.id === value ? species : s);
         setSpeciesSearchResult(updatedSpeciesSearchResult);
         setSpeciesDetails(value);
-    }
+    }, [speciesDetails, speciesSearchResult])
 
     return (
         <div id="plant-search-page">

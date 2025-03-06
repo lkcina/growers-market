@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import ListingSearchBar from '../../Components/ListingSearch/ListingSearchBar/ListingSearchBar';
 import { Chat, Listing, SpeciesInfo } from '../../types';
 import { getUsedSpecies, getUserChats, searchListings } from '../../api';
@@ -65,7 +65,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
                 toast.error("Unable to retrieve your location");
             });
         }
-
+        console.log("UH OH!!");
         searchListings(1, "", null, 10000, null, null, null, listingSearchRadius, listingSearchUnit, listingSearchLocation, currentLocationLat, currentLocationLng).then((result) => {
             if (typeof result === "string") {
                 setServerError(result);
@@ -92,6 +92,11 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             }
         })
     }, [])
+
+    useEffect(() => {
+        console.log(listingDetails);
+
+    }, [listingDetails]);
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
         setListingSearchQuery(e.target.value);
@@ -207,17 +212,18 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         console.log(listingSearchResult, serverError);
     }
 
-    const showDetails = async (e: FormEvent<HTMLFormElement>) => {
+    const showDetails = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as HTMLFormElement;
         const input = target.elements.namedItem("listingId") as HTMLInputElement;
         const value = Number(input.value);
+        console.log(value);
         if (listingDetails === value) {
             setListingDetails(null);
             return;
         }
         setListingDetails(value);
-    }
+    }, [listingDetails]);
 
     return (
         <div id="browse-market-page">

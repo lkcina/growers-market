@@ -2,7 +2,7 @@
 
 .chat-card {
     width: 225px;
-    height: 300px;
+    height: auto;
     background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
     padding: 10px;

@@ -21,6 +21,7 @@ const ChatsPage: React.FC<Props> = () => {
                 setServerError(result);
                 return;
             } else if (Array.isArray(result)) {
+                console.log(result);
                 setUserChats(result);
             }
         })
@@ -28,11 +29,12 @@ const ChatsPage: React.FC<Props> = () => {
 
     useEffect(() => {
         if (userChats.length > 0) {
+            console.log("setting Listings");
             setListings(userChats.map(chat => chat.listing));
         }
     }, [userChats])
 
-    const showDetails = async (e: FormEvent<HTMLFormElement>) => {
+    const showDetails = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as HTMLFormElement;
         const input = target.elements.namedItem("listingId") as HTMLInputElement;

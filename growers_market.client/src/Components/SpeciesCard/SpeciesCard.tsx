@@ -25,7 +25,7 @@ const SpeciesCard: React.FC<Props> = ({ id, species, onWishlistCreate, onWishlis
     }
 
     return (
-        <div id={id} className={speciesDetails === species.id ? "species-card show-details" : "species-card"} style={{gridColumn: `${isAfterDetails ? "1 / 2" : "auto"}`} }>
+        <div id={id} className={speciesDetails === species.id ? "species-card show-details" : "species-card"} style={{gridColumn: `${isAfterDetails ? "1 / 2" : "auto"}`}}>
             <div>
                 <img src={species.thumbnail} alt={species.commonName} onError={onImageError} />
                 <SpeciesDetailsButton showDetails={showDetails} speciesId={species.id} speciesCommonName={species.commonName} />
