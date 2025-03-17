@@ -24,9 +24,9 @@ namespace growers_market.Server.Services
             {
                 var urlBuilder = new StringBuilder($"https://perenual.com/api/species-list?key={_config["PerenualKey"]}&page={query.Page}");
 
-                if (!string.IsNullOrEmpty(query.Q))
+                if (!string.IsNullOrEmpty(query.Query))
                 {
-                    urlBuilder.Append($"&q={query.Q}");
+                    urlBuilder.Append($"&q={query.Query}");
                 }
                 if (!string.IsNullOrEmpty(query.Order))
                 {

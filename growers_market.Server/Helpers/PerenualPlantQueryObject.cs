@@ -1,9 +1,12 @@
-﻿namespace growers_market.Server.Helpers
+﻿using System.Text.Json.Serialization;
+
+namespace growers_market.Server.Helpers
 {
     public class PerenualPlantQueryObject
     {
         public int Page { get; set; } = 1;
-        public string? Q { get; set; }
+        [JsonPropertyName("Q")]
+        public string? Query { get; set; }
 
         public string? Order { get; set; }
         public bool? Edible { get; set; }

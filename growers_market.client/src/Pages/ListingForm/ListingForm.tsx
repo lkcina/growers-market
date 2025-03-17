@@ -160,7 +160,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 setServerError(listingResult);
                 return;
             } else if (listingResult.status === 201) {
-                navigate(`/market/my-listings/listing/${listingResult.data.id}/info`);
+                navigate(`/my-listings/listing/${listingResult.data.id}/info`);
             }
         } else {
             const listingResult = await updateListing(Number(listingId), data);
@@ -168,7 +168,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 setServerError(listingResult);
                 return;
             } else if (listingResult.status === 200) {
-                navigate(`/market/my-listings/listing/${listingId}/info`);
+                navigate(`/my-listings/listing/${listingId}/info`);
             }
         }
     }
@@ -251,9 +251,9 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const onCancel = () => {
         if (window.confirm("Are you sure? All changes will be lost.")) {
             if (listingId !== undefined) {
-                navigate(`/market/my-listings/listing/${listingId}/info`);
+                navigate(`/my-listings/listing/${listingId}/info`);
             } else {
-                navigate("/market/my-listings/all");
+                navigate("/my-listings/all");
             }
         }
     }
