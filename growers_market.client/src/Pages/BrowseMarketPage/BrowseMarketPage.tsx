@@ -65,7 +65,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
                 toast.error("Unable to retrieve your location");
             });
         }
-        console.log("UH OH!!");
         searchListings(1, "", null, 10000, null, null, null, listingSearchRadius, listingSearchUnit, listingSearchLocation, currentLocationLat, currentLocationLng).then((result) => {
             if (typeof result === "string") {
                 setServerError(result);

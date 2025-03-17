@@ -11,9 +11,10 @@ interface Props {
     columns: number;
     listingColumn: number;
     setUserChats: Dispatch<SetStateAction<Chat[]>> | null;
+    listingId: number;
 }
 
-const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn, setUserChats }: Props,): JSX.Element => {
+const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn, setUserChats, listingId }: Props,): JSX.Element => {
     const { isLoggedIn } = useAuth();
     const [newMessage, setNewMessage] = useState<string>('');
     const [serverError, setServerError] = React.useState<string | null>(null);
@@ -65,7 +66,7 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn
             }
 
         } else {
-            const chatResult = await createChat(listing.id);
+            const chatResult = await createChat(listingId);
             console.log(chatResult);
             if (typeof chatResult === "string") {
                 setServerError(chatResult);
@@ -96,7 +97,7 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn
     }
 
     const removeChat = async () => {
-        if (window.confirm("Are you sure you want to delete this chat?") && chat !== null) {
+        if (window.confirm("Are you sure you want to delete this chat?") && chat !== null && chat !== undefined) {
             const result = await deleteChat(chat.id);
             if (typeof result === "string") {
                 setServerError(result);
@@ -106,7 +107,7 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn
                 if (typeof newChats === "string") {
                     setServerError(newChats);
                     return
-                } else if (Array.isArray(newChats)) {
+                } else if (Array.isArray(newChats) && setUserChats !== null) {
                     setUserChats(newChats);
                 }
             }
@@ -126,7 +127,7 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn
                     {listing.description}
                 </div>
             </div>
-            {isLoggedIn() && chat !== null ? <ListingChat chat={chat} newMessage={newMessage} onNewMessageSubmit={onNewMessageSubmit} handleMessageInputChange={handleMessageInputChange} removeChat={removeChat} /> : null}
+            {isLoggedIn() ? <ListingChat chat={chat} newMessage={newMessage} onNewMessageSubmit={onNewMessageSubmit} handleMessageInputChange={handleMessageInputChange} removeChat={removeChat} /> : null}
         </div>
     );
 }

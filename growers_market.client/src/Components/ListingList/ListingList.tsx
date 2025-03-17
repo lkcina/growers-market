@@ -79,7 +79,7 @@ const ListingList: React.FC<Props> = ({ listings, onSelect, listingDetails, user
                         return (
                             listing.id !== 0 ? index !== detailsIndex + 1 ? <ListingCard key={uuidv4()} listing={listing} onSelect={onSelect} listingDetails={listingDetails} isAfterDetails={false} />
                                 : <ListingCard key={uuidv4()} listing={listing} onSelect={onSelect} listingDetails={listingDetails} isAfterDetails={true} />
-                                : <ListingDetails key={uuidv4()} listing={listing} chat={chat} setUserChats={setUserChats} columns={listColumns} listingColumn={listingColumn} />
+                                : <ListingDetails key={uuidv4()} listing={listing} chat={chat} setUserChats={setUserChats} columns={listColumns} listingColumn={listingColumn} listingId={listingDetails} />
                         )
                     })
                 )

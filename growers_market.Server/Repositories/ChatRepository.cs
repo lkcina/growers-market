@@ -18,13 +18,17 @@ namespace growers_market.Server.Repositories
 
         public async Task<Chat> CreateChat(Chat chat)
         {
+            Console.WriteLine(chat.Listing.Id);
             var existingChat = await _context.Chats.FirstOrDefaultAsync(c => c.ListingId == chat.ListingId && c.AppUserId == chat.AppUserId);
             if (existingChat != null)
             {
                 return null;
             }
+            Console.WriteLine("New Chat");
             await _context.Chats.AddAsync(chat);
+            Console.WriteLine("Chat Added");
             await _context.SaveChangesAsync();
+            Console.WriteLine("Chat Saved");
             return chat;
         }
 
