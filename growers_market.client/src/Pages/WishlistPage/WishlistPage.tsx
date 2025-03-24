@@ -30,6 +30,18 @@ const WishlistPage: React.FC<Props> = () => {
         });
     }, [])
 
+    useEffect(() => {
+        setTimeout(() => {
+            if (speciesDetails !== null) {
+                const detailsElement = document.getElementById(`species-${speciesDetails}`);
+                console.log(detailsElement);
+                if (detailsElement) {
+                    detailsElement.scrollIntoView();
+                }
+            }
+        }, 1);
+    }, [speciesDetails])
+
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
         setWishlistSearchQuery(e.target.value);
     }
