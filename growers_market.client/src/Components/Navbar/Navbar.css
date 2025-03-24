@@ -9,6 +9,8 @@ nav {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
     position: sticky;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
 }
     nav a {
@@ -164,10 +166,9 @@ nav {
                 display: flex;
                 flex-direction: column;
                 position: absolute;
-                left: 0;
                 right: 0;
                 top: calc(100% + 5px);
-                width: 100%;
+                width: max-content;
                 background-color: var(--color-secondary-light);
                 box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
             }
@@ -201,4 +202,84 @@ nav {
         font-size: 1.5rem;
     }
 
+}
+
+@media screen and (max-width: 550px) {
+    nav div a h1 {
+        font-size: 3rem;
+    }
+
+    nav div a img {
+        height: 40px;
+    }
+
+
+    nav #nav-link-summary {
+        position: relative;
+        width: max-content;
+    }
+
+        nav #nav-link-summary button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--color-primary-dark);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            nav #nav-link-summary button:hover {
+                text-shadow: 0 0 10px var(--color-primary-light);
+            }
+
+        nav #nav-link-summary #nav-link-summary-dropdown {
+            display: none;
+        }
+
+        nav #nav-link-summary:focus-within #nav-link-summary-dropdown {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 0;
+            top: calc(100% + 5px);
+            width: max-content;
+            min-width: 100%;
+            background-color: var(--color-secondary-light);
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        nav #nav-link-summary #nav-link-summary-dropdown .nav-link-dropdown-option {
+            width: calc(100% - 10px);
+            font-size: 1.5rem;
+            padding: 5px;
+            background: none;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            color: var(--color-text-dark);
+            text-align: left;
+            cursor: pointer;
+            font-weight: normal;
+            margin: 0;
+        }
+
+            nav #nav-link-summary #nav-link-summary-dropdown .nav-link-dropdown-option:hover,
+            nav #nav-link-summary #nav-link-summary-dropdown .nav-link-dropdown-option:focus {
+                background-color: var(--color-secondary-dark);
+                outline: none;
+            }
+}
+
+@media screen and (max-width: 450px) {
+    nav div a h1 {
+        font-size: 2.5rem;
+    }
+
+    nav div a img {
+        height: 35px;
+    }
+
+    nav #login-summary button {
+        font-size: 1.5rem;
+    }
 }
