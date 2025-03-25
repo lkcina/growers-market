@@ -283,3 +283,11 @@ nav {
         font-size: 1.5rem;
     }
 }
+
+@media screen and (max-width: 400px) {
+    nav #login-summary {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+    }
+}

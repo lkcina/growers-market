@@ -5,9 +5,7 @@ namespace growers_market.Server.Helpers
     public class PerenualPlantQueryObject
     {
         public int Page { get; set; } = 1;
-        [JsonPropertyName("Q")]
-        public string? Query { get; set; }
-
+        public string? Q { get; set; }
         public string? Order { get; set; }
         public bool? Edible { get; set; }
         public bool? Poisonous { get; set; }

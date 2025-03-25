@@ -3,7 +3,7 @@
 .search-info {
     height: auto;
     width: 100%;
-    min-width: 440px;
+    min-width: 280px;
     max-width: 1200px;
     margin: 0 auto 15px;
 }
@@ -77,5 +77,11 @@
 
     .search-info > div .results-showing {
         width: fit-content;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .search-info > div {
+        justify-content: center;
     }
 }

@@ -36,7 +36,7 @@ const SearchInfo: React.FC<Props> = ({ currentPage, lastPage, from, to, total, o
                         <div><span>{currentPage}</span> of {lastPage}</div>
                         {currentPage === lastPage ? null : <button onClick={onNextPage}>{">"}</button>}
                     </div>
-                    <div className="results-showing">Showing {from} - {to} of {total}</div>
+                    {windowWidth > 550 ? <div className="results-showing">Showing {from} - {to} of {total}</div> : null}
                 </div>
             ) : (
                 <div></div>
