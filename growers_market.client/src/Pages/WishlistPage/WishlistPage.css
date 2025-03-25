@@ -14,3 +14,13 @@
         text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
         width: 100%;
     }
+
+@media screen and (max-width: 550px) {
+    #wishlist-page {
+        padding: 20px;
+    }
+
+        #wishlist-page h1 {
+            font-size: 4rem;
+        }
+}
