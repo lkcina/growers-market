@@ -4,7 +4,7 @@
     height: auto;
     width: 100%;
     max-width: 1160px;
-    min-width: 440px;
+    min-width: 280px;
     margin: 0 auto 15px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 220px);

@@ -16,7 +16,7 @@
 
 @media screen and (max-width: 550px) {
     #plant-search-page {
-        padding: 20px;
+        padding: 0 20px;
     }
 
     #plant-search-page h1 {

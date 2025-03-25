@@ -32,3 +32,14 @@
         #all-user-listings-page .new-listing-btn:hover {
             font-weight: bold;
         }
+
+@media screen and (max-width: 550px) {
+
+    #all-user-listings-page h1 {
+        font-size: 4rem;
+    }
+
+    #all-user-listings-page .new-listing-btn {
+        font-size: 1.5rem;
+    }
+}
