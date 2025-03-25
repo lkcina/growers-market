@@ -60,10 +60,11 @@
         #user-listing-info .info-card .info-card-container {
             display: flex;
             gap: 20px;
-            justify-content: start;
+            justify-content: center;
             background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
             padding: 10px;
             box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+            flex-wrap: wrap;
         }
 
             #user-listing-info .info-card .info-card-container .listing-info {
@@ -78,17 +79,22 @@
                     color: var(--color-text-dark);
                 }
 
-            #user-listing-info .info-card .info-card-container .description h4 {
-                font-size: 2rem;
-                color: var(--color-primary-dark);
-                border-bottom: 2px solid var(--color-primary-light);
-                margin-bottom: 10px;
+            #user-listing-info .info-card .info-card-container .description {
+                min-width: 260px;
             }
 
-            #user-listing-info .info-card .info-card-container .description p {
-                font-size: 1.5rem;
-                color: var(--color-text-dark);
-            }
+                #user-listing-info .info-card .info-card-container .description h4 {
+                    font-size: 2rem;
+                    color: var(--color-primary-dark);
+                    border-bottom: 2px solid var(--color-primary-light);
+                    margin-bottom: 10px;
+                }
+
+                #user-listing-info .info-card .info-card-container .description p {
+                    font-size: 1.5rem;
+                    min-height: 100px;
+                    color: var(--color-text-dark);
+                }
 
     #user-listing-info .chats-container {
         display: flex;
@@ -103,3 +109,25 @@
             text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
         }
 
+@media screen and (max-width: 764px) {
+    #user-listing-info .info-card .info-card-header h2 {
+        font-size: 4rem;
+    }
+
+    #user-listing-info .info-card .info-card-header .info-card-btns {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+        #user-listing-info .info-card .info-card-header .info-card-btns button {
+            font-size: 1.5rem;
+        }
+}
+
+@media screen and (max-width: 550px) {
+    #user-listing-info .info-card .info-card-header h2 {
+        font-size: 3rem;
+    }
+
+    
+}
