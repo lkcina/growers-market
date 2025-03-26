@@ -1,8 +1,8 @@
 #listing-search-bar {
     height: auto;
-    width: calc(100% - 350px);
-    max-width: 800px;
-    min-width: 440px;
+    width: 100%;
+    max-width: 600px;
+    min-width: 280px;
     margin: 0 auto 15px;
 }
 
@@ -32,12 +32,12 @@
             width: 208px;
         }
             #listing-search-bar #search-area .radius div {
-            display: flex;
-            flex-direction: row;
-            justify-content: start;
-            gap: 0;
-            width: 213px;
-        }
+                display: flex;
+                flex-direction: row;
+                justify-content: start;
+                gap: 0;
+                width: 213px;
+            }
 
             #listing-search-bar #search-area .radius div #search-radius {
                 width: 55px;
@@ -149,3 +149,28 @@
             text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
             cursor: pointer;
         }
+
+@media screen and (max-width: 631px) {
+    #listing-search-bar #search-area {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #listing-search-bar #search-area {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        #listing-search-bar #search-area .radius {
+            width: 100%;
+        }
+
+            #listing-search-bar #search-area .radius div {
+                width: 100%;
+            }
+
+                #listing-search-bar #search-area .radius div #search-unit {
+                    width: 100%;
+                }
+}
