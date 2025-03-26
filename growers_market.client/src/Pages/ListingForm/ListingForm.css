@@ -2,7 +2,6 @@
 
 #listing-form-page {
     height: 100%;
-    min-height: calc(100vh - 165px);
     width: 100%;
     margin-bottom: 20px;
 }
@@ -11,6 +10,8 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
+        min-width: 280px;
+        border: 1px solid yellow;
     }
 
         #listing-form-page .listing-form .form-header {
@@ -19,7 +20,7 @@
             align-content: center;
         }
 
-            #listing-form-page .listing-form .form-header input {
+            #listing-form-page .listing-form .form-header textarea {
                 font-size: 5rem;
                 font-family: Namd, serif;
                 color: var(--color-text-light);
@@ -27,9 +28,10 @@
                 background: none;
                 width: 100%;
                 padding: 5px;
+                resize: none;
             }
 
-        #listing-form-page .listing-form .form-header input::placeholder {
+        #listing-form-page .listing-form .form-header textarea::placeholder {
             color: var(--color-primary-light);
         }
 
@@ -45,6 +47,7 @@
             #listing-form-page .listing-form .form-container .form-details {
                 min-height: 200px;
                 width: 320px;
+                width: fit-content;
                 display: flex;
                 gap: 10px;
                 flex-direction: column;
@@ -74,6 +77,7 @@
             #listing-form-page .listing-form .form-container .description {
                 min-width: 200px;
                 width: 100%;
+                min-height: 123px;
                 height: auto;
                 position: relative;
             }
@@ -88,6 +92,7 @@
 
                 #listing-form-page .listing-form .form-container .description textarea {
                     display: block;
+                    min-height: 80px;
                     position: absolute;
                     top: 30px;
                     bottom: 0;
@@ -144,9 +149,10 @@
         #listing-form-page .species-search .species-search-container {
             position: absolute;
             top: 0;
-            left: 15%;
             bottom: 0;
-            width: 70%;
+            left: 40px;
+            right: 40px;
+            min-width: 280px;
             overflow-y: auto;
             overflow-x: hidden;
             padding: 100px 0;
@@ -164,10 +170,37 @@
             color: var(--color-error);
             border: 1px solid var(--color-error);
             position: absolute;
-            top: 65px;
-            right: calc(15% - 90px);
+            top: 50px;
+            right: 0;
         }
 
             #listing-form-page .species-search .popup-close-btn:hover {
                 font-weight: bold;
             }
+
+@media screen and (max-width: 764px) {
+    #listing-form-page .listing-form .form-container {
+        flex-direction: column;
+    }
+
+    #listing-form-page .listing-form .form-header textarea {
+        font-size: 4rem;
+    }
+}
+
+@media screen and (max-width: 550px) {
+
+    #listing-form-page .listing-form .form-header textarea {
+        font-size: 3.5rem;
+    }
+
+    #listing-form-page .listing-form .form-container .form-details {
+        
+        width: 260px;
+    }
+
+    #listing-form-page .species-search .species-search-container {
+        left: 20px;
+        right: 20px;
+    }
+}
