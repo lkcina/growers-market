@@ -11,7 +11,6 @@
         flex-direction: column;
         gap: 20px;
         min-width: 280px;
-        border: 1px solid yellow;
     }
 
         #listing-form-page .listing-form .form-header {
@@ -63,6 +62,7 @@
                 #listing-form-page .listing-form .form-container .form-details #listing-is-for-trade {
                     width: 15px;
                     height: 15px;
+                    accent-color: var(--color-primary-dark);
                 }
 
                 #listing-form-page .listing-form .form-container .form-details #listing-price,

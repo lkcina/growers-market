@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
                 element: <MarketPage />,
                 children: [
                     {
-                        path: "browse",
+                        index: true,
                         element: <BrowseMarketPage />
                     },
                     {
@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
                 element: <ProtectedRoute><UserListingsPage /></ProtectedRoute>,
                 children: [
                     {
-                        path: "all",
+                        index: true,
                         element: <AllUserListings />
                     },
                     {

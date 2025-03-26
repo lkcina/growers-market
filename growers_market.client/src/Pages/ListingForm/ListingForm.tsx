@@ -285,7 +285,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
             if (listingId !== undefined) {
                 navigate(`/my-listings/listing/${listingId}/info`);
             } else {
-                navigate("/my-listings/all");
+                navigate("/my-listings");
             }
         }
     }

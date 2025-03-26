@@ -74,8 +74,8 @@ const Navbar: React.FC = (): JSX.Element => {
             </div>
             {windowWidth > 500 ? (
                 <ul>
-                    <li><NavLink to="/market/browse" className={({ isActive }) => isActive ? "active" : ""}>Market</NavLink></li>
-                    <li><NavLink to="/my-listings/all" className={({ isActive }) => isActive ? "active" : ""}>My Listings</NavLink></li>
+                    <li><NavLink to="/market" className={({ isActive }) => isActive ? "active" : ""}>Market</NavLink></li>
+                    <li><NavLink to="/my-listings" className={({ isActive }) => isActive ? "active" : ""}>My Listings</NavLink></li>
                     <li><NavLink to="/my-wishlist" className={({ isActive }) => isActive ? "active" : ""}>My Wishlist</NavLink></li>
                     <li><NavLink to="/plant-search" className={({ isActive }) => isActive ? "active" : ""}>Search Plants</NavLink></li>
                 </ul>
@@ -83,8 +83,8 @@ const Navbar: React.FC = (): JSX.Element => {
                 <div id="nav-link-summary">
                         <button>{currentPage}</button>
                     <div id="nav-link-summary-dropdown">
-                            <NavLink to="/market/browse" className={({ isActive }) => isActive ? "active nav-link-dropdown-option" : "nav-link-dropdown-option"} onClick={unfocusNavlink}>Market</NavLink>
-                            <NavLink to="/my-listings/all" className={({ isActive }) => isActive ? "active nav-link-dropdown-option" : "nav-link-dropdown-option"} onClick={unfocusNavlink}>My Listings</NavLink>
+                            <NavLink to="/market" className={({ isActive }) => isActive ? "active nav-link-dropdown-option" : "nav-link-dropdown-option"} onClick={unfocusNavlink}>Market</NavLink>
+                            <NavLink to="/my-listings" className={({ isActive }) => isActive ? "active nav-link-dropdown-option" : "nav-link-dropdown-option"} onClick={unfocusNavlink}>My Listings</NavLink>
                             <NavLink to="/my-wishlist" className={({ isActive }) => isActive ? "active nav-link-dropdown-option" : "nav-link-dropdown-option"} onClick={unfocusNavlink}>My Wishlist</NavLink>
                             <NavLink to="/plant-search" className={({ isActive }) => isActive ? "active nav-link-dropdown-option" : "nav-link-dropdown-option"} onClick={unfocusNavlink}>Search Plants</NavLink>
                     </div>

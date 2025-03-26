@@ -48,7 +48,7 @@ const ChatsPage: React.FC<Props> = () => {
 
     return (
         <div id="chats-page">
-            <Link to="/market/browse">Browse</Link>
+            <Link to="/market">Browse</Link>
             <ListingList listings={listings} listingDetails={listingDetails} userChats={userChats} onSelect={showDetails} setUserChats={setUserChats} />
         </div>
     );

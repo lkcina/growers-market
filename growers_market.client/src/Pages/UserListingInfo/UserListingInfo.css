@@ -60,7 +60,7 @@
         #user-listing-info .info-card .info-card-container {
             display: flex;
             gap: 20px;
-            justify-content: center;
+            justify-content: space-evenly;
             background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
             padding: 10px;
             box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
