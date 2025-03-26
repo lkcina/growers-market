@@ -13,7 +13,7 @@
     border: 1px solid yellow;
 }
 
-    .chat-list h2 {
+    .chat-list h3 {
         font-size: 3rem;
         color: var(--color-secondary-dark);
         margin: 0 auto;
