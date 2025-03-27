@@ -85,7 +85,7 @@ const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element =
 
     return (
         <div id={chat.id.toString()} className="chat-card">
-            <h3>{chat.appUsername}</h3>
+            <h4>{chat.appUsername}</h4>
             <div className="chat-container">
                 <ListingChat chat={chat} newMessage={newMessage} handleMessageInputChange={handleMessageInputChange} onNewMessageSubmit={onNewMessageSubmit} removeChat={removeChat} />
             </div>

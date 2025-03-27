@@ -5,7 +5,7 @@
     width: calc(100% - 10px);
 }
 
-    .message-block h4 {
+    .message-block h5 {
         font-size: 1.2rem;
         text-align: center;
         color: var(--color-primary-dark);
