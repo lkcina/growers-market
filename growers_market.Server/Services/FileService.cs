@@ -34,7 +34,7 @@ namespace growers_market.Server.Services
             }
 
             var contentPath = _environment.ContentRootPath;
-            var path = Path.Combine(contentPath, "Uploads", folderName);
+            var path = Path.Combine(contentPath, "wwwroot", folderName);
             var existingFilePath = Path.Combine(path, file.FileName);
 
             if (!Directory.Exists(path))
@@ -50,7 +50,8 @@ namespace growers_market.Server.Services
             var filePath = Path.Combine(path, fileName);
             var stream = new FileStream(filePath, FileMode.Create);
             await file.CopyToAsync(stream);
-            return filePath;
+            var webPath = $"https://localhost:7234/ListingImages/{fileName}";
+            return webPath;
         }
     }
 }
