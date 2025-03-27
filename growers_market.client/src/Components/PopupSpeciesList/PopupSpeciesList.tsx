@@ -7,10 +7,9 @@ import PopupSpeciesCard from "../PopupSpeciesCard/PopupSpeciesCard";
 interface Props {
     searchResult: SpeciesInfo[];
     onSelect: (e: SyntheticEvent) => void;
-    onScroll: (e: SyntheticEvent) => void;
 }
 
-const PopupSpeciesList: React.FC<Props> = ({ searchResult, onSelect, onScroll }: Props): JSX.Element => {
+const PopupSpeciesList: React.FC<Props> = ({ searchResult, onSelect }: Props): JSX.Element => {
     useEffect(() => {
         const scrollTop = document.documentElement.scrollTop;
         const scrollLeft = document.documentElement.scrollLeft;
@@ -25,7 +24,7 @@ const PopupSpeciesList: React.FC<Props> = ({ searchResult, onSelect, onScroll }:
     }, [])
 
     return (
-        <div id="popup-species-list" onScroll={onScroll} >
+        <div id="popup-species-list">
             {searchResult.length > 0 ? (
                 searchResult.map((s) => {
                     return (

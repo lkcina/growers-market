@@ -4,6 +4,7 @@ import ListWishlist from '../../Components/Wishlist/ListWishlist/ListWishlist';
 import { SpeciesInfo } from '../../types';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import './WishlistPage.css';
+import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 
 interface Props {
 }
@@ -28,6 +29,18 @@ const WishlistPage: React.FC<Props> = () => {
             }
         });
     }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (speciesDetails !== null) {
+                const detailsElement = document.getElementById(`species-${speciesDetails}`);
+                console.log(detailsElement);
+                if (detailsElement) {
+                    detailsElement.scrollIntoView();
+                }
+            }
+        }, 1);
+    }, [speciesDetails])
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
         setWishlistSearchQuery(e.target.value);
@@ -103,8 +116,9 @@ const WishlistPage: React.FC<Props> = () => {
 
     return (
         <div id="wishlist-page">
+            <h1>My Wishlist</h1>
             <SearchBar handleQueryChange={handleQueryChange} onSearchSubmit={onSearchSubmit} query={wishlistSearchQuery} />
-            <ListWishlist wishlistValues={wishlistValues} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistSearchResult={wishlistSearchResult} showDetails={showDetails} speciesDetails={speciesDetails} />
+            <SpeciesList wishlistValues={wishlistValues} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} searchResult={wishlistSearchResult} showDetails={showDetails} speciesDetails={speciesDetails} />
         </div>
     );
 };

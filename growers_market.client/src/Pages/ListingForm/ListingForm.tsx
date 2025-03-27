@@ -33,6 +33,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const [isSpeciesSearchOpen, setIsSpeciesSearchOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
+    const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
     const [serverError, setServerError] = useState<string | null>(null);
 
@@ -80,9 +81,40 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
     }, []);
-    
 
-    const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        }
+    }, []);
+
+    useEffect(() => {
+        const titleElement = document.getElementById("listing-title") as HTMLTextAreaElement;
+        resizeTitleElement(titleElement);
+    }, [windowWidth])
+    
+    const resizeTitleElement = (target: HTMLTextAreaElement) => {
+        target.rows = 1;
+        const { scrollHeight, clientHeight } = target;
+        const lineHeight = windowWidth > 764 ? 50 : windowWidth > 550 ? 40 : 35;
+        if (scrollHeight > clientHeight) {
+            target.rows += Math.floor((scrollHeight - clientHeight) / lineHeight);
+            target.style.overflowY = "hidden";
+            if (target.rows > 4) {
+                target.rows = 4;
+                target.style.overflowY = "auto";
+            }
+        }
+    }
+
+    const handleTitleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        resizeTitleElement(e.target);
         setListingTitle(e.target.value);
     }
 
@@ -160,7 +192,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 setServerError(listingResult);
                 return;
             } else if (listingResult.status === 201) {
-                navigate(`/market/my-listings/listing/${listingResult.data.id}/info`);
+                navigate(`/my-listings/listing/${listingResult.data.id}/info`);
             }
         } else {
             const listingResult = await updateListing(Number(listingId), data);
@@ -168,7 +200,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 setServerError(listingResult);
                 return;
             } else if (listingResult.status === 200) {
-                navigate(`/market/my-listings/listing/${listingId}/info`);
+                navigate(`/my-listings/listing/${listingId}/info`);
             }
         }
     }
@@ -212,7 +244,6 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         if (target.scrollHeight - target.scrollTop >= target.clientHeight + 20) {
             return;
         }
-        console.log(speciesSearchPage, speciesSearchLastPage);
         if (speciesSearchPage >= speciesSearchLastPage) {
             return;
         }
@@ -252,9 +283,9 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const onCancel = () => {
         if (window.confirm("Are you sure? All changes will be lost.")) {
             if (listingId !== undefined) {
-                navigate(`/market/my-listings/listing/${listingId}/info`);
+                navigate(`/my-listings/listing/${listingId}/info`);
             } else {
-                navigate("/market/my-listings/all");
+                navigate("/my-listings");
             }
         }
     }
@@ -263,7 +294,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         <div id="listing-form-page">
             <form className="listing-form" onSubmit={onListingFormSubmit}>
                 <fieldset className="form-header">
-                    <input type="text" id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} placeholder="Enter Title" />
+                    <textarea id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} placeholder="Enter Title" rows={1} />
                 </fieldset>
                 <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} />
                 <div className="form-container">
@@ -295,10 +326,10 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
             </form>
             {isSpeciesSearchOpen ? (
                 <div className="species-search">
-                    <button className="popup-close-btn" onClick={closeSpeciesSearch}>Close</button>
-                    <div className="species-search-container">
+                    <div className="species-search-container" onScroll={onSpeciesSearchScroll}>
+                        <button className="popup-close-btn" onClick={closeSpeciesSearch}>Close</button>
                         <SearchBar query={speciesSearchQuery} handleQueryChange={handleSpeciesSearchQueryChange} onSearchSubmit={onSpeciesSearchSubmit} />
-                        <PopupSpeciesList searchResult={speciesSearchResult} onSelect={onSpeciesSearchSelect} onScroll={onSpeciesSearchScroll} />
+                        <PopupSpeciesList searchResult={speciesSearchResult} onSelect={onSpeciesSearchSelect} />
                         
                     </div>
                 </div>

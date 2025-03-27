@@ -18,7 +18,7 @@ const ChatList: React.FC<Props> = ({ chats, setUserChats }: Props): JSX.Element 
                     )
                 })
             ) : (
-                <h2>No chats found</h2>
+                <h3>No chats found</h3>
             )}
         </div>
     )

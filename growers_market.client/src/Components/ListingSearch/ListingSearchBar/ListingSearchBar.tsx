@@ -1,7 +1,8 @@
-import React, { ChangeEvent, SyntheticEvent } from "react";
+import React, { ChangeEvent, SyntheticEvent, useEffect } from "react";
 import { SpeciesInfo } from "../../../types";
 import ListingAdvancedSearch from "../ListingAdvancedSearch/ListingAdvancedSearch";
 import './ListingSearchBar.css';
+import { useAuth } from "../../../Context/UseAuth";
 
 interface Props {
     query: string | undefined;
@@ -29,6 +30,9 @@ interface Props {
 };
 
 const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange, isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions, searchRadius, handleSearchRadiusChange, searchUnit, handleSearchUnitChange, searchLocation, handleSearchLocationChange, handleLocationOptionSelect }: Props): JSX.Element => {
+    const { isLoggedIn } = useAuth();
+
+
     const locationMouseOver = (e: SyntheticEvent) => {
         const target = e.target as HTMLButtonElement;
         target.focus();
@@ -64,7 +68,7 @@ const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryC
                     <label htmlFor="search-location">Search Location</label>
                     <input id="search-location" name="searchLocation" type="text" value={searchLocation} onChange={handleSearchLocationChange} />
                     <div id="location-options">
-                        <button type="button" onClick={handleLocationOptionSelect} value="Home Address" onMouseOver={locationMouseOver}>Home Address</button>
+                        {isLoggedIn() ? <button type="button" onClick={handleLocationOptionSelect} value="Home Address" onMouseOver={locationMouseOver}>Home Address</button> : null}
                         <button type="button" onClick={handleLocationOptionSelect} value="Current Location" onMouseOver={locationMouseOver}>Current Location</button>
                     </div>
                 </div>

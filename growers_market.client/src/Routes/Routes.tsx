@@ -38,46 +38,46 @@ export const router = createBrowserRouter([
                 element: <MarketPage />,
                 children: [
                     {
-                        path: "browse",
+                        index: true,
                         element: <BrowseMarketPage />
                     },
                     {
-                        path: "chats",
+                        path: "saved",
                         element: <ProtectedRoute><ChatsPage /></ProtectedRoute>
+                    }
+                ]
+            },
+            {
+                path: "my-listings",
+                element: <ProtectedRoute><UserListingsPage /></ProtectedRoute>,
+                children: [
+                    {
+                        index: true,
+                        element: <AllUserListings />
                     },
                     {
-                        path: "my-listings",
-                        element: <ProtectedRoute><UserListingsPage /></ProtectedRoute>,
+                        path: "listing/:listingId",
+                        element: <UserListing />,
                         children: [
                             {
-                                path: "all",
-                                element: <AllUserListings />
+                                path: "info",
+                                element: <UserListingInfo />
                             },
                             {
-                                path: "listing/:listingId",
-                                element: <UserListing />,
-                                children: [
-                                    {
-                                        path: "info",
-                                        element: <UserListingInfo />
-                                    },
-                                    {
-                                        path: "edit",
-                                        element: <ListingForm />
-                                    }
-                                ]
-                            },
-                            {
-                                path: "new",
+                                path: "edit",
                                 element: <ListingForm />
                             }
                         ]
                     },
                     {
-                        path: "my-wishlist",
-                        element: <ProtectedRoute><WishlistPage /></ProtectedRoute>
+                        path: "new",
+                        element: <ListingForm />
                     }
                 ]
+            },
+            {
+                path: "my-wishlist",
+                element: <ProtectedRoute><WishlistPage /></ProtectedRoute>
             },
             {
                 path: "plant-search",

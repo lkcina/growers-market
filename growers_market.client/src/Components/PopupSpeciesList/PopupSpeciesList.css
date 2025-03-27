@@ -4,6 +4,7 @@
     height: auto;
     width: fit-content;
     max-width: 1160px;
+    min-width: 280px;
     margin: 0 auto 15px;
     display: flex;
     flex-wrap: wrap;

@@ -93,3 +93,19 @@
         color: var(--color-primary-dark);
         border-bottom: 2px solid var(--color-primary-light);
     }
+
+    .register-page form p {
+        font-size: 1.5rem;
+        color: var(--color-text-dark);
+        text-align: center;
+    }
+
+        .register-page form p a {
+            font-size: 1.5rem;
+            color: var(--color-primary-dark);
+            margin-left: 5px;
+        }
+
+            .register-page form p a:hover {
+                font-weight: bold;
+            }
