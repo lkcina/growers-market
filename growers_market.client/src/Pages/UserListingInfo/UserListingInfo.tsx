@@ -1,7 +1,7 @@
 import React, { useEffect, useState, MouseEvent } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Chat, Listing } from "../../types";
-import { deleteListing, getListing, getListingChats } from "../../api";
+import { deleteListing, getListing, getListingChats, getUserListings } from "../../api";
 import ChatList from "../../Components/ChatList/ChatList";
 import ListingImages from "../../Components/ListingImages/ListingImages";
 import { SpeciesInfo } from "../../types";
@@ -47,7 +47,7 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
         getListing(Number(listingId)).then((result) => {
             if (typeof result === "string") {
                 setServerError(result);
-                navigate("/market/my-listings/all");
+                navigate("/my-listings/all");
             } else {
                 setListing(result.data);
                 getListingChats(Number(listingId)).then((chatResult) => {
@@ -91,7 +91,7 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
             if (typeof result === "string") {
                 setServerError(result);
             } else {
-                navigate("/market/my-listings/all");
+                navigate("/my-listings/all");
             }
         } else {
             return;
@@ -104,7 +104,7 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
                 <div className="info-card-header">
                     <h2>{listing?.title}</h2>
                     <div className="info-card-btns">
-                        <button id="edit-listing-btn" onClick={() => navigate(`/market/my-listings/listing/${listing?.id}/edit`)}>Edit</button>
+                        <button id="edit-listing-btn" onClick={() => navigate(`/my-listings/listing/${listing?.id}/edit`)}>Edit</button>
                         <button id="delete-listing-btn" onClick={removeListing}>Delete</button>
                     </div>
                 </div>

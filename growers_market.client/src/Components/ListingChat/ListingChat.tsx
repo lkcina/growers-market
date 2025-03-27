@@ -7,7 +7,7 @@ import MessageList from '../MessageList/MessageList';
 import './ListingChat.css';
 
 interface Props {
-    chat: Chat | undefined;
+    chat: Chat | null | undefined;
     newMessage: string;
     onNewMessageSubmit: (e: FormEvent<HTMLFormElement>) => void;
     handleMessageInputChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;

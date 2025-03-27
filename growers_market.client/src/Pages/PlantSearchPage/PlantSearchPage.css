@@ -14,4 +14,12 @@
         text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
     }
 
+@media screen and (max-width: 550px) {
+    #plant-search-page {
+        padding: 0 20px;
+    }
 
+    #plant-search-page h1 {
+        font-size: 4rem;
+    }
+}

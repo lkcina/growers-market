@@ -14,10 +14,6 @@ const MarketSidebar: React.FC<Props> = ({ }: Props): JSX.Element => {
             
             <NavLink to="/market/chats" className={({ isActive }) => isActive ? "active" : ""}>My Chats</NavLink>
             
-            <NavLink to="/market/my-listings/all" className={({ isActive }) => isActive ? "active" : ""}>My Listings</NavLink>
-            
-            <NavLink to="/market/my-wishlist" className={({ isActive }) => isActive ? "active" : ""}>My Wishlist</NavLink>
-            
         </div>
     )
 }

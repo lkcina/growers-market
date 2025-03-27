@@ -15,8 +15,12 @@
         width: 100%;
     }
 
-    #market #market-container {
-        display: flex;
-        gap: 40px;
-        justify-content: center;
+@media screen and (max-width: 550px) {
+    #market {
+        padding: 0 20px;
     }
+
+        #market h1 {
+            font-size: 4rem;
+        }
+}

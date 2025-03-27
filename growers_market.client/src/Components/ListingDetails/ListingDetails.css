@@ -2,10 +2,16 @@
 
 .listing-details {
     height: auto;
-    width: 460px;
+    min-width: 225px;
     display: flex;
     gap: 10px;
     justify-content: space-between;
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    grid-column: 1 / -1;
+    position: relative;
+    overflow: hidden;
 }
 
     .listing-details .listing-details-properties {

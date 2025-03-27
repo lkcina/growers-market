@@ -2,33 +2,49 @@
 
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    align-items: center;
+    display: block;
     padding: 15px;
     margin-bottom: 15px;
     background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
     position: sticky;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
 }
     nav a {
         text-decoration: none;
     }
 
-        nav a h1 {
-            display: block;
-            width: fit-content;
-            white-space: nowrap;
-            font-size: 5rem;
-            font-weight: 400;
-            font-family: 'Namd-Bold', serif;
-            color: var(--color-primary-dark);
-            text-shadow: -2px -1px 0 var(--color-primary-light);
-            text-decoration: none;
+    nav div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        nav div a {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 10px;
         }
+
+            nav div a h1 {
+                display: block;
+                width: fit-content;
+                white-space: nowrap;
+                font-size: 5rem;
+                font-weight: 400;
+                font-family: 'Namd-Bold', serif;
+                color: var(--color-primary-dark);
+                text-shadow: -2px -1px 0 var(--color-primary-light);
+                text-decoration: none;
+            }
+
+            nav div a img {
+                height: 60px;
+            }
 
     nav #login-container {
         display: flex;
@@ -84,6 +100,7 @@ nav {
                 font-size: 1.8rem;
                 font-weight: normal;
                 color: inherit;
+                margin-right: 5px;
             }
     nav ul {
         width: 100%;
@@ -113,3 +130,164 @@ nav {
                 nav ul li a.active {
                     border-bottom: 3px solid var(--color-primary-light);
                 }
+
+@media screen and (max-width: 764px) {
+    nav div a h1 {
+        font-size: 4rem;
+    }
+
+    nav div a img {
+        height: 50px;
+    }
+
+    nav #login-summary {
+        position: relative;
+        width: max-content;
+    }
+
+        nav #login-summary button {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--color-primary-dark);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            nav #login-summary button:hover {
+                text-shadow: 0 0 10px var(--color-primary-light);
+            }
+
+        nav #login-summary #login-summary-dropdown {
+            display: none;
+        }
+
+            nav #login-summary:focus-within #login-summary-dropdown {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                right: 0;
+                top: calc(100% + 5px);
+                width: max-content;
+                background-color: var(--color-secondary-light);
+                box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+            }
+
+    nav #login-summary #login-summary-dropdown .login-dropdown-option {
+        width: calc(100% - 10px);
+        font-size: 1.5rem;
+        padding: 5px;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        color: var(--color-text-dark);
+        text-align: left;
+        cursor: pointer;
+        font-weight: normal;
+        margin: 0;
+    }
+
+                    nav #login-summary #login-summary-dropdown .login-dropdown-option:hover,
+                    nav #login-summary #login-summary-dropdown .login-dropdown-option:focus {
+                        background-color: var(--color-secondary-dark);
+                        outline: none;
+                    }
+
+    nav ul {
+        gap: 10px;
+    }
+
+    nav ul li a {
+        font-size: 1.5rem;
+    }
+
+}
+
+@media screen and (max-width: 550px) {
+    nav div a h1 {
+        font-size: 3rem;
+    }
+
+    nav div a img {
+        height: 40px;
+    }
+
+
+    nav #nav-link-summary {
+        position: relative;
+        width: max-content;
+    }
+
+        nav #nav-link-summary button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--color-primary-dark);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            nav #nav-link-summary button:hover {
+                text-shadow: 0 0 10px var(--color-primary-light);
+            }
+
+        nav #nav-link-summary #nav-link-summary-dropdown {
+            display: none;
+        }
+
+        nav #nav-link-summary:focus-within #nav-link-summary-dropdown {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 0;
+            top: calc(100% + 5px);
+            width: max-content;
+            min-width: 100%;
+            background-color: var(--color-secondary-light);
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        nav #nav-link-summary #nav-link-summary-dropdown .nav-link-dropdown-option {
+            width: calc(100% - 10px);
+            font-size: 1.5rem;
+            padding: 5px;
+            background: none;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            color: var(--color-text-dark);
+            text-align: left;
+            cursor: pointer;
+            font-weight: normal;
+            margin: 0;
+        }
+
+            nav #nav-link-summary #nav-link-summary-dropdown .nav-link-dropdown-option:hover,
+            nav #nav-link-summary #nav-link-summary-dropdown .nav-link-dropdown-option:focus {
+                background-color: var(--color-secondary-dark);
+                outline: none;
+            }
+}
+
+@media screen and (max-width: 450px) {
+    nav div a h1 {
+        font-size: 2.5rem;
+    }
+
+    nav div a img {
+        height: 35px;
+    }
+
+    nav #login-summary button {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    nav #login-summary {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+    }
+}

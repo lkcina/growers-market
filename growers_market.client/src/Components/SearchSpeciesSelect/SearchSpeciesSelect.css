@@ -8,17 +8,20 @@
 }
 
     #search-species-select label {
-        width: 600px;
+        width: 100%;
         margin: 0 auto;
+        max-width: 600px;
     }
 
     #search-species-select div {
-        width: 600px;
+        width: 100%;
         margin: 0 auto;
+        max-width: 600px;
     }
 
         #search-species-select div select {
-            width: 600px;
+            width: 100%;
+            max-width: 600px;
         }
 
             #search-species-select div select:has(option[value=""]:checked) {

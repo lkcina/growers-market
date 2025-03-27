@@ -1,28 +1,32 @@
 @import '../../index.css';
 
-.species-details {
+#species-details {
     height: auto;
-    width: 460px;
+    min-width: 300px;
+    background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     justify-content: flex-start;
+    grid-column: 1 / -1;
 }
 
-    .species-details .species-details-properties {
+    #species-details .species-details-properties {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
 
-        .species-details .species-details-properties p {
+        #species-details .species-details-properties p {
             width: 200px;
             font-size: 1.5rem;
             color: var(--color-text-dark);
             margin: 5px 0;
         }
 
-    .species-details .species-details-description {
+    #species-details .species-details-description {
         font-size: 1.5rem;
         color: var(--color-text-dark);
         text-align: justify;

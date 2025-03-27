@@ -7,12 +7,12 @@
     position: absolute;
     left: 10px;
     bottom: 5px;
-    right: 5px;
+    right: 10px;
     z-index: 2;
 }
 
     .new-message-form textarea {
-        width: calc(100% - 50px);
+        width: calc(100% - 55px);
         min-height: 1.5rem;
         height: max-content;
         font-size: 1.5rem;
@@ -38,7 +38,7 @@
         cursor: pointer;
         position: absolute;
         bottom: 0;
-        right: 0;
+        right: 10px;
     }
 
         .new-message-form button:hover {

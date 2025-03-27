@@ -10,10 +10,7 @@ const MarketPage: React.FC<Props> = () => {
     return (
         <div id="market">
             <h1>Market</h1>
-            <div id="market-container">
-                <MarketSidebar />
-                <Outlet />
-            </div>
+            <Outlet />
         </div>
     );
 };

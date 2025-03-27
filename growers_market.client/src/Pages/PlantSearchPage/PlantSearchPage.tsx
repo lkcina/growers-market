@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, SyntheticEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { getSpeciesDetails, getWishlist, postWishlist, searchSpecies, deleteWishlist, getUsedSpecies, getRandomSpecies } from '../../api';
 import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 import SpeciesSearchBar from '../../Components/SpeciesSearch/SpeciesSearchBar/SpeciesSearchBar';
@@ -50,10 +50,24 @@ const PlantSearchPage: React.FC = () => {
                 setSpeciesSearchFrom(result.data.from);
                 setSpeciesSearchTo(result.data.to);
                 setSpeciesSearchTotal(result.data.total);
+                setSpeciesDetails(null);
+                console.log(result.data.data);
             }
-            console.log(speciesSearchResult, serverError);
+            
         })
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (speciesDetails !== null) {
+                const detailsElement = document.getElementById(`species-${speciesDetails}`);
+                console.log(detailsElement);
+                if (detailsElement) {
+                    detailsElement.scrollIntoView();
+                }
+            }
+        }, 1);
+    }, [speciesDetails])
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSpeciesSearchQuery(e.target.value);
@@ -152,6 +166,7 @@ const PlantSearchPage: React.FC = () => {
             setSpeciesSearchFrom(result.data.from);
             setSpeciesSearchTo(result.data.to);
             setSpeciesSearchTotal(result.data.total);
+            setSpeciesDetails(null);
         }
         console.log(speciesSearchResult, serverError);
     }
@@ -168,6 +183,7 @@ const PlantSearchPage: React.FC = () => {
             setSpeciesSearchFrom(result.data.from);
             setSpeciesSearchTo(result.data.to);
             setSpeciesSearchTotal(result.data.total);
+            setSpeciesDetails(null);
         }
         console.log(speciesSearchResult, serverError);
     }
@@ -184,11 +200,12 @@ const PlantSearchPage: React.FC = () => {
             setSpeciesSearchFrom(result.data.from);
             setSpeciesSearchTo(result.data.to);
             setSpeciesSearchTotal(result.data.total);
+            setSpeciesDetails(null);
         }
         console.log(speciesSearchResult, serverError);
     }
 
-    const showDetails = async (e: FormEvent<HTMLFormElement>) => {
+    const showDetails = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as HTMLFormElement;
         const input = target.elements.namedItem("speciesId") as HTMLInputElement;
@@ -205,7 +222,7 @@ const PlantSearchPage: React.FC = () => {
         const updatedSpeciesSearchResult = speciesSearchResult.map(s => s.id === value ? species : s);
         setSpeciesSearchResult(updatedSpeciesSearchResult);
         setSpeciesDetails(value);
-    }
+    }, [speciesDetails, speciesSearchResult])
 
     return (
         <div id="plant-search-page">
