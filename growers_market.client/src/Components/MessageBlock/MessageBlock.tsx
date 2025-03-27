@@ -44,7 +44,7 @@ const MessageBlock: React.FC<Props> = ({ message, lastMessage, userName }: Props
 
     return (
         <div className={`message-block ${message.appUsername === userName ? "sent" : "received"}`}>
-            {showDate() ? <h4>{daysOfWeek[messageDayOfWeek]}, {months[messageMonth]} {messageDay}{messageYear !== currentYear ? `, ${currentYear}` : ""}</h4> : null}
+            {showDate() ? <h5>{daysOfWeek[messageDayOfWeek]}, {months[messageMonth]} {messageDay}{messageYear !== currentYear ? `, ${currentYear}` : ""}</h5> : null}
             <div className="message-content">
                 <p>{message.content}</p>
                 <span>{hours}:{messageMinute < 10 ? `0${messageMinute}` : messageMinute} {amPm}</span>

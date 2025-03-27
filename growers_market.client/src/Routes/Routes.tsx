@@ -10,11 +10,12 @@ import WishlistPage from "../Pages/WishlistPage/WishlistPage";
 import UserListingChatsList from "../Components/UserListing/UserListingChatsList/UserListingChatsList";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
-import ProtectedRoute from "./ProtectedRoute";
+import IsAuthenticatedRoute from "./IsAuthenticatedRoute";
 import ListingForm from "../Pages/ListingForm/ListingForm";
 import UserListing from "../Pages/UserListing/UserListing";
 import AllUserListings from "../Pages/AllUserListings/AllUserListings";
 import UserListingInfo from "../Pages/UserListingInfo/UserListingInfo";
+import OwnedListingRoute from "./OwnedListingRoute";
 
 export const router = createBrowserRouter([
     {
@@ -43,13 +44,13 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "saved",
-                        element: <ProtectedRoute><ChatsPage /></ProtectedRoute>
+                        element: <IsAuthenticatedRoute><ChatsPage /></IsAuthenticatedRoute>
                     }
                 ]
             },
             {
                 path: "my-listings",
-                element: <ProtectedRoute><UserListingsPage /></ProtectedRoute>,
+                element: <IsAuthenticatedRoute><UserListingsPage /></IsAuthenticatedRoute>,
                 children: [
                     {
                         index: true,
@@ -57,7 +58,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "listing/:listingId",
-                        element: <UserListing />,
+                        element: <OwnedListingRoute><UserListing /></OwnedListingRoute>,
                         children: [
                             {
                                 path: "info",
@@ -77,7 +78,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "my-wishlist",
-                element: <ProtectedRoute><WishlistPage /></ProtectedRoute>
+                element: <IsAuthenticatedRoute><WishlistPage /></IsAuthenticatedRoute>
             },
             {
                 path: "plant-search",

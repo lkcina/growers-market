@@ -6,7 +6,7 @@ interface Props {
     children: React.ReactNode
 }
 
-const ProtectedRoute: React.FC<Props> = ({ children }: Props): JSX.Element => {
+const IsAuthenticatedRoute: React.FC<Props> = ({ children }: Props): JSX.Element => {
     const location = useLocation();
     const { isLoggedIn } = useAuth();
     return isLoggedIn() ? (
@@ -18,4 +18,4 @@ const ProtectedRoute: React.FC<Props> = ({ children }: Props): JSX.Element => {
     )
 }
 
-export default ProtectedRoute;
+export default IsAuthenticatedRoute;
