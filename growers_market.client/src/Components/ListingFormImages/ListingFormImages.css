@@ -44,13 +44,19 @@
             gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
+            cursor: pointer;
         }
 
-            .listing-form-images .listing-images-preview .preview-container h3 {
+        .listing-form-images .listing-images-preview .preview-container.dragging {
+            outline: 3px dashed var(--color-primary-light);
+            cursor: copy;
+        }
+
+            .listing-form-images .listing-images-preview .preview-container p {
                 display: block;
                 color: var(--color-primary-dark);
                 width: 100%;
-                font-size: 3rem;
+                font-size: 2rem;
                 text-align: center;
                 line-height: 200px;
                 vertical-align: middle;
@@ -61,6 +67,7 @@
                 height: 200px;
                 width: 200px;
                 position: relative;
+                cursor: auto;
             }
 
                 .listing-form-images .listing-images-preview .preview-container .image-preview img {
