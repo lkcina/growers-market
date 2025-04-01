@@ -28,6 +28,7 @@
     font-family: 'Comm', sans-serif;
     border: none;
     scrollbar-color: var(--color-primary-dark) var(--color-secondary-light);
+    box-sizing: border-box;
 }
 
 html {
