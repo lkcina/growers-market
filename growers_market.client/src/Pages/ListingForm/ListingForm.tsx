@@ -141,6 +141,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     }
 
     const handleImagesChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.files);
         const updatedInputImages = listingInputImages.concat(Array.from(e.target.files || []));
         setListingInputImages(updatedInputImages);
         const updatedImageValues: (File | string)[] = [...listingImageValues, ...Array.from(e.target.files || [])];
@@ -207,6 +208,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
 
     const onRemoveImage = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        e.stopPropagation();
         const button = e.target as HTMLButtonElement;
         const imageIndex = Number(button.parentElement?.id);
         const updatedImageValues = [...listingImageValues];
