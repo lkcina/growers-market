@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
                         element: <OwnedListingRoute><UserListing /></OwnedListingRoute>,
                         children: [
                             {
-                                path: "info",
+                                index: true,
                                 element: <UserListingInfo />
                             },
                             {

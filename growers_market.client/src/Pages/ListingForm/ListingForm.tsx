@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, MouseEvent, SyntheticEvent, useEffect, useState } from "react";
-import { Listing, SpeciesInfo } from "../../types";
+import { Listing, ListingImage, ListingImagePosition, SpeciesInfo } from "../../types";
 import { v4 as uuidv4 } from 'uuid';
 import ListingFormImages from "../../Components/ListingFormImages/ListingFormImages";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import PopupSpeciesList from "../../Components/PopupSpeciesList/PopupSpeciesList";
 import FormSpeciesSelect from "../../Components/FormSpeciesSelect/FormSpeciesSelect";
 import './ListingForm.css';
+import { removeListener } from "process";
 
 interface Props {
 }
@@ -24,6 +25,8 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const [listingInputImages, setListingInputImages] = useState<File[]>([]);
     const [listingImageValues, setListingImageValues] = useState<(File | string)[]>([]);
     const [fileInputCount, setFileInputCount] = useState<number>(0);
+    const [listingImagePositions, setListingImagePositions] = useState<ListingImagePosition[]>([]);
+
     const [speciesSelectOptions, setSpeciesSelectOptions] = useState<SpeciesInfo[]>([]);
 
     const [speciesSearchQuery, setSpeciesSearchQuery] = useState<string>("");
@@ -36,6 +39,8 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
     const [serverError, setServerError] = useState<string | null>(null);
+
+    
 
     useEffect(() => {
         console.log(listingId);
@@ -62,6 +67,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                         setListingSpecies(result.data.species);
                         setListingDescription(result.data.description);
                         setListingImageValues(result.data.images);
+                        setListingImagePositions(result.data.imagePositions);
                     }
                 })
             }
@@ -142,11 +148,14 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
 
     const handleImagesChange = (e: ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.files);
-        const updatedInputImages = listingInputImages.concat(Array.from(e.target.files || []));
+        const newImages: File[] = Array.from(e.target.files || [])
+        const updatedInputImages = listingInputImages.concat(newImages);
         setListingInputImages(updatedInputImages);
-        const updatedImageValues: (File | string)[] = [...listingImageValues, ...Array.from(e.target.files || [])];
+        const updatedImageValues: (File | string)[] = [...listingImageValues, ...newImages];
         console.log(updatedImageValues);
         setListingImageValues(updatedImageValues);
+        const updatedImagePositions: ListingImagePosition[] = [...listingImagePositions, ...newImages.map(image => ({ positionX: 50, positionY: 50 }))];
+        setListingImagePositions(updatedImagePositions);
     }
 
     const onListingFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -180,6 +189,8 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
             data.set('ImagePaths', JSON.stringify([]));
         }
 
+        data.set('ImagePositions', JSON.stringify(listingImagePositions.length === 0 ? [] : listingImagePositions));
+
         if (listingSpecies == null) {
             data.delete('SpeciesId');
         }
@@ -193,7 +204,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 setServerError(listingResult);
                 return;
             } else if (listingResult.status === 201) {
-                navigate(`/my-listings/listing/${listingResult.data.id}/info`);
+                navigate(`/my-listings/listing/${listingResult.data.id}`);
             }
         } else {
             const listingResult = await updateListing(Number(listingId), data);
@@ -201,7 +212,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 setServerError(listingResult);
                 return;
             } else if (listingResult.status === 200) {
-                navigate(`/my-listings/listing/${listingId}/info`);
+                navigate(`/my-listings/listing/${listingId}`);
             }
         }
     }
@@ -285,11 +296,41 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
     const onCancel = () => {
         if (window.confirm("Are you sure? All changes will be lost.")) {
             if (listingId !== undefined) {
-                navigate(`/my-listings/listing/${listingId}/info`);
+                navigate(`/my-listings/listing/${listingId}`);
             } else {
                 navigate("/my-listings");
             }
         }
+    }
+
+    const startPositionImage = (e: MouseEvent<HTMLImageElement>) => {
+        e.stopPropagation();
+        document.body.classList.add("grabbing");
+        const target = e.target as HTMLImageElement;
+        const imageIndex = Number(target.parentElement?.id);
+        const startPositionX = e.clientX;
+        const startPositionY = e.clientY;
+        const imagePositionX = listingImagePositions[imageIndex].positionX;
+        const imagePositionY = listingImagePositions[imageIndex].positionY;
+        console.log(startPositionX, startPositionY);
+
+        const setPosition = (ev: MouseEvent) => {
+            const deltaX = ev.clientX - startPositionX;
+            const deltaY = ev.clientY - startPositionY;
+            const updatedImagePositions = listingImagePositions.map((item, index) => index === imageIndex ? { positionX: Math.min(100, Math.max(0, imagePositionX - (deltaX / 1))), positionY: Math.min(100, Math.max(0, imagePositionY - (deltaY / 1))) } : item);
+            console.log(updatedImagePositions);
+            setListingImagePositions(updatedImagePositions);
+        };
+
+        const stopPositionImage = () => {
+            document.body.classList.remove("grabbing");
+            document.removeEventListener('mousemove', setPosition);
+            document.removeEventListener('mouseup', stopPositionImage);
+        }
+
+        document.addEventListener('mousemove', setPosition);
+        document.addEventListener('mouseup', stopPositionImage);
+
     }
 
     return (
@@ -298,7 +339,7 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                 <fieldset className="form-header">
                     <textarea id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} placeholder="Enter Title" rows={1} />
                 </fieldset>
-                <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} />
+                <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} imagePositions={listingImagePositions} startPositionImage={startPositionImage} />
                 <div className="form-container">
                     <div className="form-details">
                         <fieldset>

@@ -28,7 +28,6 @@
     font-family: 'Comm', sans-serif;
     border: none;
     scrollbar-color: var(--color-primary-dark) var(--color-secondary-light);
-    box-sizing: border-box;
 }
 
 html {
@@ -54,6 +53,10 @@ body {
 
 button:focus, input:focus, select:focus, textarea:focus {
     outline: 2px solid var(--color-primary-dark);
+}
+
+body.grabbing, body.grabbing * {
+    cursor: grabbing !important;
 }
 
 

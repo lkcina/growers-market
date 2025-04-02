@@ -23,6 +23,7 @@ export interface Listing {
     description: string;
     appUserName: string;
     images: string[];
+    imagePositions: ListingImagePosition[];
 }
 
 export interface Chat {
@@ -38,4 +39,9 @@ export interface Message {
     appUsername: string;
     content: string;
     createdAt: Date;
+}
+
+export interface ListingImagePosition {
+    positionX: number;
+    positionY: number;
 }
