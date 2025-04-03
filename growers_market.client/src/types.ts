@@ -22,8 +22,19 @@ export interface Listing {
     species: SpeciesInfo;
     description: string;
     appUserName: string;
-    images: string[];
-    imagePositions: ListingImagePosition[];
+    images: ListingImage[];
+}
+
+export interface ListingVM {
+    id: number;
+    title: string;
+    isForTrade: boolean;
+    price: number;
+    quantity: number;
+    species: SpeciesInfo;
+    description: string;
+    appUserName: string;
+    imageUrls: string[];
 }
 
 export interface Chat {
@@ -39,6 +50,12 @@ export interface Message {
     appUsername: string;
     content: string;
     createdAt: Date;
+}
+
+export interface ListingImage {
+    url: string;
+    positionX: number;
+    positionY: number;
 }
 
 export interface ListingImagePosition {

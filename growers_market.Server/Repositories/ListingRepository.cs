@@ -8,6 +8,7 @@ using growers_market.Server.Mappers;
 using growers_market.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace growers_market.Server.Repositories
 {
@@ -18,13 +19,15 @@ namespace growers_market.Server.Repositories
         private readonly IFileService _fileService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IGoogleGeocodingService _googleGeocodingService;
-        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService, UserManager<AppUser> userManager, IGoogleGeocodingService googleGeocodingService)
+        private readonly IImageRepository _imageRepository;
+        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService, UserManager<AppUser> userManager, IGoogleGeocodingService googleGeocodingService, IImageRepository imagePositionRepository)
         {
             _context = context;
             _chatRepository = chatRepository;
             _fileService = fileService;
             _userManager = userManager;
             _googleGeocodingService = googleGeocodingService;
+            _imageRepository = imagePositionRepository;
         }
 
         private static double CalculateDistance(string unit, double lat1, double lon1, double lat2, double lon2)
@@ -44,11 +47,11 @@ namespace growers_market.Server.Repositories
             {
                 var distanceInKm = R * c;
                 Console.WriteLine(distanceInKm);
-                return distanceInKm; // Distance in kilometers
+                return distanceInKm;
             }
             var distanceInMiles = (R * c) * 0.62137119223734;
             Console.WriteLine(distanceInMiles);
-            return distanceInMiles; // Distance in Miles
+            return distanceInMiles;
         }
 
         public async Task<Listing> CreateAsync(Listing listing)
@@ -86,9 +89,18 @@ namespace growers_market.Server.Repositories
                 }
             }
 
+            var images = await _imageRepository.GetImagesAsync(id);
+            if (images != null)
+            {
+                foreach (var image in images)
+                {
+                    await _imageRepository.DeleteImageAsync(image.Id);
+                }
+            }
+
             foreach (var image in listing.Images)
             {
-                await _fileService.DeleteFile(image);
+                await _fileService.DeleteFile(image.Url);
             }
 
             _context.Listings.Remove(listing);
@@ -98,7 +110,7 @@ namespace growers_market.Server.Repositories
 
         public async Task<AllListingsDto> GetAllListingsAsync(AppUser appUser, ListingQueryObject query)
         {
-            var listings = _context.Listings.Include(l => l.AppUser).ThenInclude(u => u.Address).Include(l => l.Species).AsQueryable();
+            var listings = _context.Listings.Include(l => l.AppUser).ThenInclude(u => u.Address).Include(l => l.Species).Include(l => l.Images).AsQueryable();
             
             if (!string.IsNullOrWhiteSpace(query.Q))
             {
@@ -198,12 +210,12 @@ namespace growers_market.Server.Repositories
 
         public async Task<Listing> GetByIdAsync(int? id)
         {
-            return await _context.Listings.Include(l => l.Species).Include(l => l.AppUser).FirstOrDefaultAsync(l => l.Id == id);
+            return await _context.Listings.Include(l => l.Species).Include(l => l.AppUser).Include(l => l.Images).FirstOrDefaultAsync(l => l.Id == id);
         }
 
         public async Task<List<Listing>> GetUserListingsAsync(AppUser appUser)
         {
-            var listings = _context.Listings.Include(l => l.AppUser).Include(l => l.Species).AsQueryable();
+            var listings = _context.Listings.Include(l => l.AppUser).Include(l => l.Species).Include(l => l.Images).AsQueryable();
             listings = listings.Where(l => l.AppUser.Id == appUser.Id);
             return await listings.ToListAsync();
         }
@@ -216,11 +228,13 @@ namespace growers_market.Server.Repositories
                 return null;
             }
 
-            foreach (var image in currentListing.Images)
+            var images = await _imageRepository.GetImagesAsync(id);
+            for (int i = 0; i < currentListing.Images.Count; i++)
             {
-                if (!listing.Images.Contains(image))
+                if (!listing.Images.Contains(currentListing.Images[i]))
                 {
-                     await _fileService.DeleteFile(image);
+                    await _imageRepository.DeleteImageAsync(images[i].Id);
+                    await _fileService.DeleteFile(currentListing.Images[i].Url);
                 }
             }
 
@@ -230,7 +244,6 @@ namespace growers_market.Server.Repositories
             currentListing.Quantity = listing.Quantity;
             currentListing.Description = listing.Description;
             currentListing.SpeciesId = listing.SpeciesId;
-            currentListing.Images = listing.Images;
             await _context.SaveChangesAsync();
             return currentListing;
 

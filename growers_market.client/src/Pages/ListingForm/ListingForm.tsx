@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, MouseEvent, SyntheticEvent, useEffect, useState } from "react";
-import { Listing, ListingImage, ListingImagePosition, SpeciesInfo } from "../../types";
+import { Listing, ListingImagePosition, SpeciesInfo } from "../../types";
 import { v4 as uuidv4 } from 'uuid';
 import ListingFormImages from "../../Components/ListingFormImages/ListingFormImages";
 import { toast } from "react-toastify";
@@ -66,8 +66,10 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
                         setListingQuantity(result.data.quantity);
                         setListingSpecies(result.data.species);
                         setListingDescription(result.data.description);
-                        setListingImageValues(result.data.images);
-                        setListingImagePositions(result.data.imagePositions);
+                        const imageValues = result.data.images.map(image => image.url);
+                        setListingImageValues(imageValues);
+                        const imagePositions = result.data.images.map((image) => ({ positionX: image.positionX, positionY: image.positionY }));
+                        setListingImagePositions(imagePositions);
                     }
                 })
             }
@@ -188,8 +190,11 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         if (imagePaths.length === 0) {
             data.set('ImagePaths', JSON.stringify([]));
         }
-
-        data.set('ImagePositions', JSON.stringify(listingImagePositions.length === 0 ? [] : listingImagePositions));
+        console.log(listingImagePositions);
+        const imagePositionsX = listingImagePositions.map((position) => position.positionX);
+        data.append('ImagePositionsX', JSON.stringify(imagePositionsX));
+        const imagePositionsY = listingImagePositions.map((position) => position.positionY);
+        data.append('ImagePositionsY', JSON.stringify(imagePositionsY));
 
         if (listingSpecies == null) {
             data.delete('SpeciesId');
@@ -226,6 +231,9 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
         updatedImageValues.splice(imageIndex, 1);
         console.log(updatedImageValues);
         setListingImageValues(updatedImageValues);
+        const updatedImagePositions = [...listingImagePositions];
+        updatedImagePositions.splice(imageIndex, 1);
+        setListingImagePositions(updatedImagePositions);
     }
 
     const onAddImage = (e: MouseEvent<HTMLButtonElement>) => {
@@ -318,7 +326,6 @@ const ListingForm: React.FC<Props> = (): JSX.Element => {
             const deltaX = ev.clientX - startPositionX;
             const deltaY = ev.clientY - startPositionY;
             const updatedImagePositions = listingImagePositions.map((item, index) => index === imageIndex ? { positionX: Math.min(100, Math.max(0, imagePositionX - (deltaX / 1))), positionY: Math.min(100, Math.max(0, imagePositionY - (deltaY / 1))) } : item);
-            console.log(updatedImagePositions);
             setListingImagePositions(updatedImagePositions);
         };
 

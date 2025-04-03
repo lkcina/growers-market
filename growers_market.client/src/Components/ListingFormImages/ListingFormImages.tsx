@@ -3,7 +3,7 @@ import ImageInput from "./ImageInput/ImageInput";
 import './ListingFormImages.css';
 import { useDropzone } from 'react-dropzone';
 import ListingForm from "../../Pages/ListingForm/ListingForm";
-import { ListingImage, ListingImagePosition } from "../../types";
+import { ListingImagePosition } from "../../types";
 
 interface Props {
     inputImages: File[];
