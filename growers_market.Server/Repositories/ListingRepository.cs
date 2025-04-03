@@ -222,20 +222,10 @@ namespace growers_market.Server.Repositories
 
         public async Task<Listing> UpdateAsync(int id, Listing listing)
         {
-            var currentListing = await _context.Listings.FirstOrDefaultAsync(l => l.Id == id);
+            var currentListing = await _context.Listings.Include(l => l.Images).FirstOrDefaultAsync(l => l.Id == id);
             if (currentListing == null)
             {
                 return null;
-            }
-
-            var images = await _imageRepository.GetImagesAsync(id);
-            for (int i = 0; i < currentListing.Images.Count; i++)
-            {
-                if (!listing.Images.Contains(currentListing.Images[i]))
-                {
-                    await _imageRepository.DeleteImageAsync(images[i].Id);
-                    await _fileService.DeleteFile(currentListing.Images[i].Url);
-                }
             }
 
             currentListing.Title = listing.Title;

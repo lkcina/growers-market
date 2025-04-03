@@ -17,6 +17,7 @@ namespace growers_market.Server.Repositories
 
         public async Task<Image> GetImageByUrlAsync(string url)
         {
+            Console.WriteLine(url);
             return await _context.Images.FirstOrDefaultAsync(i => i.Url == url);
         }
 

@@ -241,17 +241,29 @@ namespace growers_market.Server.Controllers
                 return Unauthorized();
             }
             var listing = listingDto.ToListingFromUpdateDto();
-
-            await _listingRepository.UpdateAsync(id, listing);
-            if (listing == null)
+            var updatedListing = await _listingRepository.UpdateAsync(id, listing);
+            if (updatedListing == null)
             {
                 return NotFound("Listing not found");
             }
-
+            var existingImages = _imageRepository.GetImagesAsync(id).Result;
+            Console.WriteLine(JsonSerializer.Serialize(existingImages));
             var allImageUrls = listingDto.ImagePaths.Count > 0 ? listingDto.ImagePaths.Concat(newImagePaths).ToList() : newImagePaths;
+            Console.WriteLine(JsonSerializer.Serialize(allImageUrls));
+            foreach (var image in existingImages)
+            {
+                if (!allImageUrls.Contains(image.Url))
+                {
+                    await _imageRepository.DeleteImageAsync(image.Id);
+                    await _fileService.DeleteFile(image.Url);
+                }
+            }
+
             for (var i = 0; i < allImageUrls.Count; i++)
             {
+                Console.WriteLine(allImageUrls[i]);
                 var existingImage = await _imageRepository.GetImageByUrlAsync(allImageUrls[i]);
+                Console.WriteLine(JsonSerializer.Serialize(existingImage));
                 if (existingImage == null)
                 {
                     var image = new Models.Image
@@ -259,7 +271,7 @@ namespace growers_market.Server.Controllers
                         Url = allImageUrls[i],
                         PositionX = listingDto.ImagePositionsX[i],
                         PositionY = listingDto.ImagePositionsY[i],
-                        ListingId = listing.Id
+                        ListingId = id
                     };
                     var newImage = await _imageRepository.CreateImageAsync(image);
                     if (newImage == null)
@@ -276,7 +288,6 @@ namespace growers_market.Server.Controllers
                         return StatusCode(500, "Failed to update image");
                     }
                 }
-                
             }
             return Ok(listing.ToListingDto());
         }
