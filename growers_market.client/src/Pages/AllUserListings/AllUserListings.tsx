@@ -30,7 +30,7 @@ const AllUserListings: React.FC<Props> = (): JSX.Element => {
         const target = e.target as HTMLFormElement;
         const input = target.elements.namedItem("listingId") as HTMLInputElement;
         const listingId = Number(input.value);
-        navigate(`/my-listings/listing/${listingId}/info`);
+        navigate(`/my-listings/listing/${listingId}`);
     }
 
 

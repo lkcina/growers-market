@@ -175,6 +175,7 @@ export const getListing = async (id: number) => {
 }
 
 export const createListing = async (form: FormData) => {
+    console.log(form);
     try {
         const data = await axios.post<Listing>('https://localhost:7234/api/listing', form, {
             headers: {

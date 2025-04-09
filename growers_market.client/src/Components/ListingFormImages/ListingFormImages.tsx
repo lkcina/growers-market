@@ -1,8 +1,9 @@
-import React, { SyntheticEvent, useCallback } from "react";
+import React, { ChangeEvent, MouseEvent, SyntheticEvent, useCallback } from "react";
 import ImageInput from "./ImageInput/ImageInput";
 import './ListingFormImages.css';
 import { useDropzone } from 'react-dropzone';
 import ListingForm from "../../Pages/ListingForm/ListingForm";
+import { ListingImagePosition } from "../../types";
 
 interface Props {
     inputImages: File[];
@@ -11,18 +12,18 @@ interface Props {
     onRemoveImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
     onAddImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
     fileInputCount: number;
+    imagePositions: ListingImagePosition[];
+    startPositionImage: (e: MouseEvent<HTMLImageElement>) => void;
 }
 
-const ListingFormImages: React.FC<Props> = ({ inputImages, handleImagesChange, imageValues, onRemoveImage, onAddImage, fileInputCount }: Props): JSX.Element => {
+const ListingFormImages: React.FC<Props> = ({ inputImages, handleImagesChange, imageValues, onRemoveImage, onAddImage, fileInputCount, imagePositions, startPositionImage }: Props): JSX.Element => {
     const onImageError = (e: SyntheticEvent) => {
         e.preventDefault();
         const target = e.target as HTMLImageElement;
         target.classList.add("image-error");
     }
-
     
     const onDrop = useCallback((acceptedFiles: File[]) => {
-        // Handle the accepted files here
         console.log(acceptedFiles);
         const dto = new DataTransfer();
         acceptedFiles.forEach(file => dto.items.add(file));
@@ -41,6 +42,7 @@ const ListingFormImages: React.FC<Props> = ({ inputImages, handleImagesChange, i
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+
     return (
         <fieldset className="listing-form-images">
             <button id="listing-images" type="button" onClick={onAddImage}>Add Images</button>
@@ -51,24 +53,24 @@ const ListingFormImages: React.FC<Props> = ({ inputImages, handleImagesChange, i
             <input id="image-drop" {...getInputProps()} />
             <div className="listing-images-preview" >
                 {imageValues.length > 5 ? <p className="exception">* Exceeded maximum of 5 images</p> : <p>* Maximum of 5 images</p>}
-                <div className={isDragActive ? "preview-container dragging" : "preview-container"} {...getRootProps()}>
+                <div className={isDragActive ? "preview-container dragging" : "preview-container"} {...getRootProps()} onClick={undefined}>
                     {imageValues.length > 0 ? imageValues.map((image, index) => {
                         if (typeof image === "string") {
                             return (
                                 <div id={index.toString()} key={index} className="image-preview" onClick={(e) => e.stopPropagation()}>
-                                    <img src={image} alt={`Listing image ${index + 1}`} onError={onImageError} />
-                                    <button type="button" onClick={onRemoveImage}>X</button>
+                                    <img src={image} alt={`Listing image ${index + 1}`} draggable={false} onMouseDown={startPositionImage} onError={onImageError} style={{objectPosition: `${imagePositions[index].positionX}% ${imagePositions[index].positionY}%`}} />
+                                    <button className="delete-img" type="button" onClick={onRemoveImage}>X</button>
                                 </div>
                             )
                         } else {
                             return (
                                 <div id={index.toString()} key={index} className="image-preview" onClick={(e) => e.stopPropagation() }>
-                                    <img src={URL.createObjectURL(image)} alt={`Listing image ${index + 1}`} onError={onImageError} />
-                                    <button type="button" onClick={onRemoveImage}>X</button>
+                                    <img src={URL.createObjectURL(image)} draggable={false} alt={`Listing image ${index + 1}`} onMouseDown={startPositionImage} onError={onImageError} style={{ objectPosition: `${imagePositions[index].positionX}% ${imagePositions[index].positionY}%` }} />
+                                    <button className="delete-img" type="button" onClick={onRemoveImage}>X</button>
                                 </div>
                             )
                         }
-                    }) : <p>Drag and drop images or click to select</p>}
+                    }) : <p>Drag and drop images here</p>}
                 </div>
             </div>
             

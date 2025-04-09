@@ -38,14 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\ListingImages\21b7ed90-6f24-421f-b0a2-20f33632b60d.jpg" />
-    <None Include="wwwroot\ListingImages\4bce5747-724f-43b2-9a6c-2396d517f810.JPEG" />
-    <None Include="wwwroot\ListingImages\767eb693-2a16-4e8c-bd22-06a9ab6cf349.jpg" />
-    <None Include="wwwroot\ListingImages\a51d4454-ee57-42fe-bb86-c68489bf22da.jpg" />
-    <None Include="wwwroot\ListingImages\ab45e29f-dcdb-4d2a-b82c-b72b5388657c.jpg" />
-    <None Include="wwwroot\ListingImages\d41235ee-8689-4f22-bc59-71f5a063eedc.jpg" />
-    <None Include="wwwroot\ListingImages\f444a7db-2ea6-4928-a88f-d8773905f887.jpg" />
-    <None Include="wwwroot\ListingImages\f4da28d0-2829-4d29-8e4b-d2f512b1e1dd.jpg" />
+    <Folder Include="wwwroot\ListingImages\" />
   </ItemGroup>
 
 </Project>

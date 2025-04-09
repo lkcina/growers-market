@@ -2,6 +2,11 @@
 
 namespace growers_market.Server.Dtos.Listing
 {
+    public class ListingImagePosition
+    {
+        public int PositionX { get; set; }
+        public int PositionY { get; set; }
+    }
     public class ListingFormDto
     {
         public string Title { get; set; }
@@ -12,5 +17,7 @@ namespace growers_market.Server.Dtos.Listing
         public int? SpeciesId { get; set; }
         public string ImagePaths { get; set; }
         public IFormFile[]? UploadedImages { get; set; }
+        public string ImagePositionsX { get; set; }
+        public string ImagePositionsY { get; set; }
     }
 }

@@ -70,6 +70,7 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IGoogleGeocodingService, GoogleGeocodingService>();
 builder.Services.AddHttpClient<IGoogleGeocodingService, GoogleGeocodingService>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 var app = builder.Build();
 

@@ -22,7 +22,7 @@ namespace growers_market.Server.Mappers
                 CreatedAt = listing.CreatedAt,
                 AppUserName = listing.AppUserName,
                 Species = listing.Species?.ToSpeciesDto(),
-                Images = listing.Images
+                Images = listing.Images?.Select(i => i.ToImageDto()).ToList()
             };
         }
 
@@ -54,7 +54,6 @@ namespace growers_market.Server.Mappers
 
         public static CreateListingRequestDto ToCreateListingRequestDtoFromListingFormDto(this ListingFormDto formDto)
         {
-
             return new CreateListingRequestDto
             {
                 Title = formDto.Title,
@@ -64,7 +63,9 @@ namespace growers_market.Server.Mappers
                 Description = formDto.Description != null ? formDto.Description : "",
                 SpeciesId = formDto.SpeciesId,
                 ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
-                UploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>()
+                UploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>(),
+                ImagePositionsX = JsonSerializer.Deserialize<List<int>>(formDto.ImagePositionsX),
+                ImagePositionsY = JsonSerializer.Deserialize<List<int>>(formDto.ImagePositionsY)
             };
         }
 
@@ -81,7 +82,9 @@ namespace growers_market.Server.Mappers
                 Description = formDto.Description != null ? formDto.Description : "",
                 SpeciesId = formDto.SpeciesId,
                 ImagePaths = JsonSerializer.Deserialize<List<string>>(formDto.ImagePaths),
-                UploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>()
+                UploadedImages = formDto.UploadedImages != null ? formDto.UploadedImages.ToList() : new List<IFormFile>(),
+                ImagePositionsX = JsonSerializer.Deserialize<List<int>>(formDto.ImagePositionsX),
+                ImagePositionsY = JsonSerializer.Deserialize<List<int>>(formDto.ImagePositionsY)
             };
         }
     }

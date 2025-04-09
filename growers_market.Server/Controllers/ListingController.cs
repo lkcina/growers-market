@@ -1,4 +1,5 @@
-﻿using growers_market.Server.Dtos.Listing;
+﻿using System.Text.Json;
+using growers_market.Server.Dtos.Listing;
 using growers_market.Server.Extensions;
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace growers_market.Server.Controllers
 {
@@ -22,13 +24,15 @@ namespace growers_market.Server.Controllers
         private readonly IPerenualService _perenualService;
         private readonly ISpeciesRepository _speciesRepository;
         private readonly IFileService _fileService;
-        public ListingController(IListingRepository listingRepo, UserManager<AppUser> userManager, IPerenualService perenualService, ISpeciesRepository speciesRepository, IFileService fileService)
+        private readonly IImageRepository _imageRepository;
+        public ListingController(IListingRepository listingRepo, UserManager<AppUser> userManager, IPerenualService perenualService, ISpeciesRepository speciesRepository, IFileService fileService, IImageRepository imageRepository)
         {
             _listingRepository = listingRepo;
             _userManager = userManager;
             _perenualService = perenualService;
             _speciesRepository = speciesRepository;
             _fileService = fileService;
+            _imageRepository = imageRepository;
         }
 
         [HttpGet]
@@ -97,6 +101,8 @@ namespace growers_market.Server.Controllers
         [Authorize]
         public async Task<IActionResult> CreateListing([FromForm] ListingFormDto formListingDto)
         {
+
+            Console.WriteLine(JsonSerializer.Serialize(formListingDto));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -146,11 +152,30 @@ namespace growers_market.Server.Controllers
             
             listing.AppUserId = appUser.Id;
             listing.AppUserName = appUser.UserName;
-            listing.Images = listingDto.ImagePaths.Concat(newImagePaths).ToList();
-            await _listingRepository.CreateAsync(listing);
+
+            
+            var newListing = await _listingRepository.CreateAsync(listing);
             if (listing == null)
             {
                 return StatusCode(500, "Failed to create listing");
+            }
+
+            var allImageUrls = listingDto.ImagePaths.Count > 0 ? listingDto.ImagePaths.Concat(newImagePaths).ToList() : newImagePaths;
+            for (var i = 0; i < allImageUrls.Count; i++)
+            {
+                var image = new Models.Image
+                {
+                    Url = allImageUrls[i],
+                    PositionX = listingDto.ImagePositionsX[i],
+                    PositionY = listingDto.ImagePositionsY[i],
+                    ListingId = newListing.Id
+                };
+                Console.Write(JsonSerializer.Serialize(image));
+                var newImage = await _imageRepository.CreateImageAsync(image);
+                if (newImage == null)
+                {
+                    return StatusCode(500, "Failed to create image");
+                }
             }
             return CreatedAtAction(nameof(GetById), new { id = listing.Id }, listing.ToListingDto());
         }
@@ -186,6 +211,11 @@ namespace growers_market.Server.Controllers
                 }
                 newImagePaths.Add(await _fileService.SaveFileAsync(image, "ListingImages"));
             }
+
+            
+
+
+
             if (listingDto.SpeciesId != null)
             {
                 var species = await _speciesRepository.GetByIdAsync(listingDto.SpeciesId);
@@ -211,12 +241,53 @@ namespace growers_market.Server.Controllers
                 return Unauthorized();
             }
             var listing = listingDto.ToListingFromUpdateDto();
-
-            listing.Images = listingDto.ImagePaths.Count > 0 ? listingDto.ImagePaths.Concat(newImagePaths).ToList() : newImagePaths.ToList();
-            await _listingRepository.UpdateAsync(id, listing);
-            if (listing == null)
+            var updatedListing = await _listingRepository.UpdateAsync(id, listing);
+            if (updatedListing == null)
             {
                 return NotFound("Listing not found");
+            }
+            var existingImages = _imageRepository.GetImagesAsync(id).Result;
+            Console.WriteLine(JsonSerializer.Serialize(existingImages));
+            var allImageUrls = listingDto.ImagePaths.Count > 0 ? listingDto.ImagePaths.Concat(newImagePaths).ToList() : newImagePaths;
+            Console.WriteLine(JsonSerializer.Serialize(allImageUrls));
+            foreach (var image in existingImages)
+            {
+                if (!allImageUrls.Contains(image.Url))
+                {
+                    await _imageRepository.DeleteImageAsync(image.Id);
+                    await _fileService.DeleteFile(image.Url);
+                }
+            }
+
+            for (var i = 0; i < allImageUrls.Count; i++)
+            {
+                Console.WriteLine(allImageUrls[i]);
+                var existingImage = await _imageRepository.GetImageByUrlAsync(allImageUrls[i]);
+                Console.WriteLine(JsonSerializer.Serialize(existingImage));
+                if (existingImage == null)
+                {
+                    var image = new Models.Image
+                    {
+                        Url = allImageUrls[i],
+                        PositionX = listingDto.ImagePositionsX[i],
+                        PositionY = listingDto.ImagePositionsY[i],
+                        ListingId = id
+                    };
+                    var newImage = await _imageRepository.CreateImageAsync(image);
+                    if (newImage == null)
+                    {
+                        return StatusCode(500, "Failed to create image");
+                    }
+                } else
+                {
+                    existingImage.PositionX = listingDto.ImagePositionsX[i];
+                    existingImage.PositionY = listingDto.ImagePositionsY[i];
+                    var updatedImage = await _imageRepository.UpdateImageAsync(existingImage.Id, existingImage);
+                    if (updatedImage == null)
+                    {
+                        return StatusCode(500, "Failed to update image");
+                    }
+                }
             }
             return Ok(listing.ToListingDto());
         }

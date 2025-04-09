@@ -44,7 +44,6 @@
             gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
-            cursor: pointer;
         }
 
         .listing-form-images .listing-images-preview .preview-container.dragging {
@@ -67,8 +66,14 @@
                 height: 200px;
                 width: 200px;
                 position: relative;
-                cursor: auto;
+                cursor: grab;
+                overflow: hidden;
+                border-radius: 3px;
             }
+
+                .listing-form-images .listing-images-preview .preview-container .image-preview:hover {
+                    outline: 2px solid var(--color-primary-dark);
+                }
 
                 .listing-form-images .listing-images-preview .preview-container .image-preview img {
                     display: block;
@@ -86,7 +91,15 @@
                     }
 
                 .listing-form-images .listing-images-preview .preview-container .image-preview button {
-                    display: none;
+                    display: inline-block;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    z-index: 3;
+                    color: var(--color-error);
+                    background: none;
+                    border: none;
+                    box-shadow: none;
                 }
 
                 .listing-form-images .listing-images-preview .preview-container .image-preview:hover button {

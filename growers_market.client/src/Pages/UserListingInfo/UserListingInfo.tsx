@@ -47,7 +47,7 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
         getListing(Number(listingId)).then((result) => {
             if (typeof result === "string") {
                 setServerError(result);
-                navigate("/my-listings/all");
+                navigate("/my-listings");
             } else {
                 setListing(result.data);
                 getListingChats(Number(listingId)).then((chatResult) => {
@@ -91,7 +91,7 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
             if (typeof result === "string") {
                 setServerError(result);
             } else {
-                navigate("/my-listings/all");
+                navigate("/my-listings");
             }
         } else {
             return;
