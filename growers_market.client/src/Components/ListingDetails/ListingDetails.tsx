@@ -119,7 +119,7 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn
     return (
         <div className="listing-details" style={{ gridColumn: `${columns <= 2 ? "1 / -1" : listingColumn === columns ? "-3 / span 2" : `${listingColumn} / span 2`}`, left: `${columns === 1 ? "-12px" : listingColumn !== columns && listingColumn !== 1 ? "-118px" : "0"}`, flexDirection: `${columns === 1 ? "column" : "row"}` }} >
             <div className="listing-details-properties">
-                <p>Seller: {listing.appUserName}</p>
+                <p>Seller: {listing.appUser.username}</p>
                 <p>Species: {listing.species !== null ? listing.species.scientificName : "Species not specified"}</p>
                 <p>Quantity: {listing.quantity}</p>
             

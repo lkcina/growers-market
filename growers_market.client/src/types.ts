@@ -21,7 +21,7 @@ export interface Listing {
     quantity: number;
     species: SpeciesInfo;
     description: string;
-    appUserName: string;
+    appUser: AppUser;
     images: ListingImage[];
 }
 
@@ -61,4 +61,14 @@ export interface ListingImage {
 export interface ListingImagePosition {
     positionX: number;
     positionY: number;
+}
+
+export interface AppUser {
+    username: string;
+    address: AppUserAddress;
+}
+
+export interface AppUserAddress {
+    city: string;
+    state: string;
 }
