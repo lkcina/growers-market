@@ -1,4 +1,5 @@
-﻿using growers_market.Server.Dtos.ImagePosition;
+﻿using growers_market.Server.Dtos.Account;
+using growers_market.Server.Dtos.ImagePosition;
 using growers_market.Server.Dtos.Species;
 using growers_market.Server.Models;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,7 @@ namespace growers_market.Server.Dtos.Listing
         public int Quantity { get; set; }
         public string Description { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public string AppUserName { get; set; } = string.Empty;
+        public AppUserDto AppUser { get; set; }
         public SpeciesDto? Species { get; set; }
         public List<ImageDto> Images { get; set; } = new List<ImageDto>();
     }

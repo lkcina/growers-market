@@ -151,7 +151,6 @@ namespace growers_market.Server.Controllers
             }
             
             listing.AppUserId = appUser.Id;
-            listing.AppUserName = appUser.UserName;
 
             
             var newListing = await _listingRepository.CreateAsync(listing);

@@ -52,6 +52,9 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, isAft
                     <p>{listing.isForTrade ? "Tradable" : ""}</p>
                     <p>{listing.price > 0 ? `$${(Math.round(listing.price * 100) / 100).toFixed(2)}` : "Free"}</p>
                 </div>
+                <div className="listing-address">
+                    <p>{listing.appUser.address.city}, {listing.appUser.address.state}</p>
+                </div>
                 <div className="listing-species">
                     <p>{listing.species !== null ? listing.species.commonName : "Species not specified"}</p>
                 </div>

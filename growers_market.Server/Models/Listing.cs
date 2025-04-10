@@ -13,7 +13,6 @@ namespace growers_market.Server.Models
         public string Description { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string AppUserId { get; set; } = string.Empty;
-        public string AppUserName { get; set; } = string.Empty;
         public AppUser? AppUser { get; set; }
         public int? SpeciesId { get; set; }
         public Species? Species { get; set; }

@@ -20,7 +20,7 @@ namespace growers_market.Server.Mappers
                 Quantity = listing.Quantity,
                 Description = listing.Description,
                 CreatedAt = listing.CreatedAt,
-                AppUserName = listing.AppUserName,
+                AppUser = listing.AppUser.ToAppUserDto(),
                 Species = listing.Species?.ToSpeciesDto(),
                 Images = listing.Images?.Select(i => i.ToImageDto()).ToList()
             };
