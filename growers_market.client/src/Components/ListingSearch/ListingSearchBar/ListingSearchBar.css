@@ -39,14 +39,45 @@
                 width: 213px;
             }
 
-            #listing-search-bar #search-area .radius div #search-radius {
-                width: 55px;
-                font-size: 2rem;
-                padding: 5px;
-                background-color: var(--color-secondary-light);
-                border: 1px solid var(--color-primary-light);
-                color: var(--color-text-dark);
-            }
+                #listing-search-bar #search-area .radius div .radius-container {
+                    position: relative;
+                }
+
+                    #listing-search-bar #search-area .radius div .radius-container #search-radius {
+                        width: 55px;
+                        font-size: 2rem;
+                        padding: 5px;
+                        background-color: var(--color-secondary-light);
+                        border: 1px solid var(--color-primary-light);
+                        color: var(--color-text-dark);
+                    }
+
+                    #listing-search-bar #search-area .radius div .radius-container button {
+                        width: 20px;
+                        height: 17px;
+                        position: absolute;
+                        font-size: 1rem;
+                        background: var(--color-secondary-light);
+                        color: var(--color-primary-dark);
+                        border: none;
+                        border-radius: 0;
+                        box-shadow: none;
+                        text-align: center;
+                        padding: 0;
+                    }
+
+                        #listing-search-bar #search-area .radius div .radius-container button:hover {
+                            background-color: var(--color-secondary-dark);
+                        }
+                        #listing-search-bar #search-area .radius div .radius-container button:first-of-type {
+                            left: 45px;
+                            top: 2px;
+                        }
+
+                            #listing-search-bar #search-area .radius div .radius-container button:last-of-type {
+                                left: 45px;
+                                bottom: 2px;
+                            }
 
             #listing-search-bar #search-area .radius div #search-unit {
                 width: max-content;

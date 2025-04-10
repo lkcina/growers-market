@@ -121,8 +121,60 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         setListingSort(value);
     }
 
-    const handleSearchRadiusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setListingSearchRadius(Number(e.target.value));
+    const searchRadiusIncrement = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        let updatedRadius = listingSearchRadius;
+        if (updatedRadius < 500) {
+            updatedRadius += 10;
+            setListingSearchRadius(updatedRadius);
+        }
+
+        let interval: number | NodeJS.Timeout = 0;
+
+        const timeout = setTimeout(() => {
+            interval = setInterval(() => {
+                if (updatedRadius < 500) {
+                    updatedRadius += 10;
+                    setListingSearchRadius(updatedRadius);
+                }
+            }, 50);
+        }, 500);
+
+        document.addEventListener("mouseup", (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            clearTimeout(timeout);
+            clearInterval(interval);
+        });
+    }
+
+    const searchRadiusDecrement = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        let updatedRadius = listingSearchRadius;
+        if (updatedRadius > 0) {
+            updatedRadius -= 10;
+            setListingSearchRadius(updatedRadius);
+        }
+
+        let interval: number | NodeJS.Timeout = 0;
+
+        const timeout = setTimeout(() => {
+            interval = setInterval(() => {
+                if (updatedRadius > 0) {
+                    updatedRadius -= 10;
+                    setListingSearchRadius(updatedRadius);
+                }
+            }, 50);
+        }, 500);
+
+        document.addEventListener("mouseup", (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            clearTimeout(timeout);
+            clearInterval(interval);
+        });
     }
 
     const handleSearchUnitChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -227,7 +279,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
     return (
         <div id="browse-market-page">
             <Link to="/market/saved">Saved Listings</Link>
-            <ListingSearchBar query={listingSearchQuery} handleQueryChange={handleQueryChange} isForTrade={listingIsForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={listingPriceMax} handlePriceMaxChange={handlePriceMaxChange} species={listingSpecies} handleSpeciesChange={handleSpeciesChange} sort={listingSort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} onSearchSubmit={onSearchSubmit} searchRadius={listingSearchRadius} handleSearchRadiusChange={handleSearchRadiusChange} searchUnit={listingSearchUnit} handleSearchUnitChange={handleSearchUnitChange} searchLocation={listingSearchLocation} handleSearchLocationChange={handleSearchLocationChange} handleLocationOptionSelect={handleLocationOptionSelect} />
+            <ListingSearchBar query={listingSearchQuery} handleQueryChange={handleQueryChange} isForTrade={listingIsForTrade} handleIsForTradeChange={handleIsForTradeChange} priceMax={listingPriceMax} handlePriceMaxChange={handlePriceMaxChange} species={listingSpecies} handleSpeciesChange={handleSpeciesChange} sort={listingSort} handleSortChange={handleSortChange} speciesSelectOptions={speciesSelectOptions} onSearchSubmit={onSearchSubmit} searchRadius={listingSearchRadius} searchRadiusIncrement={searchRadiusIncrement} searchRadiusDecrement={searchRadiusDecrement} searchUnit={listingSearchUnit} handleSearchUnitChange={handleSearchUnitChange} searchLocation={listingSearchLocation} handleSearchLocationChange={handleSearchLocationChange} handleLocationOptionSelect={handleLocationOptionSelect} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />
             <ListingList listings={listingSearchResult} onSelect={showDetails} listingDetails={listingDetails} userChats={userChats} setUserChats={setUserChats} />
             <SearchInfo currentPage={listingSearchCurrentPage} lastPage={listingSearchLastPage} from={listingSearchFrom} to={listingSearchTo} total={listingSearchTotal} onNextPage={onSearchNextPage} onPreviousPage={onSearchPreviousPage} />

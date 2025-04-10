@@ -1,6 +1,7 @@
-import React, { MouseEvent, SyntheticEvent } from 'react';
+import React, { MouseEvent, SyntheticEvent, useRef } from 'react';
 import './ListingImages.css';
 import { ListingImage } from '../../types';
+import { useSwipeable } from 'react-swipeable';
 
 interface Props {
     listingTitle: string;
@@ -11,17 +12,36 @@ interface Props {
 }
 
 const ListingImages: React.FC<Props> = ({ listingTitle, images, imageIndex, onNextImage, onPreviousImage }: Props): JSX.Element => {
+    const nextButtonRef = useRef<HTMLButtonElement>(null);
+    const previousButtonRef = useRef<HTMLButtonElement>(null);
     const onImageError = (e: SyntheticEvent) => {
         e.preventDefault();
         const target = e.target as HTMLImageElement;
         target.classList.add("image-error");
     }
 
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => {
+            console.log("swiped left");
+            if (previousButtonRef.current && images.length > 1) {
+                previousButtonRef.current.click();
+            }
+        },
+        onSwipedRight: () => {
+            console.log("swiped right");
+            if (nextButtonRef.current && images.length > 1) {
+                nextButtonRef.current.click();
+            }
+        },
+        trackMouse: true,
+        preventScrollOnSwipe: true,
+    });
+
     return (
-        <div className="listing-images">
-            {images.length > 1 ? <button onClick={onPreviousImage}>{"<"}</button> : null}
+        <div className="listing-images" {...swipeHandlers}>
+            {images.length > 1 ? <button ref={previousButtonRef} onClick={onPreviousImage}>{"<"}</button> : null}
             {images.length > 0 ? <img src={images[imageIndex].url} alt={listingTitle} onError={onImageError} style={{ objectPosition: `${images[imageIndex].positionX}% ${images[imageIndex].positionY}%` }} /> : <div>No images</div>}
-            {images.length > 1 ? <button onClick={onNextImage}>{">"}</button> : null}
+            {images.length > 1 ? <button ref={nextButtonRef} onClick={onNextImage}>{">"}</button> : null}
         </div>
     );
 }
