@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useEffect } from "react";
+﻿import React, { ChangeEvent, SyntheticEvent, useEffect } from "react";
 import { SpeciesInfo } from "../../../types";
 import ListingAdvancedSearch from "../ListingAdvancedSearch/ListingAdvancedSearch";
 import './ListingSearchBar.css';
@@ -21,7 +21,8 @@ interface Props {
     onSearchSubmit: (e: SyntheticEvent) => void;
 
     searchRadius: number;
-    handleSearchRadiusChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    searchRadiusIncrement: (e: MouseEvent<HTMLButtonElement>) => void;
+    searchRadiusDecrement: (e: MouseEvent<HTMLButtonElement>) => void;
     searchUnit: string;
     handleSearchUnitChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     searchLocation: string;
@@ -29,7 +30,7 @@ interface Props {
     handleLocationOptionSelect: (e: SyntheticEvent) => void;
 };
 
-const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange, isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions, searchRadius, handleSearchRadiusChange, searchUnit, handleSearchUnitChange, searchLocation, handleSearchLocationChange, handleLocationOptionSelect }: Props): JSX.Element => {
+const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryChange, isForTrade, handleIsForTradeChange, priceMax, handlePriceMaxChange, species, handleSpeciesChange, sort, handleSortChange, speciesSelectOptions, searchRadius, searchRadiusIncrement, searchRadiusDecrement, searchUnit, handleSearchUnitChange, searchLocation, handleSearchLocationChange, handleLocationOptionSelect }: Props): JSX.Element => {
     const { isLoggedIn } = useAuth();
 
 
@@ -56,7 +57,12 @@ const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryC
                 <div className="radius">
                     <label htmlFor="search-radius">Search Area</label>
                     <div>
-                        <input id="search-radius" type="number" min="10" max="500" step="10" value={searchRadius} onChange={handleSearchRadiusChange} onKeyDown={handleRadiusKeyDown} />
+                        <div className="radius-container">
+                            <input id="search-radius" type="number" readOnly min="10" max="500" step="10" value={searchRadius} onKeyDown={handleRadiusKeyDown} />
+                            <button type="button" onMouseDown={searchRadiusIncrement}>▲</button>
+                            <button type="button" onMouseDown={searchRadiusDecrement}>▼</button>
+                        </div>
+                        
                         <select id="search-unit" value={searchUnit} onChange={handleSearchUnitChange}>
                             <option value="mi">Miles</option>
                             <option value="km">Kilometers</option>

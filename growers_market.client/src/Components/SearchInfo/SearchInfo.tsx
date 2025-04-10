@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+﻿import React, { SyntheticEvent, useEffect, useState } from "react";
 import "./SearchInfo.css";
 
 interface Props {
@@ -32,9 +32,9 @@ const SearchInfo: React.FC<Props> = ({ currentPage, lastPage, from, to, total, o
                 <div>
                     {windowWidth > 784 ? <div></div> : null}
                     <div className="page-nav">
-                        {currentPage === 1 ? null : <button onClick={onPreviousPage}>{"<"}</button>}
+                        {currentPage === 1 ? null : <button onClick={onPreviousPage}>◄</button>}
                         <div><span>{currentPage}</span> of {lastPage}</div>
-                        {currentPage === lastPage ? null : <button onClick={onNextPage}>{">"}</button>}
+                        {currentPage === lastPage ? null : <button onClick={onNextPage}>►</button>}
                     </div>
                     {windowWidth > 550 ? <div className="results-showing">Showing {from} - {to} of {total}</div> : null}
                 </div>
