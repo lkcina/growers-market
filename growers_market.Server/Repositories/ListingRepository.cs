@@ -127,7 +127,7 @@ namespace growers_market.Server.Repositories
             }
             if (!string.IsNullOrWhiteSpace(query.AppUserName))
             {
-                listings = listings.Where(l => l.AppUserName == query.AppUserName);
+                listings = listings.Where(l => l.AppUser.UserName == query.AppUserName);
             }
             if (query.SpeciesId.HasValue)
             {
@@ -210,12 +210,12 @@ namespace growers_market.Server.Repositories
 
         public async Task<Listing> GetByIdAsync(int? id)
         {
-            return await _context.Listings.Include(l => l.Species).Include(l => l.AppUser).Include(l => l.Images).FirstOrDefaultAsync(l => l.Id == id);
+            return await _context.Listings.Include(l => l.Species).Include(l => l.AppUser).ThenInclude(u => u.Address).Include(l => l.Images).FirstOrDefaultAsync(l => l.Id == id);
         }
 
         public async Task<List<Listing>> GetUserListingsAsync(AppUser appUser)
         {
-            var listings = _context.Listings.Include(l => l.AppUser).Include(l => l.Species).Include(l => l.Images).AsQueryable();
+            var listings = _context.Listings.Include(l => l.AppUser).ThenInclude(u => u.Address).Include(l => l.Species).Include(l => l.Images).AsQueryable();
             listings = listings.Where(l => l.AppUser.Id == appUser.Id);
             return await listings.ToListAsync();
         }
