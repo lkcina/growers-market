@@ -1,0 +1,63 @@
+@import '../../index.css';
+
+#home-page {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 80px 40px;
+}
+
+    #home-page video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: calc(100% - 2px);
+        width: 100%;
+        object-fit: cover;
+        z-index: -2;
+    }
+
+    #home-page h2 {
+        font-size: 6rem;
+        font-family: 'Namd', serif;
+        color: var(--color-text-light);
+        text-align: center;
+        font-weight: 400;
+        text-shadow: 0 -2px 2px rgba(0, 0, 0, 0.7), 0 2px 2px rgba(0, 0, 0, 0.7), -2px 0 2px rgba(0, 0, 0, 0.7), 2px 0 2px rgba(0, 0, 0, 0.7), 5px 5px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    #home-page p {
+        font-size: 2rem;
+        color: var(--color-text-light);
+        text-align: center;
+        letter-spacing: 1px;
+        word-spacing: 1px;
+        text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.7), 0 1px 1px rgba(0, 0, 0, 0.7), -1px 0 1px rgba(0, 0, 0, 0.7), 1px 0 1px rgba(0, 0, 0, 0.7), 5px 5px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    #home-page a {
+        font-size: 2rem;
+        color: var(--color-primary-dark);
+        background: linear-gradient(165deg, var(--color-secondary-light), var(--color-secondary-dark));
+        border-radius: 3px;
+        border: 2px solid var(--color-primary-dark);
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        width: 200px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.7);
+    }
+
+        #home-page a:hover {
+            font-weight: bold;
+        }
