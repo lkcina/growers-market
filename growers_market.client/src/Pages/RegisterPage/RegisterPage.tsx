@@ -193,7 +193,7 @@ const RegisterPage: React.FC<Props> = () => {
                     </div>
                 </div>
                 <button type="submit">Sign Up</button>
-                <p>Already have an account? <Link to="/register">Login</Link></p>
+                <p>Already have an account? <Link to="/login">Login</Link></p>
             </form>
         </div>
     );
