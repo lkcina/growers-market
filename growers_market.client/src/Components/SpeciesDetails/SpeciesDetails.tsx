@@ -13,7 +13,7 @@ const SpeciesDetails: React.FC<Props> = ({ species, columns, speciesColumn }: Pr
         <div id="species-details" style={{gridColumn: `${columns <= 3 ? "1 / -1" : columns === 5 && speciesColumn === 3 ? "2 / span 3" : speciesColumn <= 2 ? "1 / span 3" : "-4 / span 3"}`, marginLeft: `${columns === 1 ? "-50px" : "0"}`}} >
             <div className="species-details-properties">
                 <p>Cycle: {species.cycle}</p>
-                <p>Sunlight: {species.sunlight}</p>
+                <p>Sunlight: {species.sunlight.join(", ")}</p>
                 <p>Watering: {species.watering}</p>
                 <p>Hardiness: {species.hardinessMin === species.hardinessMax ? species.hardinessMin : species.hardinessMin + " - " + species.hardinessMax}</p>
                 <p>{species.indoor ? "Indoor" : null}</p>

@@ -36,7 +36,7 @@ const SpeciesAdvancedSearch: React.FC<Props> = ({ cycle, handleCycleChange, sunl
                     <option value="null">Select</option>
                     <option value="full_shade">Full Shade</option>
                     <option value="part_shade">Part Shade</option>
-                    <option value="sun_part_shade">Part Sun</option>
+                    <option value="sun-part_shade">Part Sun</option>
                     <option value="full_sun">Full Sun</option>
                 </select>
             </fieldset>
