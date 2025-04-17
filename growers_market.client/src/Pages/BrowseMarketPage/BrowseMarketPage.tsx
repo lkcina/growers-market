@@ -153,7 +153,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         e.preventDefault();
         e.stopPropagation();
         let updatedRadius = listingSearchRadius;
-        if (updatedRadius > 0) {
+        if (updatedRadius > 10) {
             updatedRadius -= 10;
             setListingSearchRadius(updatedRadius);
         }
@@ -162,7 +162,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
 
         const timeout = setTimeout(() => {
             interval = setInterval(() => {
-                if (updatedRadius > 0) {
+                if (updatedRadius > 10) {
                     updatedRadius -= 10;
                     setListingSearchRadius(updatedRadius);
                 }
