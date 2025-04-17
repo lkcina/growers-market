@@ -1,4 +1,5 @@
-﻿using growers_market.Server.Dtos.Species;
+﻿using System.Text.RegularExpressions;
+using growers_market.Server.Dtos.Species;
 using growers_market.Server.Models;
 
 namespace growers_market.Server.Mappers
@@ -27,14 +28,30 @@ namespace growers_market.Server.Mappers
 
         public static Species ToSpeciesFromAllPerenual(this AllSpeciesData speciesData)
         {
+            List<string>? formattedSunlight = speciesData.sunlight?.Select(str =>
+            {
+                switch (str.ToLower())
+                {
+                    case "full sun":
+                        return "Full sun";
+                    case "part shade":
+                        return "Part shade";
+                    case "full shade":
+                        return "Full shade";
+                    case "sun part shade":
+                        return "Part sun";
+                    default:
+                        return char.ToUpper(str.ToLower()[0]) + str.ToLower().Substring(1);
+                }
+            }).ToList();
             return new Species
             {
                 Id = speciesData.id,
-                CommonName = speciesData.common_name,
+                CommonName = Regex.Replace(speciesData.common_name.ToLower(), @"\b(?<!\b')([a-z])", match => match.Value.ToUpper()),
                 ScientificName = speciesData.scientific_name,
-                Cycle = speciesData.cycle,
-                Watering = speciesData.watering,
-                Sunlight = speciesData.sunlight,
+                Cycle = char.ToUpper(speciesData.cycle.ToLower()[0]) + speciesData.cycle.ToLower().Substring(1),
+                Watering = char.ToUpper(speciesData.watering.ToLower()[0]) + speciesData.watering.ToLower().Substring(1),
+                Sunlight = formattedSunlight,
                 Indoor = speciesData.indoor,
                 HardinessMin = int.TryParse(speciesData.hardiness.min, out int minResult) ? minResult : 0,
                 HardinessMax = int.TryParse(speciesData.hardiness.max, out int maxResult) ? maxResult : 0,
@@ -46,14 +63,30 @@ namespace growers_market.Server.Mappers
 
         public static Species ToSpeciesFromDetailsPerenual(this DetailsSpeciesData speciesData)
         {
+            List<string>? formattedSunlight = speciesData.sunlight?.Select(str =>
+            {
+                switch (str.ToLower())
+                {
+                    case "full sun":
+                        return "Full sun";
+                    case "part shade":
+                        return "Part shade";
+                    case "full shade":
+                        return "Full shade";
+                    case "sun part shade":
+                        return "Part sun";
+                    default:
+                        return char.ToUpper(str.ToLower()[0]) + str.ToLower().Substring(1);
+                }
+            }).ToList();
             return new Species
             {
                 Id = speciesData.id,
-                CommonName = speciesData.common_name,
+                CommonName = Regex.Replace(speciesData.common_name.ToLower(), @"\b(?<!\b')([a-z])", match => match.Value.ToUpper()),
                 ScientificName = speciesData.scientific_name,
-                Cycle = speciesData.cycle,
-                Watering = speciesData.watering,
-                Sunlight = speciesData.sunlight,
+                Cycle = char.ToUpper(speciesData.cycle.ToLower()[0]) + speciesData.cycle.ToLower().Substring(1),
+                Watering = char.ToUpper(speciesData.watering.ToLower()[0]) + speciesData.watering.ToLower().Substring(1),
+                Sunlight = formattedSunlight,
                 Indoor = speciesData.indoor,
                 HardinessMin = int.TryParse(speciesData.hardiness.min, out int minResult) ? minResult : 0,
                 HardinessMax = int.TryParse(speciesData.hardiness.max, out int maxResult) ? maxResult : 0,
