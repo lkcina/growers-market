@@ -1,4 +1,5 @@
-﻿using growers_market.Server.Data;
+﻿using AutoMapper;
+using growers_market.Server.Data;
 using growers_market.Server.Dtos.Species;
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
@@ -16,11 +17,13 @@ namespace growers_market.Server.Controllers
     {
         private readonly IPerenualService _perenualService;
         private readonly ISpeciesRepository _speciesRepository;
+        private readonly IMapper _mapper;
 
-        public SpeciesController(IPerenualService perenualService, ISpeciesRepository speciesRepo)
+        public SpeciesController(IPerenualService perenualService, ISpeciesRepository speciesRepo, IMapper mapper)
         {
             _perenualService = perenualService;
             _speciesRepository = speciesRepo;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -37,7 +40,7 @@ namespace growers_market.Server.Controllers
             {
                 return StatusCode(500, "Species is unavailable");
             }
-            var perenualDto = perenual.ToSpeciesDto();
+            var perenualDto = _mapper.Map<SpeciesDto>(perenual);
             return Ok(perenualDto);
         }
 
@@ -65,7 +68,7 @@ namespace growers_market.Server.Controllers
             }
 
             var species = await _speciesRepository.GetAllAsync();
-            var speciesDto = species.Select(species => species.ToSpeciesDto()).ToList();
+            var speciesDto = species.Select(species => _mapper.Map<SpeciesDto>(species)).ToList();
             return Ok(speciesDto);
         }
 
@@ -81,7 +84,7 @@ namespace growers_market.Server.Controllers
             {
                 return NotFound();
             }
-            var speciesDto = species.ToSpeciesDto();
+            var speciesDto = _mapper.Map<SpeciesDto>(species);
             return Ok(speciesDto);
         }
 
@@ -94,7 +97,7 @@ namespace growers_market.Server.Controllers
             }
 
             var species = await _speciesRepository.GetAllAsync();
-            var speciesDto = species.Select(species => species.ToSpeciesDto()).ToList();
+            var speciesDto = species.Select(species => _mapper.Map<SpeciesDto>(species)).ToList();
             var random = new Random();
             var pageSize = speciesDto.Count < 30 ? speciesDto.Count : 30;
             var randomSpecies = new List<SpeciesDto>();
@@ -131,8 +134,8 @@ namespace growers_market.Server.Controllers
             {
                 return StatusCode(500, "Species could not be added");
             }
-            var speciesDto = createdSpecies.ToSpeciesDto();
-            return CreatedAtAction(nameof(GetById), new { id = createdSpecies.Id }, createdSpecies.ToSpeciesDto());
+            var speciesDto = _mapper.Map<SpeciesDto>(createdSpecies);
+            return CreatedAtAction(nameof(GetById), new { id = createdSpecies.Id }, _mapper.Map<SpeciesDto>(createdSpecies));
         }
     }
 }

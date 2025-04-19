@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,8 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddOpenApi();
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();

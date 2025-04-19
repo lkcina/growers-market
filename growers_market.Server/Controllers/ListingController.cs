@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using AutoMapper;
 using growers_market.Server.Dtos.Listing;
 using growers_market.Server.Extensions;
 using growers_market.Server.Helpers;
@@ -25,7 +26,8 @@ namespace growers_market.Server.Controllers
         private readonly ISpeciesRepository _speciesRepository;
         private readonly IFileService _fileService;
         private readonly IImageRepository _imageRepository;
-        public ListingController(IListingRepository listingRepo, UserManager<AppUser> userManager, IPerenualService perenualService, ISpeciesRepository speciesRepository, IFileService fileService, IImageRepository imageRepository)
+        private readonly IMapper _mapper;
+        public ListingController(IListingRepository listingRepo, UserManager<AppUser> userManager, IPerenualService perenualService, ISpeciesRepository speciesRepository, IFileService fileService, IImageRepository imageRepository, IMapper mapper)
         {
             _listingRepository = listingRepo;
             _userManager = userManager;
@@ -33,6 +35,7 @@ namespace growers_market.Server.Controllers
             _speciesRepository = speciesRepository;
             _fileService = fileService;
             _imageRepository = imageRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -77,7 +80,7 @@ namespace growers_market.Server.Controllers
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var listings = await _listingRepository.GetUserListingsAsync(appUser);
-            var listingsDto = listings.Select(l => l.ToListingDto()).ToList();
+            var listingsDto = listings.Select(l => _mapper.Map<ListingDto>(l)).ToList();
             return Ok(listingsDto);
         }
 
@@ -93,7 +96,7 @@ namespace growers_market.Server.Controllers
             {
                 return NotFound();
             }
-            var listingDto = listing.ToListingDto();
+            var listingDto = _mapper.Map<ListingDto>(listing);
             return Ok(listingDto);
         }
 
@@ -131,7 +134,7 @@ namespace growers_market.Server.Controllers
 
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
-            var listing = listingDto.ToListingFromCreateDto();
+            var listing = _mapper.Map<Listing>(listingDto);
             if (listing.SpeciesId != null)
             {
                 var species = await _speciesRepository.GetByIdAsync(listing.SpeciesId);
@@ -176,7 +179,7 @@ namespace growers_market.Server.Controllers
                     return StatusCode(500, "Failed to create image");
                 }
             }
-            return CreatedAtAction(nameof(GetById), new { id = listing.Id }, listing.ToListingDto());
+            return CreatedAtAction(nameof(GetById), new { id = listing.Id }, _mapper.Map<ListingDto>(listing));
         }
 
         [HttpPut("{id}")]
@@ -239,7 +242,7 @@ namespace growers_market.Server.Controllers
             {
                 return Unauthorized();
             }
-            var listing = listingDto.ToListingFromUpdateDto();
+            var listing = _mapper.Map<Listing>(listingDto);
             var updatedListing = await _listingRepository.UpdateAsync(id, listing);
             if (updatedListing == null)
             {
@@ -288,7 +291,7 @@ namespace growers_market.Server.Controllers
                     }
                 }
             }
-            return Ok(listing.ToListingDto());
+            return Ok(_mapper.Map<ListingDto>(listing));
         }
 
         [HttpDelete("{id}")]

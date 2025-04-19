@@ -1,4 +1,5 @@
-﻿using growers_market.Server.Dtos.Species;
+﻿using AutoMapper;
+using growers_market.Server.Dtos.Species;
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Mappers;
@@ -12,10 +13,12 @@ namespace growers_market.Server.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _config;
-        public PerenualService(HttpClient httpClient, IConfiguration config)
+        private readonly IMapper _mapper;
+        public PerenualService(HttpClient httpClient, IConfiguration config, IMapper mapper)
         {
             _httpClient = httpClient;
             _config = config;
+            _mapper = mapper;
         }
 
         public async Task<AllSpeciesDto> PlantSearchAsync(PerenualPlantQueryObject query)
@@ -77,7 +80,7 @@ namespace growers_market.Server.Services
                     var tasks = JsonSerializer.Deserialize<AllPerenualSpecies>(content);
                     if (tasks != null)
                     {
-                        var species = tasks.ToAllSpeciesDtoFromPerenual();
+                        var species = tasks.ToAllSpeciesDtoFromPerenual(_mapper);
                         
                         return species;
                     }
