@@ -1,20 +1,19 @@
 ﻿using System.Linq;
+using AutoMapper;
 using growers_market.Server.Dtos.Address;
 using growers_market.Server.Models;
 
 namespace growers_market.Server.Mappers
 {
+    public class AddressMapperProfile : Profile
+    {
+        public AddressMapperProfile()
+        {
+            CreateMap<Address, AddressDto>();
+        }
+    }
     public static class AddressMapper
     {
-        public static AddressDto ToAddressDto(this Address address)
-        {
-            return new AddressDto
-            {
-                City = address.City,
-                State = address.State
-            };
-        }
-
         public static Address ToAddressFromGoogleAddressDto(this GoogleAddressDto addressDto)
         {
             Console.WriteLine("ToAddressFromGoogleAddressDto");

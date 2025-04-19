@@ -1,4 +1,5 @@
-﻿using growers_market.Server.Dtos.Chat;
+﻿using AutoMapper;
+using growers_market.Server.Dtos.Chat;
 using growers_market.Server.Extensions;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Mappers;
@@ -17,12 +18,14 @@ namespace growers_market.Server.Controllers
         private readonly IChatRepository _chatRepository;
         private readonly IListingRepository _listingRepository;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public ChatController(IChatRepository chatRepo, UserManager<AppUser> userManager, IListingRepository listingRepository)
+        public ChatController(IChatRepository chatRepo, UserManager<AppUser> userManager, IListingRepository listingRepository, IMapper mapper)
         {
             _chatRepository = chatRepo;
             _userManager = userManager;
             _listingRepository = listingRepository;
+            _mapper = mapper;
         }
 
         [HttpGet("user")]
@@ -38,7 +41,7 @@ namespace growers_market.Server.Controllers
             var appUser = await _userManager.FindByNameAsync(username);
             var chats = await _chatRepository.GetBuyerChats(appUser);
             Console.Write(chats.Count);
-            var chatsDto = chats.Select(c => c.ToChatDto()).ToList();
+            var chatsDto = chats.Select(c => _mapper.Map<ChatDto>(c)).ToList();
             return Ok(chatsDto);
         }
 
@@ -62,7 +65,7 @@ namespace growers_market.Server.Controllers
             }
             if (listing.AppUserId == appUser.Id)
             {
-                var chatsDto = chats.Select(c => c.ToChatDto()).ToList();
+                var chatsDto = chats.Select(c => _mapper.Map<ChatDto>(c)).ToList();
                 return Ok(chatsDto);
             }
 
@@ -88,7 +91,7 @@ namespace growers_market.Server.Controllers
             }
             if (chat.AppUserId == appUser.Id || chat.Listing.AppUserId == appUser.Id)
             {
-                var chatDto = chat.ToChatDto();
+                var chatDto = _mapper.Map<ChatDto>(chat);
                 return Ok(chatDto);
             }
 
@@ -122,7 +125,7 @@ namespace growers_market.Server.Controllers
             {
                 return StatusCode(500, "Failed to create chat");
             }
-            return CreatedAtAction(nameof(GetChatById), new { id = chat.Id }, chat.ToChatDto());
+            return CreatedAtAction(nameof(GetChatById), new { id = chat.Id }, _mapper.Map<ChatDto>(chat));
         }
 
         [HttpDelete("{id}")]
@@ -147,7 +150,7 @@ namespace growers_market.Server.Controllers
                 {
                     return StatusCode(500, "Failed to delete chat");
                 }
-                return Ok(deletedChat.ToChatDto());
+                return Ok(_mapper.Map<ChatDto>(deletedChat));
             }
             return Unauthorized();
         }

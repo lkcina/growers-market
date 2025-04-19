@@ -1,4 +1,6 @@
-﻿using growers_market.Server.Dtos.Account;
+﻿using AutoMapper;
+using growers_market.Server.Dtos.Account;
+using growers_market.Server.Dtos.Address;
 using growers_market.Server.Helpers;
 using growers_market.Server.Interfaces;
 using growers_market.Server.Mappers;
@@ -20,14 +22,16 @@ namespace growers_market.Server.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IGoogleGeocodingService _googleGeocodingService;
         private readonly IAddressRepository _addressRepository;
+        private readonly IMapper _mapper;
 
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IGoogleGeocodingService googleGeocodingService, IAddressRepository addressRepository)
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IGoogleGeocodingService googleGeocodingService, IAddressRepository addressRepository, IMapper mapper)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signInManager = signInManager;
             _googleGeocodingService = googleGeocodingService;
             _addressRepository = addressRepository;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -81,7 +85,7 @@ namespace growers_market.Server.Controllers
                             {
                                 UserName = newUser.UserName,
                                 Email = newUser.Email,
-                                Address = newUser.Address.ToAddressDto(),
+                                Address = _mapper.Map<AddressDto>(newUser.Address),
                                 Token = _tokenService.CreateToken(appUser)
                             }
                         );
@@ -129,7 +133,7 @@ namespace growers_market.Server.Controllers
                 {
                     UserName = user.UserName,
                     Email = user.Email,
-                    Address = user.Address.ToAddressDto(),
+                    Address = _mapper.Map<AddressDto>(user.Address),
                     Token = _tokenService.CreateToken(user)
                 }
             );

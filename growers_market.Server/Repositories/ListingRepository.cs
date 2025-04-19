@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using AutoMapper;
 using growers_market.Server.Data;
 using growers_market.Server.Dtos.Listing;
 using growers_market.Server.Helpers;
@@ -20,7 +21,8 @@ namespace growers_market.Server.Repositories
         private readonly UserManager<AppUser> _userManager;
         private readonly IGoogleGeocodingService _googleGeocodingService;
         private readonly IImageRepository _imageRepository;
-        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService, UserManager<AppUser> userManager, IGoogleGeocodingService googleGeocodingService, IImageRepository imagePositionRepository)
+        private readonly IMapper _mapper;
+        public ListingRepository(AppDbContext context, IChatRepository chatRepository, IFileService fileService, UserManager<AppUser> userManager, IGoogleGeocodingService googleGeocodingService, IImageRepository imagePositionRepository, IMapper mapper)
         {
             _context = context;
             _chatRepository = chatRepository;
@@ -28,6 +30,7 @@ namespace growers_market.Server.Repositories
             _userManager = userManager;
             _googleGeocodingService = googleGeocodingService;
             _imageRepository = imagePositionRepository;
+            _mapper = mapper;
         }
 
         private static double CalculateDistance(string unit, double lat1, double lon1, double lat2, double lon2)
@@ -193,7 +196,7 @@ namespace growers_market.Server.Repositories
             }
 
             var totalListings = listingsList.Count;
-            var listingsListDto = listingsList.Select(l => l.ToListingDto()).Skip(skipNumber).Take(query.PageSize).ToList();
+            var listingsListDto = listingsList.Select(l => _mapper.Map<ListingDto>(l)).Skip(skipNumber).Take(query.PageSize).ToList();
             var listingsDto = new AllListingsDto
             {
                 Data = listingsListDto,

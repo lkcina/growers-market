@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using growers_market.Server.Dtos.Message;
 using growers_market.Server.Extensions;
 using growers_market.Server.Interfaces;
@@ -18,11 +19,13 @@ namespace growers_market.Server.Controllers
         private readonly IMessageRepository _messageRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly IChatRepository _chatRepository;
-        public MessageController(IMessageRepository messageRepository, UserManager<AppUser> userManager, IChatRepository chatRepository)
+        private readonly IMapper _mapper;
+        public MessageController(IMessageRepository messageRepository, UserManager<AppUser> userManager, IChatRepository chatRepository, IMapper mapper)
         {
             _messageRepository = messageRepository;
             _userManager = userManager;
             _chatRepository = chatRepository;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -43,7 +46,7 @@ namespace growers_market.Server.Controllers
                 return Unauthorized();
             }
 
-            var message = createMessageRequestDto.ToMessageFromCreateDto();
+            var message = _mapper.Map<Message>(createMessageRequestDto);
             message.AppUserId = appUser.Id;
             message.AppUserName = appUser.UserName;
 
