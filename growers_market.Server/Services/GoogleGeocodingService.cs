@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using growers_market.Server.Dtos.Address;
 using growers_market.Server.Dtos.Species;
 using growers_market.Server.Helpers;
@@ -13,107 +14,67 @@ namespace growers_market.Server.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _config;
-        public GoogleGeocodingService(HttpClient httpClient, IConfiguration config)
+        private readonly IGoogleGeocodingApi _googleGeocodingApi;
+        public GoogleGeocodingService(HttpClient httpClient, IConfiguration config, IGoogleGeocodingApi googleGeocodingApi)
         {
             _httpClient = httpClient;
             _config = config;
+            _googleGeocodingApi = googleGeocodingApi;
         }
 
         public async Task<Address> GetUserAddressLocation(AddressQueryObject queryObject)
         {
-            try
+            var apiKey = _config["GoogleGeocodingKey"];
+            var addressBuilder = new StringBuilder("");
+            if (queryObject.StreetAddressLine1 != "")
             {
-                var urlBuilder = new StringBuilder($"https://maps.googleapis.com/maps/api/geocode/json?key={_config["GoogleGeocodingKey"]}");
-
-                if (queryObject.StreetAddressLine1 != "")
-                {
-                    var formattedStAddress1 = queryObject.StreetAddressLine1.Replace(" ", "+");
-                    urlBuilder.Append($"&address={formattedStAddress1},+");
-                }
-                if (queryObject.StreetAddressLine2 != "")
-                {
-                    var formattedStAddress2 = queryObject.StreetAddressLine2.Replace(" ", "+");
-                    urlBuilder.Append($"{formattedStAddress2},+");
-                }
-                if (queryObject.City != "")
-                {
-                    var formattedCity = queryObject.City.Replace(" ", "+");
-                    urlBuilder.Append($"{formattedCity},+");
-                }
-                if (queryObject.State != "")
-                {
-                    var formattedState = queryObject.State.Replace(" ", "+");
-                    urlBuilder.Append($"{formattedState}");
-                }
-
-                var url = urlBuilder.ToString();
-                Console.WriteLine(url);
-                var result = await _httpClient.GetAsync(url);
-                if (result.IsSuccessStatusCode)
-                {
-                    var content = await result.Content.ReadAsStringAsync();
-                    if (content == null)
-                    {
-                        return null;
-                    }
-                    var tasks = JsonSerializer.Deserialize<GoogleAddressDto>(content);
-                    Console.WriteLine(tasks.results[0].formatted_address);
-                    if (tasks != null && tasks.results.Count == 1)
-                    {
-                        var address = tasks.ToAddressFromGoogleAddressDto();
-                        Console.WriteLine("New Address Coordinates");
-                        Console.WriteLine(address.Latitude);
-                        Console.WriteLine(address.Longitude);
-                        return address;
-                    }
-                    return null;
-                }
-                return null;
+                addressBuilder.Append(queryObject.StreetAddressLine1 + ", ");
             }
-            catch (Exception ex)
+            if (queryObject.StreetAddressLine2 != "")
             {
-                Console.WriteLine($"Exception occurred: {ex.Message}");
-                Console.WriteLine(ex.StackTrace);
-                return null;
+                addressBuilder.Append(queryObject.StreetAddressLine2 + ", ");
             }
+            if (queryObject.City != "")
+            {
+                addressBuilder.Append(queryObject.City + ", ");
+            }
+            if (queryObject.State != "")
+            {
+                addressBuilder.Append(queryObject.State);
+            }
+            if (queryObject.PostalCode != "")
+            {
+                addressBuilder.Append(" " + queryObject.PostalCode);
+            }
+
+            var address = addressBuilder.ToString();
+            var response = await _googleGeocodingApi.GetAddressAsync(apiKey, address);
+            if (response != null && response.results.Count == 1)
+            {
+                var newAddress = response.ToAddressFromGoogleAddressDto();
+                Console.WriteLine("New Address Coordinates");
+                Console.WriteLine(newAddress.Latitude);
+                Console.WriteLine(newAddress.Longitude);
+                return newAddress;
+            }
+            return null;
         }
 
         public async Task<Address> GetCustomAddressLocation(string customAddress)
         {
-            try
-            {
-                var urlBuilder = new StringBuilder($"https://maps.googleapis.com/maps/api/geocode/json?key={_config["GoogleGeocodingKey"]}&address={customAddress.Replace(" ", "+")}");
+            var apiKey = _config["GoogleGeocodingKey"];
+            var address = customAddress.Replace(" ", "+");
+            var response = await _googleGeocodingApi.GetAddressAsync(apiKey, address);
 
-                var url = urlBuilder.ToString();
-                Console.WriteLine(url);
-                var result = await _httpClient.GetAsync(url);
-                if (result.IsSuccessStatusCode)
-                {
-                    var content = await result.Content.ReadAsStringAsync();
-                    if (content == null)
-                    {
-                        return null;
-                    }
-                    var tasks = JsonSerializer.Deserialize<GoogleAddressDto>(content);
-                    Console.WriteLine(tasks.results[0].formatted_address);
-                    if (tasks != null && tasks.results.Count == 1)
-                    {
-                        var address = tasks.ToAddressFromGoogleAddressDto();
-                        Console.WriteLine("New Address Coordinates");
-                        Console.WriteLine(address.Latitude);
-                        Console.WriteLine(address.Longitude);
-                        return address;
-                    }
-                    return null;
-                }
-                return null;
-            }
-            catch (Exception ex)
+            if (response != null && response.results.Count == 1)
             {
-                Console.WriteLine($"Exception occurred: {ex.Message}");
-                Console.WriteLine(ex.StackTrace);
-                return null;
+                var newAddress = response.ToAddressFromGoogleAddressDto();
+                Console.WriteLine("New Address Coordinates");
+                Console.WriteLine(newAddress.Latitude);
+                Console.WriteLine(newAddress.Longitude);
+                return newAddress;
             }
+            return null;
         }
     }
 }
