@@ -1,13 +1,12 @@
-import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import { Chat } from '../../types';
 import NewMessageForm from '../NewMessageForm/NewMessageForm';
-import { createChat, getUserChats, sendMessage } from '../../api';
 import { useAuth } from '../../Context/UseAuth';
 import MessageList from '../MessageList/MessageList';
 import './ListingChat.css';
 
 interface Props {
-    chat: Chat | null | undefined;
+    chat: Chat | null;
     newMessage: string;
     onNewMessageSubmit: (e: FormEvent<HTMLFormElement>) => void;
     handleMessageInputChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;

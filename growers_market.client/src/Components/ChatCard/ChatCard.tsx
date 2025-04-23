@@ -16,7 +16,6 @@ const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element =
     const handleMessageInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.target.rows = 1;
         const { scrollHeight, clientHeight } = e.target;
-        console.log(scrollHeight, clientHeight);
         if (scrollHeight > clientHeight) {
             e.target.rows += Math.floor((scrollHeight - clientHeight) / 16);
             e.target.style.overflowY = "hidden";
@@ -50,7 +49,6 @@ const ChatCard: React.FC<Props> = ({ chat, setUserChats }: Props): JSX.Element =
                     if (typeof chatResult === "string") {
                         setServerError(chatResult);
                     } else if (Array.isArray(chatResult)) {
-                        console.log(chatResult);
                         setUserChats(chatResult);
                         setNewMessage('');
                         newMessageInput.rows = 1;

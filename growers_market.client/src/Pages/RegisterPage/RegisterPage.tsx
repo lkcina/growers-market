@@ -6,15 +6,13 @@ import { useForm } from 'react-hook-form';
 import "./RegisterPage.css";
 import { Link } from 'react-router-dom';
 
-interface Props {
-}
 
 type RegisterFormsInputs = {
     email: string;
     userName: string;
     password: string;
     streetAddressLine1: string;
-    streetAddressLine2: string;
+    streetAddressLine2?: string | undefined;
     city: string,
     state: string,
     postalCode: string
@@ -25,20 +23,20 @@ const validation = Yup.object().shape({
     userName: Yup.string().required('Username is required'),
     password: Yup.string().required('Password is required'),
     streetAddressLine1: Yup.string().required('Street Address is required'),
+    streetAddressLine2: Yup.string().optional(),
     city: Yup.string().required('City is required'),
     state: Yup.string().required('State is required'),
     postalCode: Yup.string().required('Zip Code is required').matches(/^[0-9]{5}$/, 'Invalid Zip Code')
 });
 
-const RegisterPage: React.FC<Props> = () => {
+const RegisterPage: React.FC = () => {
     const { registerUser } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormsInputs>({ resolver: yupResolver(validation) });
 
     const handleRegister = (form: RegisterFormsInputs) => {
-        console.log("Form Values:", form);
         console.log("Validation Errors:", errors);
 
-        registerUser(form.email, form.userName, form.password, form.streetAddressLine1, form.streetAddressLine2, form.city, form.state, form.postalCode);
+        registerUser(form.email, form.userName, form.password, form.streetAddressLine1, form.streetAddressLine2 === undefined ? "" : form.streetAddressLine2, form.city, form.state, form.postalCode);
     };
 
     const states: string[] = [

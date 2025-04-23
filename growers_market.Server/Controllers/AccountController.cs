@@ -37,7 +37,6 @@ namespace growers_market.Server.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-            Console.WriteLine("RegisterDto:", registerDto);
             try
             {
                 if (!ModelState.IsValid)
@@ -120,7 +119,6 @@ namespace growers_market.Server.Controllers
             {
                 return Unauthorized("Invalid Username");
             }
-            Console.WriteLine(user.Address == null ? "Address is Null" : user.Address.StreetAddressLine1);
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
             if (!result.Succeeded)

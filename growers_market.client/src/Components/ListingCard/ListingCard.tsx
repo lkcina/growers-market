@@ -1,8 +1,6 @@
-import React, { ChangeEvent, Dispatch, FormEvent, MouseEvent, SetStateAction, useEffect, useState } from 'react';
-import { Chat, Listing } from '../../types';
+import React, { FormEvent, MouseEvent, useEffect, useState } from 'react';
+import { Listing } from '../../types';
 import ListingImages from '../ListingImages/ListingImages';
-import ListingDetails from '../ListingDetails/ListingDetails';
-import { createChat, deleteChat, getUserChats, sendMessage } from '../../api';
 import './ListingCard.css';
 
 interface Props {
@@ -15,9 +13,6 @@ interface Props {
 const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, isAfterDetails }: Props): JSX.Element => {
     const [imageIndex, setImageIndex] = useState<number>(0);
 
-    useEffect(() => {
-        console.log(`ListingCard rendered: ${listing.id}`);
-    });
 
     const onNextImage = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -69,9 +64,6 @@ const ListingCard: React.FC<Props> = ({ listing, onSelect, listingDetails, isAft
 }
 
 const areEqual = (prevProps: Props, nextProps: Props) => {
-    console.log(prevProps.listing.id === nextProps.listing.id &&
-        prevProps.listingDetails === nextProps.listingDetails &&
-        prevProps.isAfterDetails === nextProps.isAfterDetails);
     return (
         prevProps.listing.id === nextProps.listing.id &&
         prevProps.listingDetails === nextProps.listingDetails &&

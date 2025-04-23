@@ -1,17 +1,13 @@
 import React, { useEffect, useState, MouseEvent } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Chat, Listing } from "../../types";
-import { deleteListing, getListing, getListingChats, getUserListings } from "../../api";
+import { deleteListing, getListing, getListingChats } from "../../api";
 import ChatList from "../../Components/ChatList/ChatList";
 import ListingImages from "../../Components/ListingImages/ListingImages";
-import { SpeciesInfo } from "../../types";
 import './UserListingInfo.css';
 
-interface Props {
 
-}
-
-const UserListingInfo: React.FC<Props> = (): JSX.Element => {
+const UserListingInfo: React.FC = (): JSX.Element => {
     const { listingId } = useParams();
     const [listing, setListing] = useState<Listing>({
         title: "",
@@ -34,7 +30,10 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
         },
         images: [],
         description: "",
-        appUserName: "",
+        appUser: {
+            username: "",
+            address: { city: "", state: "" }
+        },
         id: Number(listingId)
     });
     const [userChats, setUserChats] = useState<Chat[]>([]);
@@ -54,7 +53,6 @@ const UserListingInfo: React.FC<Props> = (): JSX.Element => {
                     if (typeof chatResult === "string") {
                         setServerError(chatResult);
                     } else if (Array.isArray(chatResult)) {
-                        console.log(chatResult);
                         setUserChats(chatResult);
                     }
                 })

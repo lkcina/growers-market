@@ -1,15 +1,12 @@
 import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { postWishlist, getSpeciesDetails, deleteWishlist, getWishlist } from '../../api';
-import ListWishlist from '../../Components/Wishlist/ListWishlist/ListWishlist';
 import { SpeciesInfo } from '../../types';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import './WishlistPage.css';
 import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 
-interface Props {
-}
 
-const WishlistPage: React.FC<Props> = () => {
+const WishlistPage: React.FC = () => {
     const [wishlistSearchQuery, setWishlistSearchQuery] = useState<string>("");
     const [wishlistSearchResult, setWishlistSearchResult] = useState<SpeciesInfo[]>([]);
 
@@ -25,7 +22,6 @@ const WishlistPage: React.FC<Props> = () => {
             } else if (Array.isArray(result.data)) {
                 setWishlistValues(result.data);
                 setWishlistSearchResult(result.data);
-                console.log(result.data);
             }
         });
     }, [])
@@ -34,7 +30,6 @@ const WishlistPage: React.FC<Props> = () => {
         setTimeout(() => {
             if (speciesDetails !== null) {
                 const detailsElement = document.getElementById(`species-${speciesDetails}`);
-                console.log(detailsElement);
                 if (detailsElement) {
                     detailsElement.scrollIntoView();
                 }
@@ -49,7 +44,6 @@ const WishlistPage: React.FC<Props> = () => {
     const onSearchSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         const result = wishlistValues.filter((species) => species.commonName.toLowerCase().includes(wishlistSearchQuery.toLowerCase()) || species.scientificName[0].toLowerCase().includes(wishlistSearchQuery.toLowerCase()));
-        console.log(result);
         setWishlistSearchResult(result);
     }
 
@@ -75,7 +69,6 @@ const WishlistPage: React.FC<Props> = () => {
         } else {
 
             const updatedWishlist = [...wishlistValues, result];
-            console.log(updatedWishlist);
             setWishlistValues(updatedWishlist);
         }
 
@@ -86,7 +79,6 @@ const WishlistPage: React.FC<Props> = () => {
         const target = e.target as HTMLFormElement;
         const input = target.getElementsByClassName("rem-wishlist-input")[0] as HTMLInputElement;
         const value = Number(input.value);
-        console.log(value);
         const wishlistResult = await deleteWishlist(value);
         if (typeof wishlistResult === "string") {
             setServerError(wishlistResult);
@@ -96,7 +88,6 @@ const WishlistPage: React.FC<Props> = () => {
         }
 
         const updatedWishlist = wishlistValues.filter((species) => species.id !== value);
-        console.log(updatedWishlist);
         setWishlistValues(updatedWishlist);
         const updatedSearchResult = wishlistSearchResult.filter((species) => species.id !== value);
         setWishlistSearchResult(updatedSearchResult);

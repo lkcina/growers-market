@@ -4,7 +4,6 @@ import AddWishlist from "../Wishlist/AddWishlist/AddWishlist";
 import { SpeciesInfo } from "../../types";
 import RemoveWishlist from "../Wishlist/RemoveWishlist/RemoveWishlist";
 import SpeciesDetailsButton from "../SpeciesDetailsButton/SpeciesDetailsButton";
-import SpeciesDetails from "../SpeciesDetails/SpeciesDetails";
 
 interface Props {
     id: string;

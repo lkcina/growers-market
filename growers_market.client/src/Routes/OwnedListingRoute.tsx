@@ -1,6 +1,5 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../Context/UseAuth';
+import React, { useLayoutEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getUserListings } from '../api';
 
 interface Props {

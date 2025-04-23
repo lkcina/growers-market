@@ -57,8 +57,6 @@ namespace growers_market.Server.Controllers
             var username = User.GetUsername();
             var appUsers = _userManager.Users.Include(u => u.Address).Where(u => u.UserName == username);
             var appUser = await appUsers.FirstOrDefaultAsync(u => u.UserName == username);
-            Console.WriteLine(appUser.UserName);
-            Console.WriteLine(appUser.Address.StreetAddressLine1);
 
             var listings = await _listingRepository.GetAllListingsAsync(appUser, queryObject);
             if (listings == null)
@@ -104,8 +102,6 @@ namespace growers_market.Server.Controllers
         [Authorize]
         public async Task<IActionResult> CreateListing([FromForm] ListingFormDto formListingDto)
         {
-
-            Console.WriteLine(JsonSerializer.Serialize(formListingDto));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -124,7 +120,6 @@ namespace growers_market.Server.Controllers
                     return BadRequest("File size cannot exceed 1 MB");
                 }
                 var extension = Path.GetExtension(image.FileName).ToLower();
-                Console.WriteLine(extension);
                 if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
                 {
                     return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
@@ -206,7 +201,6 @@ namespace growers_market.Server.Controllers
                     return BadRequest("File size cannot exceed 1 MB");
                 }
                 var extension = Path.GetExtension(image.FileName).ToLower();
-                Console.WriteLine(extension);
                 if (extension != ".jpg" && extension != ".png" && extension != ".jpeg")
                 {
                     return BadRequest("Only .jpg, .jpeg, and .png file types are supported");
@@ -249,9 +243,7 @@ namespace growers_market.Server.Controllers
                 return NotFound("Listing not found");
             }
             var existingImages = _imageRepository.GetImagesAsync(id).Result;
-            Console.WriteLine(JsonSerializer.Serialize(existingImages));
             var allImageUrls = listingDto.ImagePaths.Count > 0 ? listingDto.ImagePaths.Concat(newImagePaths).ToList() : newImagePaths;
-            Console.WriteLine(JsonSerializer.Serialize(allImageUrls));
             foreach (var image in existingImages)
             {
                 if (!allImageUrls.Contains(image.Url))
@@ -263,9 +255,7 @@ namespace growers_market.Server.Controllers
 
             for (var i = 0; i < allImageUrls.Count; i++)
             {
-                Console.WriteLine(allImageUrls[i]);
                 var existingImage = await _imageRepository.GetImageByUrlAsync(allImageUrls[i]);
-                Console.WriteLine(JsonSerializer.Serialize(existingImage));
                 if (existingImage == null)
                 {
                     var image = new Models.Image

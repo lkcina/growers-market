@@ -27,21 +27,15 @@ const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishli
             if (listRef.current) {
                 if (speciesDetails !== null) {
                     const columns = Math.floor((listRef.current.offsetWidth + 15) / 235);
-                    console.log(columns);
                     setListColumns(columns);
                     const detailsSpecies: SpeciesInfo = { ...searchResult.filter((s) => s.id === speciesDetails)[0] }
-                    console.log(detailsSpecies);
-                    console.log(detailsSpecies);
-                    const rowOfSpecies = Math.floor(searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)) / columns) + 1;
-                    const columnOfSpecies = (searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)) % columns) + 1;
+                    const rowOfSpecies = Math.floor(searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)!) / columns) + 1;
+                    const columnOfSpecies = (searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)!) % columns) + 1;
                     setSpeciesColumn(columnOfSpecies);
                     detailsSpecies.id = 0;
-                    console.log(columns, columnOfSpecies, rowOfSpecies);
                     const detailsIndex = (rowOfSpecies * columns);
-                    console.log(detailsIndex);
                     const newSearchResultDetails: SpeciesInfo[] = [...searchResult];
                     newSearchResultDetails.splice(detailsIndex, 0, detailsSpecies);
-                    console.log(newSearchResultDetails);
                     setSearchResultDetails(newSearchResultDetails);
                 }
             }
@@ -77,7 +71,7 @@ const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishli
                     })
                 ) : (
                     searchResultDetails.map((s, index) => {
-                        const detailsIndex = searchResultDetails.indexOf(searchResultDetails.find((s) => s.id === 0));
+                        const detailsIndex = searchResultDetails.indexOf(searchResultDetails.find((s) => s.id === 0)!);
                         return (
                             s.id !== 0 ? index !== detailsIndex + 1 ? <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} isAfterDetails={false} />
                                 : <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} isAfterDetails={true} />

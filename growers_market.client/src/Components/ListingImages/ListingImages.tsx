@@ -22,13 +22,11 @@ const ListingImages: React.FC<Props> = ({ listingTitle, images, imageIndex, onNe
 
     const swipeHandlers = useSwipeable({
         onSwipedLeft: () => {
-            console.log("swiped left");
             if (previousButtonRef.current && images.length > 1) {
                 previousButtonRef.current.click();
             }
         },
         onSwipedRight: () => {
-            console.log("swiped right");
             if (nextButtonRef.current && images.length > 1) {
                 nextButtonRef.current.click();
             }

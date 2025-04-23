@@ -52,9 +52,6 @@ namespace growers_market.Server.Services
             if (response != null && response.results.Count == 1)
             {
                 var newAddress = response.ToAddressFromGoogleAddressDto();
-                Console.WriteLine("New Address Coordinates");
-                Console.WriteLine(newAddress.Latitude);
-                Console.WriteLine(newAddress.Longitude);
                 return newAddress;
             }
             return null;
@@ -69,9 +66,6 @@ namespace growers_market.Server.Services
             if (response != null && response.results.Count == 1)
             {
                 var newAddress = response.ToAddressFromGoogleAddressDto();
-                Console.WriteLine("New Address Coordinates");
-                Console.WriteLine(newAddress.Latitude);
-                Console.WriteLine(newAddress.Longitude);
                 return newAddress;
             }
             return null;

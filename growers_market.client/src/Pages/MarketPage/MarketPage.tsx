@@ -1,12 +1,9 @@
 import React from 'react';
-import MarketSidebar from '../../Components/MarketSidebar/MarketSidebar';
 import { Outlet } from 'react-router';
 import './MarketPage.css';
 
-interface Props {
-}
 
-const MarketPage: React.FC<Props> = () => {
+const MarketPage: React.FC = () => {
     return (
         <div id="market">
             <h1>Market</h1>

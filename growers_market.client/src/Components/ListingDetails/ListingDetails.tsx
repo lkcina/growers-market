@@ -7,7 +7,7 @@ import { createChat, deleteChat, getUserChats, sendMessage } from "../../api";
 
 interface Props {
     listing: Listing;
-    chat: Chat | null | undefined;
+    chat: Chat | null;
     columns: number;
     listingColumn: number;
     setUserChats: Dispatch<SetStateAction<Chat[]>> | null;
@@ -19,12 +19,9 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn
     const [newMessage, setNewMessage] = useState<string>('');
     const [serverError, setServerError] = React.useState<string | null>(null);
 
-    console.log(chat)
-
     const handleMessageInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.target.rows = 1;
         const { scrollHeight, clientHeight } = e.target;
-        console.log(scrollHeight, clientHeight);
         if (scrollHeight > clientHeight) {
             e.target.rows += Math.floor((scrollHeight - clientHeight) / 16);
             e.target.style.overflowY = "hidden";
@@ -67,7 +64,6 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn
 
         } else {
             const chatResult = await createChat(listingId);
-            console.log(chatResult);
             if (typeof chatResult === "string") {
                 setServerError(chatResult);
                 return
@@ -77,7 +73,6 @@ const ListingDetails: React.FC<Props> = ({ listing, chat, columns, listingColumn
                     setServerError(result);
                     return
                 } else {
-                    console.log(result);
                     const newChats = await getUserChats();
                     if (typeof newChats === "string") {
                         setServerError(newChats);

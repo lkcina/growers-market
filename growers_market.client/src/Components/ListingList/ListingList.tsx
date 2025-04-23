@@ -1,4 +1,4 @@
-import React, { Dispatch, FormEvent, MouseEvent, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Chat, Listing } from '../../types';
 import ListingCard from '../ListingCard/ListingCard';
 import './ListingList.css';
@@ -19,31 +19,21 @@ const ListingList: React.FC<Props> = ({ listings, onSelect, listingDetails, user
     const [listingColumn, setListingColumn] = useState<number>(0);
     const [searchResultDetails, setSearchResultDetails] = useState<Listing[]>([]);
 
-    useEffect(() => {
-        console.log("listing list rendered");
-        console.log(userChats);
-    });
 
     useEffect(() => {
-        console.log("useEffect triggered");
         const handleListingList = () => {
             if (listRef.current) {
                 if (listingDetails !== null) {
                     const columns = Math.min(Math.floor((listRef.current.offsetWidth + 15) / 235), listings.length);
-                    console.log(columns);
                     setListColumns(columns);
                     const detailsListing: Listing = { ...listings.filter((s) => s.id === listingDetails)[0] }
-                    console.log(detailsListing);
-                    const rowOfListing = Math.floor(listings.indexOf(listings.find((l) => l.id === listingDetails)) / columns) + 1;
-                    const columnOfListing = (listings.indexOf(listings.find((l) => l.id === listingDetails)) % columns) + 1;
+                    const rowOfListing = Math.floor(listings.indexOf(listings.find((l) => l.id === listingDetails)!) / columns) + 1;
+                    const columnOfListing = (listings.indexOf(listings.find((l) => l.id === listingDetails)!) % columns) + 1;
                     setListingColumn(columnOfListing);
                     detailsListing.id = 0;
-                    console.log(columns, columnOfListing, rowOfListing);
                     const detailsIndex = (rowOfListing * columns);
-                    console.log(detailsIndex);
                     const newSearchResultDetails: Listing[] = [...listings];
                     newSearchResultDetails.splice(detailsIndex, 0, detailsListing);
-                    console.log(newSearchResultDetails);
                     setSearchResultDetails(newSearchResultDetails);
                 }
             }
@@ -74,7 +64,7 @@ const ListingList: React.FC<Props> = ({ listings, onSelect, listingDetails, user
                     })
                 ) : (
                     searchResultDetails.map((listing, index) => {
-                        const detailsIndex = searchResultDetails.indexOf(searchResultDetails.find((l) => l.id === 0));
+                        const detailsIndex = searchResultDetails.indexOf(searchResultDetails.find((l) => l.id === 0)!);
                         const chat = userChats?.find((chat) => chat.listing.id === listingDetails) || null;
                         return (
                             listing.id !== 0 ? index !== detailsIndex + 1 ? <ListingCard key={uuidv4()} listing={listing} onSelect={onSelect} listingDetails={listingDetails} isAfterDetails={false} />
