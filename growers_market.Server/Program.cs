@@ -11,6 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,12 +67,16 @@ builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
 builder.Services.AddScoped<IPerenualService, PerenualService>();
 builder.Services.AddHttpClient<IPerenualService, PerenualService>();
+builder.Services.AddRefitClient<IPerenualApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://perenual.com"));
 builder.Services.AddScoped<IListingRepository, ListingRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IGoogleGeocodingService, GoogleGeocodingService>();
 builder.Services.AddHttpClient<IGoogleGeocodingService, GoogleGeocodingService>();
+builder.Services.AddRefitClient<IGoogleGeocodingApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://maps.googleapis.com"));
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
