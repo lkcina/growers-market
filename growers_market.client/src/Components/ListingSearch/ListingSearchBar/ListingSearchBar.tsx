@@ -21,8 +21,8 @@ interface Props {
     onSearchSubmit: (e: SyntheticEvent) => void;
 
     searchRadius: number;
-    searchRadiusIncrement: (e: MouseEvent<HTMLButtonElement>) => void;
-    searchRadiusDecrement: (e: MouseEvent<HTMLButtonElement>) => void;
+    searchRadiusIncrement: (e: SyntheticEvent<HTMLButtonElement>) => void;
+    searchRadiusDecrement: (e: SyntheticEvent<HTMLButtonElement>) => void;
     searchUnit: string;
     handleSearchUnitChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     searchLocation: string;
@@ -59,8 +59,8 @@ const ListingSearchBar: React.FC<Props> = ({ onSearchSubmit, query, handleQueryC
                     <div>
                         <div className="radius-container">
                             <input id="search-radius" type="number" readOnly min="10" max="500" step="10" value={searchRadius} onKeyDown={handleRadiusKeyDown} />
-                            <button type="button" onMouseDown={searchRadiusIncrement}>▲</button>
-                            <button type="button" onMouseDown={searchRadiusDecrement}>▼</button>
+                            <button type="button" onMouseDown={searchRadiusIncrement} onTouchStart={searchRadiusIncrement}>▲</button>
+                            <button type="button" onMouseDown={searchRadiusDecrement} onTouchStart={searchRadiusDecrement}>▼</button>
                         </div>
                         
                         <select id="search-unit" value={searchUnit} onChange={handleSearchUnitChange}>
