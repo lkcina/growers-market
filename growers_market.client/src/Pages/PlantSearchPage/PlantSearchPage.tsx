@@ -1,5 +1,5 @@
-import React, { ChangeEvent, FormEvent, SyntheticEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
-import { getSpeciesDetails, getWishlist, postWishlist, searchSpecies, deleteWishlist, getUsedSpecies, getRandomSpecies } from '../../api';
+import React, { ChangeEvent, FormEvent, SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import { getSpeciesDetails, getWishlist, postWishlist, searchSpecies, deleteWishlist, getRandomSpecies } from '../../api';
 import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 import SpeciesSearchBar from '../../Components/SpeciesSearch/SpeciesSearchBar/SpeciesSearchBar';
 import { SpeciesInfo } from '../../types';

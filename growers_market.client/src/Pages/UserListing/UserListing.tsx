@@ -1,12 +1,8 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { Listing } from '../../types';
-import { getUserListings } from '../../api';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-interface Props {
-}
 
-const UserListing: React.FC<Props> = (): JSX.Element => {
+const UserListing: React.FC = (): JSX.Element => {
     return (
             <Outlet />
     );

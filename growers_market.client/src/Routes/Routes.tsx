@@ -7,7 +7,6 @@ import BrowseMarketPage from "../Pages/BrowseMarketPage/BrowseMarketPage";
 import ChatsPage from "../Pages/ChatsPage/ChatsPage";
 import UserListingsPage from "../Pages/UserListingsPage/UserListingsPage";
 import WishlistPage from "../Pages/WishlistPage/WishlistPage";
-import UserListingChatsList from "../Components/UserListing/UserListingChatsList/UserListingChatsList";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import IsAuthenticatedRoute from "./IsAuthenticatedRoute";

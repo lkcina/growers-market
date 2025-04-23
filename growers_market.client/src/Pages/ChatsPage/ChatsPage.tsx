@@ -1,15 +1,12 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { deleteChat, getUserChats } from '../../api';
+import { getUserChats } from '../../api';
 import { Chat, Listing } from '../../types';
-import ChatList from '../../Components/ChatList/ChatList';
 import ListingList from '../../Components/ListingList/ListingList';
 import './ChatsPage.css';
 import { Link } from 'react-router-dom';
 
-interface Props {
-}
 
-const ChatsPage: React.FC<Props> = () => {
+const ChatsPage: React.FC = () => {
     const [userChats, setUserChats] = useState<Chat[]>([]);
     const [listings, setListings] = useState<Listing[]>([]);
     const [listingDetails, setListingDetails] = useState<number | null>(null);

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useRef } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 import "./PopupSpeciesList.css";
 import { SpeciesInfo } from "../../types";
 import { v4 as uuidv4 } from 'uuid';

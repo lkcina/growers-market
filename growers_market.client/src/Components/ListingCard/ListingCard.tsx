@@ -1,8 +1,6 @@
-import React, { ChangeEvent, Dispatch, FormEvent, MouseEvent, SetStateAction, useEffect, useState } from 'react';
-import { Chat, Listing } from '../../types';
+import React, { FormEvent, MouseEvent, useEffect, useState } from 'react';
+import { Listing } from '../../types';
 import ListingImages from '../ListingImages/ListingImages';
-import ListingDetails from '../ListingDetails/ListingDetails';
-import { createChat, deleteChat, getUserChats, sendMessage } from '../../api';
 import './ListingCard.css';
 
 interface Props {

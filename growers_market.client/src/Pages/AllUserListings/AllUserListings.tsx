@@ -6,10 +6,8 @@ import ListingList from '../../Components/ListingList/ListingList';
 import { useNavigate } from 'react-router-dom';
 import './AllUserLisitngs.css';
 
-interface Props {
-}
 
-const AllUserListings: React.FC<Props> = (): JSX.Element => {
+const AllUserListings: React.FC = (): JSX.Element => {
     const [userListings, setUserListings] = useState<Listing[]>([]);
 
     const navigate = useNavigate();

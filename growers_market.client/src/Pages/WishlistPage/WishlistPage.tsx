@@ -1,15 +1,12 @@
 import React, { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { postWishlist, getSpeciesDetails, deleteWishlist, getWishlist } from '../../api';
-import ListWishlist from '../../Components/Wishlist/ListWishlist/ListWishlist';
 import { SpeciesInfo } from '../../types';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import './WishlistPage.css';
 import SpeciesList from '../../Components/SpeciesList/SpeciesList';
 
-interface Props {
-}
 
-const WishlistPage: React.FC<Props> = () => {
+const WishlistPage: React.FC = () => {
     const [wishlistSearchQuery, setWishlistSearchQuery] = useState<string>("");
     const [wishlistSearchResult, setWishlistSearchResult] = useState<SpeciesInfo[]>([]);
 

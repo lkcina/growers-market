@@ -3,7 +3,7 @@ import { Chat } from '../../types';
 import './NewMessageForm.css';
 
 interface Props {
-    chat: Chat | undefined;
+    chat: Chat | null;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     message: string;
     handleMessageInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;

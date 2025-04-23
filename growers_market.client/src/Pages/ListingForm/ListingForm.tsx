@@ -1,20 +1,16 @@
 import React, { ChangeEvent, FormEvent, MouseEvent, SyntheticEvent, useEffect, useState } from "react";
-import { Listing, ListingImagePosition, SpeciesInfo } from "../../types";
-import { v4 as uuidv4 } from 'uuid';
+import { ListingImagePosition, SpeciesInfo } from "../../types";
 import ListingFormImages from "../../Components/ListingFormImages/ListingFormImages";
 import { toast } from "react-toastify";
 import { getUsedSpecies, createListing, updateListing, getListing, searchSpecies } from "../../api";
-import { useBlocker, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import PopupSpeciesList from "../../Components/PopupSpeciesList/PopupSpeciesList";
 import FormSpeciesSelect from "../../Components/FormSpeciesSelect/FormSpeciesSelect";
 import './ListingForm.css';
-import { removeListener } from "process";
 
-interface Props {
-}
 
-const ListingForm: React.FC<Props> = (): JSX.Element => {
+const ListingForm: React.FC = (): JSX.Element => {
     const { listingId } = useParams();
     const [listingTitle, setListingTitle] = useState<string>("");
     const [listingIsForTrade, setListingIsForTrade] = useState<boolean>(false);

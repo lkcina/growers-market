@@ -6,8 +6,6 @@ import { useForm } from 'react-hook-form';
 import "./RegisterPage.css";
 import { Link } from 'react-router-dom';
 
-interface Props {
-}
 
 type RegisterFormsInputs = {
     email: string;
@@ -25,12 +23,13 @@ const validation = Yup.object().shape({
     userName: Yup.string().required('Username is required'),
     password: Yup.string().required('Password is required'),
     streetAddressLine1: Yup.string().required('Street Address is required'),
+    streetAddressLine2: Yup.string().optional(),
     city: Yup.string().required('City is required'),
     state: Yup.string().required('State is required'),
     postalCode: Yup.string().required('Zip Code is required').matches(/^[0-9]{5}$/, 'Invalid Zip Code')
 });
 
-const RegisterPage: React.FC<Props> = () => {
+const RegisterPage: React.FC = () => {
     const { registerUser } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormsInputs>({ resolver: yupResolver(validation) });
 

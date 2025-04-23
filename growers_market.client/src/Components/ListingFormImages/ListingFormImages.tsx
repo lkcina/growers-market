@@ -2,11 +2,9 @@ import React, { ChangeEvent, MouseEvent, SyntheticEvent, useCallback } from "rea
 import ImageInput from "./ImageInput/ImageInput";
 import './ListingFormImages.css';
 import { useDropzone } from 'react-dropzone';
-import ListingForm from "../../Pages/ListingForm/ListingForm";
 import { ListingImagePosition } from "../../types";
 
 interface Props {
-    inputImages: File[];
     imageValues: (File | string)[];
     handleImagesChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onRemoveImage: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -16,7 +14,7 @@ interface Props {
     startPositionImage: (e: MouseEvent<HTMLImageElement>) => void;
 }
 
-const ListingFormImages: React.FC<Props> = ({ inputImages, handleImagesChange, imageValues, onRemoveImage, onAddImage, fileInputCount, imagePositions, startPositionImage }: Props): JSX.Element => {
+const ListingFormImages: React.FC<Props> = ({ handleImagesChange, imageValues, onRemoveImage, onAddImage, fileInputCount, imagePositions, startPositionImage }: Props): JSX.Element => {
     const onImageError = (e: SyntheticEvent) => {
         e.preventDefault();
         const target = e.target as HTMLImageElement;

@@ -7,7 +7,7 @@ import { createChat, deleteChat, getUserChats, sendMessage } from "../../api";
 
 interface Props {
     listing: Listing;
-    chat: Chat | null | undefined;
+    chat: Chat | null;
     columns: number;
     listingColumn: number;
     setUserChats: Dispatch<SetStateAction<Chat[]>> | null;

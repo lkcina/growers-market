@@ -2,10 +2,8 @@ import React from 'react';
 import "./HomePage.css";
 import { Link } from 'react-router-dom';
 
-interface Props {
-}
 
-const HomePage: React.FC<Props> = () => {
+const HomePage: React.FC = () => {
     return (
         <div id="home-page">
             <video src="/src/assets/Videos/Growers_Market_Hero.mp4" controls={false} autoPlay loop muted></video>

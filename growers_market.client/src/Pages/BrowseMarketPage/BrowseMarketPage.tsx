@@ -215,7 +215,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         const input = target.parentElement?.parentElement?.children.namedItem("searchLocation") as HTMLInputElement;
         input.value = target.value;
         console.log(input);
-        const event = new InputEvent('change', { bubbles: true }) as ChangeEvent<HTMLInputElement>;
+        const event = new InputEvent('change', { bubbles: true }) as unknown as ChangeEvent<HTMLInputElement>;
         Object.defineProperty(event, 'target', { writable: false, value: input });
 
         setListingSearchLocation(target.value);

@@ -32,8 +32,8 @@ const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishli
                     const detailsSpecies: SpeciesInfo = { ...searchResult.filter((s) => s.id === speciesDetails)[0] }
                     console.log(detailsSpecies);
                     console.log(detailsSpecies);
-                    const rowOfSpecies = Math.floor(searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)) / columns) + 1;
-                    const columnOfSpecies = (searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)) % columns) + 1;
+                    const rowOfSpecies = Math.floor(searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)!) / columns) + 1;
+                    const columnOfSpecies = (searchResult.indexOf(searchResult.find((s) => s.id === speciesDetails)!) % columns) + 1;
                     setSpeciesColumn(columnOfSpecies);
                     detailsSpecies.id = 0;
                     console.log(columns, columnOfSpecies, rowOfSpecies);
@@ -77,7 +77,7 @@ const SpeciesList: React.FC<Props> = ({ searchResult, onWishlistCreate, onWishli
                     })
                 ) : (
                     searchResultDetails.map((s, index) => {
-                        const detailsIndex = searchResultDetails.indexOf(searchResultDetails.find((s) => s.id === 0));
+                        const detailsIndex = searchResultDetails.indexOf(searchResultDetails.find((s) => s.id === 0)!);
                         return (
                             s.id !== 0 ? index !== detailsIndex + 1 ? <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} isAfterDetails={false} />
                                 : <SpeciesCard id={`species-${s.id}`} key={uuidv4()} species={s} onWishlistCreate={onWishlistCreate} onWishlistRemove={onWishlistRemove} wishlistValues={wishlistValues} showDetails={showDetails} speciesDetails={speciesDetails} isAfterDetails={true} />

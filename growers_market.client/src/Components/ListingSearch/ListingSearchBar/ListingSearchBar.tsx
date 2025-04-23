@@ -1,4 +1,4 @@
-﻿import React, { ChangeEvent, SyntheticEvent, useEffect } from "react";
+﻿import React, { ChangeEvent, SyntheticEvent } from "react";
 import { SpeciesInfo } from "../../../types";
 import ListingAdvancedSearch from "../ListingAdvancedSearch/ListingAdvancedSearch";
 import './ListingSearchBar.css';
