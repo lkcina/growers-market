@@ -45,7 +45,6 @@ namespace growers_market.Server.Controllers
             if (species == null)
             {
                 species = await _perenualService.GetPlantByIdAsync(speciesId);
-                Console.WriteLine(species.Description);
                 if (species == null)
                 {
                     return BadRequest("Species does not exist");

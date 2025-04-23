@@ -35,10 +35,6 @@ namespace growers_market.Server.Repositories
 
         private static double CalculateDistance(string unit, double lat1, double lon1, double lat2, double lon2)
         {
-            Console.WriteLine(lat1);
-            Console.WriteLine(lon1);
-            Console.WriteLine(lat2);
-            Console.WriteLine(lon2);
             const double R = 6371; // Radius of the Earth in kilometers
             var lat = (lat2 - lat1) * Math.PI / 180;
             var lon = (lon2 - lon1) * Math.PI / 180;
@@ -49,30 +45,24 @@ namespace growers_market.Server.Repositories
             if (unit == "km")
             {
                 var distanceInKm = R * c;
-                Console.WriteLine(distanceInKm);
                 return distanceInKm;
             }
             var distanceInMiles = (R * c) * 0.62137119223734;
-            Console.WriteLine(distanceInMiles);
             return distanceInMiles;
         }
 
         public async Task<Listing> CreateAsync(Listing listing)
         {
-            Console.WriteLine(JsonSerializer.Serialize(listing));
-            await _context.Listings.AddAsync(listing);
-            Console.WriteLine("Added");
             try
             {
+                await _context.Listings.AddAsync(listing);
                 await _context.SaveChangesAsync();
-                Console.WriteLine("Saved");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error saving changes: {ex.Message}");
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
-            Console.WriteLine("Saved");
             return listing;
         }
 
@@ -146,11 +136,9 @@ namespace growers_market.Server.Repositories
                     listings = listings.OrderByDescending(l => l.Price);
                     break;
                 case "dateAsc":
-                    Console.WriteLine("Date Asc");
                     listings = listings.OrderBy(l => l.CreatedAt);
                     break;
                 default:
-                    Console.WriteLine("Date Desc");
                     listings = listings.OrderByDescending(l => l.CreatedAt);
                     break;
             }
@@ -168,26 +156,16 @@ namespace growers_market.Server.Repositories
 
             if (query.Location == "Home Address")
             {
-                Console.WriteLine("Searching From: Home Address");
-                Console.WriteLine($"{appUser.Address.StreetAddressLine1}, {appUser.Address.City}, {appUser.Address.State}, {appUser.Address.PostalCode}");
-                Console.WriteLine(appUser.Address.Latitude);
-                Console.WriteLine(appUser.Address.Longitude);
+                
                 listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, appUser.Address.Latitude, appUser.Address.Longitude, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
             } else if (query.Location == "Current Location")
             {
-                Console.WriteLine("Searching From: Current Location");
-                Console.WriteLine(query.Latitude);
-                Console.WriteLine(query.Longitude);
                 listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, query.Latitude.Value, query.Longitude.Value, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
             } else
             {
                 var address = await _googleGeocodingService.GetCustomAddressLocation(query.Location);
                 if (address != null)
                 {
-                    Console.WriteLine($"Searching From: {query.Location}");
-                    Console.WriteLine($"{address.StreetAddressLine1}, {address.City}, {address.State}, {address.PostalCode}");
-                    Console.WriteLine(address.Latitude);
-                    Console.WriteLine(address.Longitude);
                     listingsList = listingsList.Where(l => l.AppUser.Address != null && CalculateDistance(query.Unit, address.Latitude, address.Longitude, l.AppUser.Address.Latitude, l.AppUser.Address.Longitude) <= query.Radius).ToList();
                 } else
                 {

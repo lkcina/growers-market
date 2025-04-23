@@ -106,7 +106,6 @@ namespace growers_market.Server.Controllers
             {
                 return BadRequest(ModelState);
             }
-            Console.WriteLine("Creating Chat");
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
             var chat = new Chat
@@ -117,9 +116,6 @@ namespace growers_market.Server.Controllers
             chat.Listing = listing;
             chat.AppUserName = appUser.UserName;
             chat.AppUserId = appUser.Id;
-            Console.WriteLine(chat.ListingId);
-            Console.WriteLine(chat.Listing.Title);
-            Console.WriteLine(chat.AppUserName);
             await _chatRepository.CreateChat(chat);
             if (chat == null)
             {
