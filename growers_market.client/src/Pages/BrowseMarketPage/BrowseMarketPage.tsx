@@ -121,7 +121,7 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         setListingSort(value);
     }
 
-    const searchRadiusIncrement = (e: MouseEvent<HTMLButtonElement>) => {
+    const searchRadiusIncrement = (e: SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
         let updatedRadius = listingSearchRadius;
@@ -141,15 +141,20 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             }, 50);
         }, 500);
 
-        document.addEventListener("mouseup", (ev) => {
+        const mouseUpEvent = (ev: MouseEvent | TouchEvent) => {
             ev.preventDefault();
             ev.stopPropagation();
             clearTimeout(timeout);
             clearInterval(interval);
-        });
+            document.removeEventListener("mouseup", mouseUpEvent);
+            document.removeEventListener("touchend", mouseUpEvent);
+        };
+
+        document.addEventListener("mouseup", mouseUpEvent);
+        document.addEventListener("touchend", mouseUpEvent);
     }
 
-    const searchRadiusDecrement = (e: MouseEvent<HTMLButtonElement>) => {
+    const searchRadiusDecrement = (e: SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
         let updatedRadius = listingSearchRadius;
@@ -169,12 +174,17 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             }, 50);
         }, 500);
 
-        document.addEventListener("mouseup", (ev) => {
+        const mouseUpEvent = (ev: MouseEvent | TouchEvent) => {
             ev.preventDefault();
             ev.stopPropagation();
             clearTimeout(timeout);
             clearInterval(interval);
-        });
+            document.removeEventListener("mouseup", mouseUpEvent);
+            document.removeEventListener("touchend", mouseUpEvent);
+        };
+
+        document.addEventListener("mouseup", mouseUpEvent);
+        document.addEventListener("touchend", mouseUpEvent);
     }
 
     const handleSearchUnitChange = (e: ChangeEvent<HTMLSelectElement>) => {
