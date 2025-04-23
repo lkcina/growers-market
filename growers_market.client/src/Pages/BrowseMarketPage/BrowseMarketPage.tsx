@@ -46,7 +46,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
                 setServerError(result);
                 return;
             } else if (Array.isArray(result)) {
-                console.log(result);
                 setSpeciesSelectOptions(result);
             }
         })
@@ -69,7 +68,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             if (typeof result === "string") {
                 setServerError(result);
             } else if (Array.isArray(result.data.data)) {
-                console.log(result.data);
                 setListingSearchResult(result.data.data);
                 setListingSearchCurrentPage(result.data.currentPage);
                 setListingSearchLastPage(result.data.lastPage);
@@ -77,7 +75,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
                 setListingSearchTo(result.data.to);
                 setListingSearchTotal(result.data.total);
             }
-            console.log(listingSearchResult, serverError);
         });
     }, [])
 
@@ -92,10 +89,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         })
     }, [])
 
-    useEffect(() => {
-        console.log(listingDetails);
-
-    }, [listingDetails]);
 
     const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
         setListingSearchQuery(e.target.value);
@@ -192,7 +185,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
     }
 
     const handleSearchLocationChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        console.log("handleSearchLocationChange", e.target.value);
         if (e.target.value === "Current Location") {
             if (!navigator.geolocation) {
                 setServerError("Geolocation is not supported by your browser");
@@ -214,7 +206,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         const target = e.target as HTMLButtonElement;
         const input = target.parentElement?.parentElement?.children.namedItem("searchLocation") as HTMLInputElement;
         input.value = target.value;
-        console.log(input);
         const event = new InputEvent('change', { bubbles: true }) as unknown as ChangeEvent<HTMLInputElement>;
         Object.defineProperty(event, 'target', { writable: false, value: input });
 
@@ -229,7 +220,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         if (typeof result === "string") {
             setServerError(result);
         } else if (Array.isArray(result.data.data)) {
-            console.log(result.data);
             setListingSearchResult(result.data.data);
             setListingSearchCurrentPage(result.data.currentPage);
             setListingSearchLastPage(result.data.lastPage);
@@ -237,7 +227,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             setListingSearchTo(result.data.to);
             setListingSearchTotal(result.data.total);
         }
-        console.log(listingSearchResult, serverError);
         
     }
 
@@ -254,7 +243,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             setListingSearchTo(result.data.to);
             setListingSearchTotal(result.data.total);
         }
-        console.log(listingSearchResult, serverError);
     }
 
     const onSearchPreviousPage = async (e: SyntheticEvent) => {
@@ -270,7 +258,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
             setListingSearchTo(result.data.to);
             setListingSearchTotal(result.data.total);
         }
-        console.log(listingSearchResult, serverError);
     }
 
     const showDetails = useCallback((e: FormEvent<HTMLFormElement>) => {
@@ -278,7 +265,6 @@ const BrowseMarketPage: React.FC = (): JSX.Element => {
         const target = e.target as HTMLFormElement;
         const input = target.elements.namedItem("listingId") as HTMLInputElement;
         const value = Number(input.value);
-        console.log(value);
         if (listingDetails === value) {
             setListingDetails(null);
             return;

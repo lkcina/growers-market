@@ -22,7 +22,6 @@ const ListingFormImages: React.FC<Props> = ({ handleImagesChange, imageValues, o
     }
     
     const onDrop = useCallback((acceptedFiles: File[]) => {
-        console.log(acceptedFiles);
         const dto = new DataTransfer();
         acceptedFiles.forEach(file => dto.items.add(file));
         const listingFormImages = document.getElementsByClassName("listing-form-images")[0] as HTMLFieldSetElement;
@@ -32,7 +31,7 @@ const ListingFormImages: React.FC<Props> = ({ handleImagesChange, imageValues, o
         input.name = "UploadedImages";
         input.className = "uploaded-images";
         input.multiple = true;
-        input.addEventListener('change', (e: Event) => handleImagesChange(e as ChangeEvent<HTMLInputElement>));
+        input.addEventListener('change', (e: Event) => handleImagesChange(e as unknown as ChangeEvent<HTMLInputElement>));
         listingFormImages.appendChild(input);
         const event = new Event('change', { bubbles: true });
         input.dispatchEvent(event);

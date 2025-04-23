@@ -10,7 +10,6 @@ const ImageInput: React.FC<Props> = ({ handleImagesChange }: Props): JSX.Element
 
     useEffect(() => {
         if (inputRef.current) {
-            console.log(inputRef.current);
             inputRef.current.click();
         }
     }, [])

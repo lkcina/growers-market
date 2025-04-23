@@ -17,7 +17,6 @@ const AllUserListings: React.FC = (): JSX.Element => {
             if (typeof result === "string") {
                 toast.error(result);
             } else {
-                console.log(result.data);
                 setUserListings(result.data);
             }
         })

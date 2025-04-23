@@ -53,7 +53,6 @@ const UserListingInfo: React.FC = (): JSX.Element => {
                     if (typeof chatResult === "string") {
                         setServerError(chatResult);
                     } else if (Array.isArray(chatResult)) {
-                        console.log(chatResult);
                         setUserChats(chatResult);
                     }
                 })

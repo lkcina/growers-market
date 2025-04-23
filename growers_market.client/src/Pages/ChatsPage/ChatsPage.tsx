@@ -18,7 +18,6 @@ const ChatsPage: React.FC = () => {
                 setServerError(result);
                 return;
             } else if (Array.isArray(result)) {
-                console.log(result);
                 setUserChats(result);
             }
         })
@@ -26,7 +25,6 @@ const ChatsPage: React.FC = () => {
 
     useEffect(() => {
         if (userChats.length > 0) {
-            console.log("setting Listings");
             setListings(userChats.map(chat => chat.listing));
         }
     }, [userChats])

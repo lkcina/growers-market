@@ -22,7 +22,6 @@ const WishlistPage: React.FC = () => {
             } else if (Array.isArray(result.data)) {
                 setWishlistValues(result.data);
                 setWishlistSearchResult(result.data);
-                console.log(result.data);
             }
         });
     }, [])
@@ -31,7 +30,6 @@ const WishlistPage: React.FC = () => {
         setTimeout(() => {
             if (speciesDetails !== null) {
                 const detailsElement = document.getElementById(`species-${speciesDetails}`);
-                console.log(detailsElement);
                 if (detailsElement) {
                     detailsElement.scrollIntoView();
                 }
@@ -46,7 +44,6 @@ const WishlistPage: React.FC = () => {
     const onSearchSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         const result = wishlistValues.filter((species) => species.commonName.toLowerCase().includes(wishlistSearchQuery.toLowerCase()) || species.scientificName[0].toLowerCase().includes(wishlistSearchQuery.toLowerCase()));
-        console.log(result);
         setWishlistSearchResult(result);
     }
 
@@ -72,7 +69,6 @@ const WishlistPage: React.FC = () => {
         } else {
 
             const updatedWishlist = [...wishlistValues, result];
-            console.log(updatedWishlist);
             setWishlistValues(updatedWishlist);
         }
 
@@ -83,7 +79,6 @@ const WishlistPage: React.FC = () => {
         const target = e.target as HTMLFormElement;
         const input = target.getElementsByClassName("rem-wishlist-input")[0] as HTMLInputElement;
         const value = Number(input.value);
-        console.log(value);
         const wishlistResult = await deleteWishlist(value);
         if (typeof wishlistResult === "string") {
             setServerError(wishlistResult);
@@ -93,7 +88,6 @@ const WishlistPage: React.FC = () => {
         }
 
         const updatedWishlist = wishlistValues.filter((species) => species.id !== value);
-        console.log(updatedWishlist);
         setWishlistValues(updatedWishlist);
         const updatedSearchResult = wishlistSearchResult.filter((species) => species.id !== value);
         setWishlistSearchResult(updatedSearchResult);

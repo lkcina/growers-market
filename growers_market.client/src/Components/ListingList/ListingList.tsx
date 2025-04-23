@@ -19,31 +19,21 @@ const ListingList: React.FC<Props> = ({ listings, onSelect, listingDetails, user
     const [listingColumn, setListingColumn] = useState<number>(0);
     const [searchResultDetails, setSearchResultDetails] = useState<Listing[]>([]);
 
-    useEffect(() => {
-        console.log("listing list rendered");
-        console.log(userChats);
-    });
 
     useEffect(() => {
-        console.log("useEffect triggered");
         const handleListingList = () => {
             if (listRef.current) {
                 if (listingDetails !== null) {
                     const columns = Math.min(Math.floor((listRef.current.offsetWidth + 15) / 235), listings.length);
-                    console.log(columns);
                     setListColumns(columns);
                     const detailsListing: Listing = { ...listings.filter((s) => s.id === listingDetails)[0] }
-                    console.log(detailsListing);
                     const rowOfListing = Math.floor(listings.indexOf(listings.find((l) => l.id === listingDetails)!) / columns) + 1;
                     const columnOfListing = (listings.indexOf(listings.find((l) => l.id === listingDetails)!) % columns) + 1;
                     setListingColumn(columnOfListing);
                     detailsListing.id = 0;
-                    console.log(columns, columnOfListing, rowOfListing);
                     const detailsIndex = (rowOfListing * columns);
-                    console.log(detailsIndex);
                     const newSearchResultDetails: Listing[] = [...listings];
                     newSearchResultDetails.splice(detailsIndex, 0, detailsListing);
-                    console.log(newSearchResultDetails);
                     setSearchResultDetails(newSearchResultDetails);
                 }
             }

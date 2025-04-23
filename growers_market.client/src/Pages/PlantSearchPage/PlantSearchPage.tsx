@@ -36,7 +36,6 @@ const PlantSearchPage: React.FC = () => {
                 setServerError(result);
             } else if (Array.isArray(result.data)) {
                 setWishlistValues(result.data);
-                console.log(result.data);
             }
         });
 
@@ -51,7 +50,6 @@ const PlantSearchPage: React.FC = () => {
                 setSpeciesSearchTo(result.data.to);
                 setSpeciesSearchTotal(result.data.total);
                 setSpeciesDetails(null);
-                console.log(result.data.data);
             }
             
         })
@@ -61,7 +59,6 @@ const PlantSearchPage: React.FC = () => {
         setTimeout(() => {
             if (speciesDetails !== null) {
                 const detailsElement = document.getElementById(`species-${speciesDetails}`);
-                console.log(detailsElement);
                 if (detailsElement) {
                     detailsElement.scrollIntoView();
                 }
@@ -129,7 +126,6 @@ const PlantSearchPage: React.FC = () => {
         } else {
 
             const updatedWishlist = [...wishlistValues, result];
-            console.log(updatedWishlist);
             setWishlistValues(updatedWishlist);
         }
 
@@ -140,7 +136,6 @@ const PlantSearchPage: React.FC = () => {
         const target = e.target as HTMLFormElement;
         const input = target.getElementsByClassName("rem-wishlist-input")[0] as HTMLInputElement;
         const value = Number(input.value);
-        console.log(value);
         const wishlistResult = await deleteWishlist(value);
         if (typeof wishlistResult === "string") {
             setServerError(wishlistResult);
@@ -150,7 +145,6 @@ const PlantSearchPage: React.FC = () => {
         }
 
         const updatedWishlist = wishlistValues.filter((species) => species.id !== value);
-        console.log(updatedWishlist);
         setWishlistValues(updatedWishlist);
     }
 
@@ -168,7 +162,6 @@ const PlantSearchPage: React.FC = () => {
             setSpeciesSearchTotal(result.data.total);
             setSpeciesDetails(null);
         }
-        console.log(speciesSearchResult, serverError);
     }
 
     const onSearchNextPage = async (e: SyntheticEvent) => {
@@ -185,7 +178,6 @@ const PlantSearchPage: React.FC = () => {
             setSpeciesSearchTotal(result.data.total);
             setSpeciesDetails(null);
         }
-        console.log(speciesSearchResult, serverError);
     }
 
     const onSearchPreviousPage = async (e: SyntheticEvent) => {
@@ -202,7 +194,6 @@ const PlantSearchPage: React.FC = () => {
             setSpeciesSearchTotal(result.data.total);
             setSpeciesDetails(null);
         }
-        console.log(speciesSearchResult, serverError);
     }
 
     const showDetails = useCallback(async (e: FormEvent<HTMLFormElement>) => {

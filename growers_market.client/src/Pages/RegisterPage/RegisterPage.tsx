@@ -12,7 +12,7 @@ type RegisterFormsInputs = {
     userName: string;
     password: string;
     streetAddressLine1: string;
-    streetAddressLine2: string;
+    streetAddressLine2?: string | undefined;
     city: string,
     state: string,
     postalCode: string
@@ -34,10 +34,9 @@ const RegisterPage: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormsInputs>({ resolver: yupResolver(validation) });
 
     const handleRegister = (form: RegisterFormsInputs) => {
-        console.log("Form Values:", form);
         console.log("Validation Errors:", errors);
 
-        registerUser(form.email, form.userName, form.password, form.streetAddressLine1, form.streetAddressLine2, form.city, form.state, form.postalCode);
+        registerUser(form.email, form.userName, form.password, form.streetAddressLine1, form.streetAddressLine2 === undefined ? "" : form.streetAddressLine2, form.city, form.state, form.postalCode);
     };
 
     const states: string[] = [

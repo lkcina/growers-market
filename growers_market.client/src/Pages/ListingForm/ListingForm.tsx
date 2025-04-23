@@ -39,13 +39,11 @@ const ListingForm: React.FC = (): JSX.Element => {
     
 
     useEffect(() => {
-        console.log(listingId);
         getUsedSpecies().then((result) => {
             if (typeof result === "string") {
                 setServerError(result);
                 return;
             } else if (Array.isArray(result)) {
-                console.log(result);
                 setSpeciesSelectOptions(result);
             }
 
@@ -55,7 +53,6 @@ const ListingForm: React.FC = (): JSX.Element => {
                         setServerError(result);
                         return;
                     } else {
-                        console.log(result);
                         setListingTitle(result.data.title);
                         setListingIsForTrade(result.data.isForTrade);
                         setListingPrice(result.data.price);
@@ -145,12 +142,10 @@ const ListingForm: React.FC = (): JSX.Element => {
     }
 
     const handleImagesChange = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.files);
         const newImages: File[] = Array.from(e.target.files || [])
         const updatedInputImages = listingInputImages.concat(newImages);
         setListingInputImages(updatedInputImages);
         const updatedImageValues: (File | string)[] = [...listingImageValues, ...newImages];
-        console.log(updatedImageValues);
         setListingImageValues(updatedImageValues);
         const updatedImagePositions: ListingImagePosition[] = [...listingImagePositions, ...newImages.map(image => ({ positionX: 50, positionY: 50 }))];
         setListingImagePositions(updatedImagePositions);
@@ -176,7 +171,6 @@ const ListingForm: React.FC = (): JSX.Element => {
         data.set('IsForTrade', listingIsForTrade.toString());
 
         const uploadedImages = Array.from(listingInputImages || []).filter(image => listingImageValues.includes(image));
-        console.log(uploadedImages);
         data.delete('UploadedImages');
 
         for (let i = 0; i < uploadedImages.length; i++) {
@@ -186,7 +180,6 @@ const ListingForm: React.FC = (): JSX.Element => {
         if (imagePaths.length === 0) {
             data.set('ImagePaths', JSON.stringify([]));
         }
-        console.log(listingImagePositions);
         const imagePositionsX = listingImagePositions.map((position) => position.positionX);
         data.append('ImagePositionsX', JSON.stringify(imagePositionsX));
         const imagePositionsY = listingImagePositions.map((position) => position.positionY);
@@ -195,8 +188,6 @@ const ListingForm: React.FC = (): JSX.Element => {
         if (listingSpecies == null) {
             data.delete('SpeciesId');
         }
-
-        console.log(Object.fromEntries(data.entries()));
         if (listingId === undefined) {
 
             const listingResult = await createListing(data);
@@ -225,7 +216,6 @@ const ListingForm: React.FC = (): JSX.Element => {
         const imageIndex = Number(button.parentElement?.id);
         const updatedImageValues = [...listingImageValues];
         updatedImageValues.splice(imageIndex, 1);
-        console.log(updatedImageValues);
         setListingImageValues(updatedImageValues);
         const updatedImagePositions = [...listingImagePositions];
         updatedImagePositions.splice(imageIndex, 1);
@@ -244,7 +234,6 @@ const ListingForm: React.FC = (): JSX.Element => {
     const onSpeciesSearchSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         const result = await searchSpecies(1, speciesSearchQuery, null, null, null, null, null, null, null);
-        console.log(result);
         if (typeof result === "string") {
             setServerError(result);
             return;
@@ -316,7 +305,6 @@ const ListingForm: React.FC = (): JSX.Element => {
         const startPositionY = e.clientY;
         const imagePositionX = listingImagePositions[imageIndex].positionX;
         const imagePositionY = listingImagePositions[imageIndex].positionY;
-        console.log(startPositionX, startPositionY);
 
         const setPosition = (ev: MouseEvent) => {
             const deltaX = ev.clientX - startPositionX;
@@ -342,7 +330,7 @@ const ListingForm: React.FC = (): JSX.Element => {
                 <fieldset className="form-header">
                     <textarea id="listing-title" name="Title" required value={listingTitle} onChange={handleTitleChange} placeholder="Enter Title" rows={1} />
                 </fieldset>
-                <ListingFormImages inputImages={listingInputImages} handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} imagePositions={listingImagePositions} startPositionImage={startPositionImage} />
+                <ListingFormImages handleImagesChange={handleImagesChange} imageValues={listingImageValues} onRemoveImage={onRemoveImage} onAddImage={onAddImage} fileInputCount={fileInputCount} imagePositions={listingImagePositions} startPositionImage={startPositionImage} />
                 <div className="form-container">
                     <div className="form-details">
                         <fieldset>

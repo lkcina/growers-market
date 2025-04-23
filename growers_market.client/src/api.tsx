@@ -23,7 +23,6 @@ export const searchSpecies = async (page: number, query: string, cycle: string |
         if (poisonous !== null) url += `&Poisonous=${poisonous}`;
 
         const data = await axios.get<SpeciesSearchResponse>(url);
-        console.log(data);
         return data;
     }
     catch (error) {
@@ -175,7 +174,6 @@ export const getListing = async (id: number) => {
 }
 
 export const createListing = async (form: FormData) => {
-    console.log(form);
     try {
         const data = await axios.post<Listing>('https://localhost:7234/api/listing', form, {
             headers: {
@@ -233,7 +231,6 @@ export const deleteListing = async (id: number) => {
 export const getListingChats = async (listingId: number) => {
     try {
         const data = await axios.get<ChatResponse[]>(`https://localhost:7234/api/chat/listing/${listingId}`);
-        console.log(data);
         if (typeof data === "string") {
             return data;
         }
@@ -241,7 +238,6 @@ export const getListingChats = async (listingId: number) => {
         const chatsFormatted = data.data.map((chat) => {
             return formatChat(chat);
         });
-        console.log(chatsFormatted);
         return chatsFormatted;
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -266,9 +262,6 @@ interface ListingSearchResponse {
 
 export const searchListings = async (page: number, query: string, isForTrade: boolean | null, priceMax: number, speciesId: number | null, username: string | null, sort: string | null, radius: number, unit: string, location: string, lat: number | null, lng: number | null) => {
     try {
-        console.log(location);
-        console.log(lat);
-        console.log(lng);
         let url = `https://localhost:7234/api/listing?Radius=${radius}&Unit=${unit}&Location=${location}&Page=${page}&Q=${query}&PriceMax=${priceMax}`;
         if (location === "Current Location") url += `&Latitude=${lat}&Longitude=${lng}`;
         if (isForTrade) url += `&IsForTrade=${isForTrade}`;
@@ -277,7 +270,6 @@ export const searchListings = async (page: number, query: string, isForTrade: bo
         if (sort) url += `&SortBy=${sort}`;
 
         const data = await axios.get<ListingSearchResponse>(url);
-        console.log(data);
         return data;
     }
     catch (error) {
